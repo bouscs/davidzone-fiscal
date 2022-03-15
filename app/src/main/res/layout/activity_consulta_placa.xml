@@ -29,11 +29,24 @@
             android:hint="Placa"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnConsultar"
             android:layout_width="wrap_content"
             android:layout_height="65dp"
             android:text="Consultar"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"/>
+        
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:text="O veiculo placa ABC-1234 está irregular"
+            ></androidx.appcompat.widget.AppCompatTextView>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
