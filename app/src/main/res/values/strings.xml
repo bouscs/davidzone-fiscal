@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DavidZone Fiscal</string>
+    <string name="title_activity_mapa_itinerario">MapaItinerarioActivity</string>
 </resources>
