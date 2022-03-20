@@ -4,51 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:background="@color/black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".ConsultaPlacaActivity">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/ic_baseline_search_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Consultar a Placa"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="60dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPlacaHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textAlignment="center"
-            android:layout_margin="30dp"
-            android:text="Consulta de veículo"/>
+            android:text="Digite a Placa"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/numPlaca"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:hint="Placa"/>
+            android:id="@+id/etPlaca"
+            android:layout_width="268dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/tvPlacaHint"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="#3D424F"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="BRA2E19" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnConsultar"
-            android:layout_width="wrap_content"
-            android:layout_height="65dp"
-            android:text="Consultar"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="20dp"/>
-        
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvStatus"
+            android:id="@+id/tvPlacaNotFound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:textSize="20sp"
+            android:layout_below="@id/etPlaca"
+            android:layout_marginBottom="50dp"
+            android:text="Placa não encontrada"
             android:textColor="@color/red"
-            android:visibility="gone"
-            android:text="O veiculo placa ABC-1234 está irregular"
-            ></androidx.appcompat.widget.AppCompatTextView>
+            android:textSize="14sp"
+            android:visibility="invisible" />
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </RelativeLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConsultar"
+        android:layout_width="224dp"
+        android:layout_height="70dp"
+        android:background="@color/blue"
+        android:elevation="4dp"
+        android:text="Consultar"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

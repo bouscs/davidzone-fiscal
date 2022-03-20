@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".ResultadoConsultaActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="15dp"
+        android:text="Placa"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPlacaConsulta"
+        android:layout_width="290dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
+        android:background="#3D424F"
+        android:text="BRA-2E19"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_baseline_error_24" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingHorizontal="25dp"
+        android:text="Irregularidade encontrado nesse veículo"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="28sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegistrarIrregularidade"
+        android:layout_width="238dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="100dp"
+        android:background="@color/red"
+        android:elevation="4dp"
+        android:paddingVertical="5dp"
+        android:text="Registrar Irregularidade"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/success" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:letterSpacing="0.5"
+        android:text="SUCESSO"
+        android:textColor="@color/white"
+        android:textSize="24dp" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnVoltarHome"
+        android:layout_width="224dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="25dp"
+        android:background="@color/blue"
+        android:elevation="4dp"
+        android:text="Voltar Home"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnConsultarMais"
+        android:layout_width="224dp"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:elevation="4dp"
+        android:text="Consultar +"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        android:textSize="28sp" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
