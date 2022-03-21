@@ -5,7 +5,6 @@ import android.os.Bundle
 
 class ConsultaPlacaActivity : AppCompatActivity() {
 
-    private lateinit var
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
