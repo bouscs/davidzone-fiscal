@@ -3,23 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/drawable/outline_rect.xml" value="0.338" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/drawable/primary_background.xml" value="0.338" />
         <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_consulta_placa.xml" value="0.36666666666666664" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
-<<<<<<< Updated upstream
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_registrar_irregularidade.xml" value="0.28532608695652173" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_resultado_consulta_regular.xml" value="0.18802083333333333" />
-        <entry key="..\:/AndroidStudioProjects/DavidZoneFiscal/app/src/main/res/layout/activity_success.xml" value="0.17" />
-=======
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.163" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.163" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/outline_rect.xml" value="0.163" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/time_left_box.xml" value="0.163" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_consulta_placa.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_login.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_mapa_itinerario.xml" value="0.22447916666666667" />
->>>>>>> Stashed changes
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.25" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_splash_screen.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/Tobia/davidzone-fiscal/app/src/main/res/layout/activity_consulta_placa.xml" value="0.22826086956521738" />
       </map>
     </option>
