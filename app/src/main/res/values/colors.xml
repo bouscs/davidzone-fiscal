@@ -7,7 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#1F2123</color>
     <color name="white">#FFFFFFFF</color>
+<<<<<<< Updated upstream
     <color name="red">#F13838 </color>
     <color name="blue">#4886FF </color>
     <color name="primary">#6200EE</color>
+=======
+    <color name="red">#FF0000</color>
+    <color name="bg_dark">#1F2123</color>
+    <color name="orange">#E88510</color>
+    <color name="dark_grey">#3D424F</color>
+>>>>>>> Stashed changes
 </resources>
