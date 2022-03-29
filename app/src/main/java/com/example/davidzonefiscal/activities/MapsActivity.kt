@@ -1,7 +1,8 @@
-package com.example.davidzonefiscal
+package com.example.davidzonefiscal.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.davidzonefiscal.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

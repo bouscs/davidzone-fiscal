@@ -1,7 +1,8 @@
-package com.example.davidzonefiscal
+package com.example.davidzonefiscal.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.davidzonefiscal.R
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
