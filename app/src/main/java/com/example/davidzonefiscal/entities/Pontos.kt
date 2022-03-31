@@ -1,4 +1,6 @@
 package com.example.davidzonefiscal.entities
 
-class Pontos {
+class Pontos (val id: Int, val localizacao: Localizacao, val raio: Float){
+
+
 }

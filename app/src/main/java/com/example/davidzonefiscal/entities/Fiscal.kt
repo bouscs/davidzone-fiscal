@@ -1,4 +1,3 @@
 package com.example.davidzonefiscal.entities
 
-class Fiscal {
-}
+data class Fiscal(val id: Int, val email: String, val nome: String, val sobrenome: String, val itinerario: Itinerario)

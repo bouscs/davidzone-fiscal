@@ -1,4 +1,7 @@
 package com.example.davidzonefiscal.entities
 
-class Veiculo {
+class Veiculo(val placa: String, val tipo: String) {
+
+
+
 }

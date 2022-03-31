@@ -1,4 +1,4 @@
 package com.example.davidzonefiscal.entities
 
-class Expediente {
+data class Itinerario(val id: Int) {
 }
