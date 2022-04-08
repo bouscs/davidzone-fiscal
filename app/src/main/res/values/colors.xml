@@ -20,4 +20,5 @@
     <color name="amber_dark">#c56000</color>
     <color name="erro">#F13838</color>
     <color name="red">#FF0000</color>
+    <color name="primary">#FFFFFF</color>
 </resources>

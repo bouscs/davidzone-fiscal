@@ -30,7 +30,7 @@
         android:layout_height="70dp"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="25dp"
-        android:background="@color/blue"
+        android:background="@color/azultema"
         android:elevation="4dp"
         android:text="Voltar Home"
         android:textAllCaps="false"
@@ -45,7 +45,7 @@
         android:elevation="4dp"
         android:text="Consultar +"
         android:textAllCaps="false"
-        android:textColor="@color/blue"
+        android:textColor="@color/azultema"
         android:textSize="28sp" />
 
 
