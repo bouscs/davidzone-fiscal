@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/colorPrimary"
     tools:context=".activities.MapsActivity">
 
     <androidx.fragment.app.FragmentContainerView
@@ -12,75 +14,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/bottombar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        map:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
-        android:id="@+id/bottombar"
         android:gravity="center_horizontal"
-        android:background="@color/bg_dark">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="332dp"
-            android:layout_height="58dp"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/time_left_box">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tempo restante: "
-                android:textSize="30sp"
-                map:layout_constraintStart_toStartOf="parent"
-                map:layout_constraintTop_toTopOf="parent"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"/>
-
-            <TextView
-                android:id="@+id/tvTimeLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="4:57"
-                android:textSize="30sp"
-                map:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="20dp"
-                map:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="8dp"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        app:cardElevation="3dp"
+        android:layout_margin="8dp"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="?attr/colorPrimary">
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnItinerario"
-                android:layout_width="170dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Meu\nExpediente"
-                android:textSize="20sp"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/roboto_medium"/>
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/arredondadoteste"
+                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:layout_marginBottom="25dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnConsultar"
-                android:layout_width="170dp"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tempo restante: "
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    map:layout_constraintStart_toStartOf="parent"
+                    map:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTimeLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4:57"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    map:layout_constraintEnd_toEndOf="parent"
+                    map:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Consultar Placa"
-                android:textSize="20sp"
-                android:layout_margin="10dp"
-                android:fontFamily="@font/roboto_medium"/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                    android:id="@+id/btnregistradireto"
+                    android:backgroundTint="@color/erro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:contentDescription="Registrar Irregularidade"
+                    style="@style/Widget.Material3.Button"
+                    app:srcCompat="@drawable/ic_baseline_error_24"
+                    app:maxImageSize="40dp"
+                    app:fabCustomSize="80dp"
+                    app:tint='?attr/colorPrimaryVariant' />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnItinerario"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Ver Itinerario"
+                    style="@style/Widget.Material3.Button"
+                    app:srcCompat="@drawable/ic_baseline_location_on_24"
+                    app:maxImageSize="40dp"
+                    app:fabCustomSize="80dp"
+                    app:tint='?attr/colorPrimaryVariant' />
+
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnConsultar"
+                    android:backgroundTint="@color/azultema"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:contentDescription="Buscar para registrar Irregularidade"
+                    style="@style/Widget.Material3.Button"
+                    app:srcCompat="@drawable/ic_baseline_search_24_2"
+                    app:maxImageSize="40dp"
+                    app:fabCustomSize="80dp"
+                    app:tint='?attr/colorPrimaryVariant' />
+
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -6,17 +6,18 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.davidzonefiscal.R
 
-class SplashScreenActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash_screen)
+        setContentView(R.layout.activity_main)
 
         supportActionBar?.hide()
 
         Handler().postDelayed({
-            val intent = Intent(this@SplashScreenActivity, MapsActivity::class.java)
+            val intent = Intent(this@MainActivity, MapsActivity::class.java)
             startActivity(intent)
             finish()
-        }, 2000)
+        }, 1000)
+
     }
 }

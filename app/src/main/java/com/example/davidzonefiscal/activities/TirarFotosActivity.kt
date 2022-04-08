@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.davidzonefiscal.R
 
-class ConsultaPlacaActivity : AppCompatActivity() {
-
-
+class TirarFotosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_consulta_placa)
+        setContentView(R.layout.activity_tirar_fotos)
     }
 }

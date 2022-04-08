@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.davidzonefiscal">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DavidZoneFiscal">
-
+        <activity
+            android:name=".activities.TirarFotosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SelecionarIrregularidadeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ResultadoNoTicketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ResultadoConsultaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ConsultarActivity"
+            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -23,14 +44,14 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY" />
+            android:value="AIzaSyDx1gXyWjtvIJ3i49s7SVOptIv3iyYIxjA" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".activities.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,24 +59,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".RegistrarIrregularidadeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ResultadoConsultaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ConsultaPlacaActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

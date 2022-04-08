@@ -7,6 +7,6 @@ import com.example.davidzonefiscal.R
 class ResultadoConsultaActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_resultado_consulta_irregular)
+        setContentView(R.layout.activity_resultado_consulta_regular)
     }
 }
