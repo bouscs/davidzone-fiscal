@@ -20,6 +20,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private lateinit var btnregistradireto: FloatingActionButton
     private lateinit var btnConsultar: FloatingActionButton
     private lateinit var btnItinerario: FloatingActionButton
 
@@ -34,6 +35,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        btnregistradireto = findViewById(R.id.btnregistradireto)
+        btnregistradireto.setOnClickListener{
+            val intentRegistroIrregularidadeActivity = Intent(this@MapsActivity, SelecionarIrregularidadeActivity::class.java)
+            startActivity(intentRegistroIrregularidadeActivity)
+        }
 
         btnConsultar = findViewById(R.id.btnConsultar)
         btnConsultar.setOnClickListener{
