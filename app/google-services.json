@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "298132446440",
+    "firebase_url": "https://pi-3-96e67-default-rtdb.firebaseio.com",
+    "project_id": "pi-3-96e67",
+    "storage_bucket": "pi-3-96e67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298132446440:android:b054ab2c92664ec7fdbd5d",
+        "android_client_info": {
+          "package_name": "com.david.davidzone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298132446440-d96push6vqoi4vs6vf7mfaq3le5h9p1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd5pLfTmF1iXNQFjxcd4HFGYHVKQUnd-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298132446440-d96push6vqoi4vs6vf7mfaq3le5h9p1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298132446440:android:3c0afd9e3a415523fdbd5d",
+        "android_client_info": {
+          "package_name": "com.example.davidzonefiscal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298132446440-d96push6vqoi4vs6vf7mfaq3le5h9p1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd5pLfTmF1iXNQFjxcd4HFGYHVKQUnd-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298132446440-d96push6vqoi4vs6vf7mfaq3le5h9p1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
