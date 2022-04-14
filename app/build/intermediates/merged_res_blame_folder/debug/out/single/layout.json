@@ -1,0 +1,46 @@
+[
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_maps.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_maps.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\bottomsheet_fragmento.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\bottomsheet_fragmento.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_resultado_consulta_irregular.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_resultado_consulta_irregular.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_success.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_success.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_selecionar_irregularidade.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_selecionar_irregularidade.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_tirar_fotos.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_tirar_fotos.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_registrar_irregularidade_foto.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_registrar_irregularidade_foto.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_resultado_consulta_regular.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_resultado_consulta_regular.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_consultar.xml",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_consultar.xml"
+    }
+]

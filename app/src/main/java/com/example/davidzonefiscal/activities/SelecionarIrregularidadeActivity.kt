@@ -13,38 +13,44 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.davidzonefiscal.R
+import com.example.davidzonefiscal.databinding.ActivitySelecionarIrregularidadeBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class SelecionarIrregularidadeActivity : AppCompatActivity() {
 
-    private lateinit var radioGroup: RadioGroup
-    private lateinit var txtLayout : TextInputLayout
-    private lateinit var btnProx : Button
-    private lateinit var tvIrregularidade : TextView
+    private lateinit var binding: ActivitySelecionarIrregularidadeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_selecionar_irregularidade)
 
-        tvIrregularidade = findViewById(R.id.tvIrregularidade)
-        txtLayout = findViewById(R.id.txtLayout)
-        radioGroup = findViewById(R.id.radioGroup)
-        btnProx = findViewById(R.id.btnProx)
-        btnProx.setOnClickListener{
-            btnProx()
+        binding = ActivitySelecionarIrregularidadeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Validar seleção ao clicar no botão próximo
+        binding.btnProx.setOnClickListener{
+            hideKeyboard()
+            if (binding.radioGroup.checkedRadioButtonId!=View.NO_ID){
+                val intentTirarFotos = Intent(this, TirarFotosActivity::class.java)
+                startActivity(intentTirarFotos)
+            } else {
+                Snackbar.make(binding.tvIrregularidade, "Selecione uma opção", Snackbar.LENGTH_LONG).show()
+            }
         }
 
-        val checkedRadioButtonId = radioGroup.checkedRadioButtonId
-        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+        // Mostrar caixa de texto ao selecionar radiobutton "outros"
+        val checkedRadioButtonId = binding.radioGroup.checkedRadioButtonId
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId!=R.id.radio3){
-                txtLayout.visibility = View.GONE
+                binding.txtLayout.visibility = View.GONE
                 hideKeyboard()
             }
-            else txtLayout.visibility = View.VISIBLE
+            else binding.txtLayout.visibility = View.VISIBLE
         }
     }
 
+
+    // Funções para esconder o teclado
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
@@ -56,15 +62,6 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-    }
-
-    private fun btnProx() {
-        if (radioGroup.checkedRadioButtonId!=View.NO_ID){
-            val intentTirarFotos = Intent(this, TirarFotosActivity::class.java)
-            startActivity(intentTirarFotos)
-        } else {
-            Snackbar.make(tvIrregularidade, "Selecione uma opção", Snackbar.LENGTH_LONG).show()
-        }
     }
 
 }

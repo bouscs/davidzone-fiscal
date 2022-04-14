@@ -3,17 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_consultar.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.2006340579710145" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_regular.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_success.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.2006340579710145" />
+        <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.209" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/arredondadoteste.xml" value="0.1875" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/fiscal_box.xml" value="0.1875" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_directions_car_24.xml" value="0.1875" />
