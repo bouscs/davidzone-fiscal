@@ -3,51 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_consultar.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_login.xml" value="0.358695652173913" />
         <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.2006340579710145" />
+        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.35190217391304346" />
         <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_regular.xml" value="0.358695652173913" />
         <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_success.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.358695652173913" />
-        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.2006340579710145" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/arredondadoteste.xml" value="0.1875" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/fiscal_box.xml" value="0.1875" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_directions_car_24.xml" value="0.1875" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_location_on_24.xml" value="0.1875" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_search_24_2.xml" value="0.1875" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_consulta_placa.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_consultar.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_main.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.1490036231884058" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_regular.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/arredondadoteste.xml" value="0.1215" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.1215" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1215" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/primary_background.xml" value="0.1215" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_consultar.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_login.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_main.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_irregular.xml" value="0.12573099415204678" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_resultado_consulta_regular.xml" value="0.12573099415204678" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_success.xml" value="0.12573099415204678" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.25726495726495724" />
-        <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.25726495726495724" />
+        <entry key="..\:/Android/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.35190217391304346" />
       </map>
     </option>
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
 </project>

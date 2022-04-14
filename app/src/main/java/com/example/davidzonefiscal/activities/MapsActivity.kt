@@ -20,9 +20,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private lateinit var btnregistradireto: FloatingActionButton
-    private lateinit var btnConsultar: FloatingActionButton
-    private lateinit var btnItinerario: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,20 +33,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        btnregistradireto = findViewById(R.id.btnregistradireto)
-        btnregistradireto.setOnClickListener{
+        // Botão regsitrar irregularidade diretamente.
+        binding.btnregistradireto.setOnClickListener{
             val intentRegistroIrregularidadeActivity = Intent(this@MapsActivity, SelecionarIrregularidadeActivity::class.java)
             startActivity(intentRegistroIrregularidadeActivity)
         }
 
-        btnConsultar = findViewById(R.id.btnConsultar)
-        btnConsultar.setOnClickListener{
+        // Botão consultar placa.
+        binding.btnConsultar.setOnClickListener{
             val intentConsult = Intent(this@MapsActivity, ConsultarActivity::class.java)
             startActivity(intentConsult)
         }
 
-        btnItinerario = findViewById(R.id.btnItinerario)
-        btnItinerario.setOnClickListener {
+        // Botão consultar itinerário.
+        binding.btnItinerario.setOnClickListener {
             bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
         }
     }

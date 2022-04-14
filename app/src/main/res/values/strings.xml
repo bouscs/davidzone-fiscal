@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">DavidZone Fiscal</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="registrar_irregularidade">Registrar Irregularidade</string>
+    <string name="registrar_irregularidade_short">Registrar</string>
+    <string name="selecionar_irregularidade">Selecione a Irregularidade:</string>
+    <string name="tempo_atual">Tempo atual: </string>
+    <string name="placa_sample">ABC1234</string>
+    <string name="proximo">Próximo</string>
+    <string name="vaga_inadequada">Vaga Inadequada</string>
+    <string name="ticket_expirado">Ticket Expirado</string>
+
+
+
+
 </resources>

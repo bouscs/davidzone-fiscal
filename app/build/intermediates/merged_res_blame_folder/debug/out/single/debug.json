@@ -1,0 +1,166 @@
+[
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_search_24.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_search_24.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_directions_car_24.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_directions_car_24.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_bottomsheet_fragmento.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\bottomsheet_fragmento.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_selecionar_irregularidade.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_selecionar_irregularidade.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_medium.ttf.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_medium.ttf"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_bolditalic.ttf.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_bolditalic.ttf"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_keyboard_arrow_down_24.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_keyboard_arrow_down_24.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_search_24_2.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_search_24_2.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_time_left_box.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\time_left_box.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_tirar_fotos.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_tirar_fotos.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_outline_rect.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\outline_rect.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_success.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\success.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_success.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_success.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_resultado_consulta_regular.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_resultado_consulta_regular.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_background.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_maps.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_maps.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_registrar_irregularidade_foto.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_registrar_irregularidade_foto.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_bold.ttf.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_bold.ttf"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_resultado_consulta_irregular.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_resultado_consulta_irregular.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_consultar.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_consultar.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_arredondadoteste.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\arredondadoteste.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_fiscal_box.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\fiscal_box.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_login.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_primary_background.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\primary_background.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_location_on_24.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_location_on_24.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_regular.ttf.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_regular.ttf"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_baseline_error_24.xml.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\ic_baseline_error_24.xml"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Android\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    }
+]
