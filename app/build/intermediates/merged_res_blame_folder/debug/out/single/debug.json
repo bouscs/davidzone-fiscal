@@ -40,12 +40,16 @@
         "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_success.png.flat",
-        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\success.png"
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_camera_preview.xml.flat",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\layout\\activity_camera_preview.xml"
     },
     {
         "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
         "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable_success.png.flat",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\success.png"
     },
     {
         "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_selecionar_irregularidade.xml.flat",
@@ -76,12 +80,12 @@
         "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\drawable\\primary_background.xml"
     },
     {
-        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_regular.ttf.flat",
-        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_regular.ttf"
-    },
-    {
         "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_background.xml.flat",
         "source": "C:\\Github\\davidzone-fiscal\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\font_roboto_regular.ttf.flat",
+        "source": "C:\\Github\\davidzone-fiscal\\app\\src\\main\\res\\font\\roboto_regular.ttf"
     },
     {
         "merged": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_registrar_irregularidade_foto.xml.flat",

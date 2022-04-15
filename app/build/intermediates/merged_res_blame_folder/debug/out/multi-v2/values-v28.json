@@ -4,7 +4,7 @@
             "outputFile": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v28\\values-v28.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\623c5a9512bd24064814f2ba228eb8f9\\transformed\\material-1.5.0\\res\\values-v28\\values-v28.xml",
+                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\76c69bef564ca0baac8b0db6d5cb6efd\\transformed\\material-1.5.0\\res\\values-v28\\values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\cdfeaf8fba4fbfe9bb38b1b1ac8c620d\\transformed\\appcompat-1.4.1\\res\\values-v28\\values-v28.xml",
+                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\f99ff5fb10b679c8e861eff7bccc7e0f\\transformed\\appcompat-1.4.1\\res\\values-v28\\values-v28.xml",
                     "from": {
                         "startLines": "2,3,4,8",
                         "startColumns": "4,4,4,4",

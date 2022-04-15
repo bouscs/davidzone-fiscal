@@ -49,6 +49,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.DavidZoneFiscal" >
         <activity
+            android:name="com.example.davidzonefiscal.activities.CameraPreviewActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.davidzonefiscal.activities.TirarFotosActivity"
             android:exported="false" />
         <activity
@@ -150,6 +153,14 @@
             android:required="false" />
 
         <service
+            android:name="androidx.camera.core.impl.MetadataHolderService"
+            android:enabled="false"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.camera.core.impl.MetadataHolderService.DEFAULT_CONFIG_PROVIDER"
+                android:value="androidx.camera.camera2.Camera2Config$DefaultProvider" />
+        </service>
+        <service
             android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
             android:exported="false" >
             <meta-data
@@ -209,14 +220,6 @@
             android:directBootAware="true"
             android:exported="false"
             android:initOrder="100" />
-        <!--
-        Service for holding metadata. Cannot be instantiated.
-        Metadata will be merged from other manifests.
-        -->
-        <service
-            android:name="androidx.camera.core.impl.MetadataHolderService"
-            android:enabled="false"
-            android:exported="false" />
 
         <activity
             android:name="com.google.android.gms.common.api.GoogleApiActivity"

@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DavidZoneFiscal">
         <activity
+            android:name=".activities.CameraPreviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.TirarFotosActivity"
             android:exported="false" />
         <activity

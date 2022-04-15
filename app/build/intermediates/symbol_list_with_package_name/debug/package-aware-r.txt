@@ -2746,12 +2746,14 @@ id btnFechar
 id btnIrregularidade
 id btnItinerario
 id btnProx
+id btnStart
 id btnVoltarHome
 id btnregistradireto
 id button
 id buttonPanel
 id cache_measures
 id callMeasure
+id cameraPreview
 id cancel_action
 id cancel_button
 id card_content_root
@@ -3256,6 +3258,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_camera_preview
 layout activity_consultar
 layout activity_login
 layout activity_main

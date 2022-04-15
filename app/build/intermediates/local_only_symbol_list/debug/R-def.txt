@@ -48,8 +48,10 @@ id btnFechar
 id btnIrregularidade
 id btnItinerario
 id btnProx
+id btnStart
 id btnVoltarHome
 id btnregistradireto
+id cameraPreview
 id etIrregularidade
 id etPlaca
 id map
@@ -61,6 +63,7 @@ id textField
 id tvIrregularidade
 id tvTimeLeft
 id txtLayout
+layout activity_camera_preview
 layout activity_consultar
 layout activity_login
 layout activity_main
