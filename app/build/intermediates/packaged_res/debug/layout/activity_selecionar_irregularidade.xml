@@ -13,7 +13,7 @@
         android:id="@+id/tvIrregularidade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar Irregularidade"
+        android:text="@string/registrar_irregularidade"
         android:layout_gravity="center_horizontal"
         android:textSize="30sp"
         android:layout_marginTop="70dp"
@@ -30,8 +30,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="AAA1112"
-            android:textColor="@color/white"
+            android:hint="@string/placa_sample"
+            android:textColorHint="@color/white"
             android:textSize="47sp"
             android:layout_margin="10dp"/>
 
@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Selecione a Irregularidade:"
+        android:text="@string/selecionar_irregularidade"
         android:textSize="27sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
@@ -57,26 +57,20 @@
             android:id="@+id/radio1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sem Ticket"
+            android:text="@string/vaga_inadequada"
             android:textSize="20sp"/>
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ticket Expirado"
+            android:text="@string/ticket_expirado"
             android:textSize="20sp"/>
 
-        <RadioButton
-            android:id="@+id/radio3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Outros"
-            android:textSize="20sp"/>
 
     </RadioGroup>
 
-    <com.google.android.material.textfield.TextInputLayout
+ <!--   <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtLayout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -89,13 +83,13 @@
             android:layout_height="wrap_content"
             android:hint="Descreva a Irregularidade"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout> -->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnProx"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
-        android:text="Próximo"
+        android:text="@string/proximo"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:textSize="22sp"

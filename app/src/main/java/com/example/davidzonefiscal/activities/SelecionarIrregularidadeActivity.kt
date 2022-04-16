@@ -38,15 +38,6 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
             }
         }
 
-        // Mostrar caixa de texto ao selecionar radiobutton "outros"
-        val checkedRadioButtonId = binding.radioGroup.checkedRadioButtonId
-        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId!=R.id.radio3){
-                binding.txtLayout.visibility = View.GONE
-                hideKeyboard()
-            }
-            else binding.txtLayout.visibility = View.VISIBLE
-        }
     }
 
 
