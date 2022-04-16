@@ -14,6 +14,8 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.davidzonefiscal.R;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -26,10 +28,16 @@ public final class ActivitySelecionarIrregularidadeBinding implements ViewBindin
   public final MaterialButton btnProx;
 
   @NonNull
+  public final TextInputEditText etIrregularidade;
+
+  @NonNull
   public final RadioButton radio1;
 
   @NonNull
   public final RadioButton radio2;
+
+  @NonNull
+  public final RadioButton radio3;
 
   @NonNull
   public final RadioGroup radioGroup;
@@ -37,15 +45,23 @@ public final class ActivitySelecionarIrregularidadeBinding implements ViewBindin
   @NonNull
   public final TextView tvIrregularidade;
 
+  @NonNull
+  public final TextInputLayout txtLayout;
+
   private ActivitySelecionarIrregularidadeBinding(@NonNull LinearLayoutCompat rootView,
-      @NonNull MaterialButton btnProx, @NonNull RadioButton radio1, @NonNull RadioButton radio2,
-      @NonNull RadioGroup radioGroup, @NonNull TextView tvIrregularidade) {
+      @NonNull MaterialButton btnProx, @NonNull TextInputEditText etIrregularidade,
+      @NonNull RadioButton radio1, @NonNull RadioButton radio2, @NonNull RadioButton radio3,
+      @NonNull RadioGroup radioGroup, @NonNull TextView tvIrregularidade,
+      @NonNull TextInputLayout txtLayout) {
     this.rootView = rootView;
     this.btnProx = btnProx;
+    this.etIrregularidade = etIrregularidade;
     this.radio1 = radio1;
     this.radio2 = radio2;
+    this.radio3 = radio3;
     this.radioGroup = radioGroup;
     this.tvIrregularidade = tvIrregularidade;
+    this.txtLayout = txtLayout;
   }
 
   @Override
@@ -81,6 +97,12 @@ public final class ActivitySelecionarIrregularidadeBinding implements ViewBindin
         break missingId;
       }
 
+      id = R.id.etIrregularidade;
+      TextInputEditText etIrregularidade = ViewBindings.findChildViewById(rootView, id);
+      if (etIrregularidade == null) {
+        break missingId;
+      }
+
       id = R.id.radio1;
       RadioButton radio1 = ViewBindings.findChildViewById(rootView, id);
       if (radio1 == null) {
@@ -90,6 +112,12 @@ public final class ActivitySelecionarIrregularidadeBinding implements ViewBindin
       id = R.id.radio2;
       RadioButton radio2 = ViewBindings.findChildViewById(rootView, id);
       if (radio2 == null) {
+        break missingId;
+      }
+
+      id = R.id.radio3;
+      RadioButton radio3 = ViewBindings.findChildViewById(rootView, id);
+      if (radio3 == null) {
         break missingId;
       }
 
@@ -105,8 +133,14 @@ public final class ActivitySelecionarIrregularidadeBinding implements ViewBindin
         break missingId;
       }
 
+      id = R.id.txtLayout;
+      TextInputLayout txtLayout = ViewBindings.findChildViewById(rootView, id);
+      if (txtLayout == null) {
+        break missingId;
+      }
+
       return new ActivitySelecionarIrregularidadeBinding((LinearLayoutCompat) rootView, btnProx,
-          radio1, radio2, radioGroup, tvIrregularidade);
+          etIrregularidade, radio1, radio2, radio3, radioGroup, tvIrregularidade, txtLayout);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

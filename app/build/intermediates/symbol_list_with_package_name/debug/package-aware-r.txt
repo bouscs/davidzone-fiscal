@@ -2746,12 +2746,14 @@ id btnFechar
 id btnIrregularidade
 id btnItinerario
 id btnProx
+id btnStart
 id btnVoltarHome
 id btnregistradireto
 id button
 id buttonPanel
 id cache_measures
 id callMeasure
+id cameraPreview
 id cancel_action
 id cancel_button
 id card_content_root
@@ -2836,6 +2838,7 @@ id endToStart
 id end_padder
 id enterAlways
 id enterAlwaysCollapsed
+id etIrregularidade
 id etPlaca
 id exitUntilCollapsed
 id expand_activities_button
@@ -3016,6 +3019,7 @@ id progress_horizontal
 id radio
 id radio1
 id radio2
+id radio3
 id radioGroup
 id ratio
 id rectangles
@@ -3144,6 +3148,7 @@ id transition_transform
 id triangle
 id tvIrregularidade
 id tvTimeLeft
+id txtLayout
 id unchecked
 id uniform
 id unlabeled
@@ -3253,6 +3258,7 @@ layout abc_search_dropdown_item_icons_2line
 layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
+layout activity_camera_preview
 layout activity_consultar
 layout activity_login
 layout activity_main
@@ -3533,18 +3539,10 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
-string placa_sample
 string project_id
-string proximo
-string registrar_irregularidade
-string registrar_irregularidade_short
 string search_menu_title
-string selecionar_irregularidade
 string status_bar_notification_info_overflow
-string tempo_atual
-string ticket_expirado
 string title_activity_maps
-string vaga_inadequada
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style AndroidThemeColorAccentYellow

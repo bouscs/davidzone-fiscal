@@ -32,28 +32,20 @@
     <string name="map_key" translatable="false">
         AIzaSyDx1gXyWjtvIJ3i49s7SVOptIv3iyYIxjA
     </string>
-    <string name="placa_sample">ABC1234</string>
     <string name="project_id" translatable="false">pi-3-96e67</string>
-    <string name="proximo">Próximo</string>
-    <string name="registrar_irregularidade">Registrar Irregularidade</string>
-    <string name="registrar_irregularidade_short">Registrar</string>
-    <string name="selecionar_irregularidade">Selecione a Irregularidade:</string>
-    <string name="tempo_atual">Tempo atual: </string>
-    <string name="ticket_expirado">Ticket Expirado</string>
     <string name="title_activity_maps">MapsActivity</string>
-    <string name="vaga_inadequada">Vaga Inadequada</string>
     <style name="Theme.DavidZoneFiscal" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_grey_300</item>
         <item name="colorPrimaryVariant">@color/blue_grey_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-        
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_grey_300</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/black</item>
-        
+        <!-- Status bar color. -->
         <item name="android:statusBarColor" ns1:targetApi="l">?attr/colorPrimaryVariant</item>
-        
+        <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 </resources>

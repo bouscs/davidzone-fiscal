@@ -1,10 +1,27 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Android\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+            "outputFile": "C:\\Github\\davidzone-fiscal\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw600dp-v13\\values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Usuário\\.gradle\\caches\\transforms-3\\623c5a9512bd24064814f2ba228eb8f9\\transformed\\material-1.5.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\d678bd7e2d6979e047bec050078f5489\\transformed\\firebase-inappmessaging-display-20.1.2\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,128",
+                        "endColumns": "72,71",
+                        "endOffsets": "123,195"
+                    },
+                    "to": {
+                        "startLines": "19,20",
+                        "startColumns": "4,4",
+                        "startOffsets": "1173,1246",
+                        "endColumns": "72,71",
+                        "endOffsets": "1241,1313"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\76c69bef564ca0baac8b0db6d5cb6efd\\transformed\\material-1.5.0\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,10,11,12,13,14",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,24 +40,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Usuário\\.gradle\\caches\\transforms-3\\98d0126db1f131b212b8e392aad689de\\transformed\\firebase-inappmessaging-display-20.1.2\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,128",
-                        "endColumns": "72,71",
-                        "endOffsets": "123,195"
-                    },
-                    "to": {
-                        "startLines": "19,20",
-                        "startColumns": "4,4",
-                        "startOffsets": "1173,1246",
-                        "endColumns": "72,71",
-                        "endOffsets": "1241,1313"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Usuário\\.gradle\\caches\\transforms-3\\cdfeaf8fba4fbfe9bb38b1b1ac8c620d\\transformed\\appcompat-1.4.1\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
+                    "source": "C:\\Users\\João Ricardo\\.gradle\\caches\\transforms-3\\f99ff5fb10b679c8e861eff7bccc7e0f\\transformed\\appcompat-1.4.1\\res\\values-sw600dp-v13\\values-sw600dp-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
