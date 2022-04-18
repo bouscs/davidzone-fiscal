@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DavidZoneFiscal">
         <activity
+            android:name=".activities.GenericInsertResponse"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FunctionsGenericResponse"
+            android:exported="false" />
+        <activity
             android:name=".activities.CameraPreviewActivity"
             android:exported="false" />
         <activity

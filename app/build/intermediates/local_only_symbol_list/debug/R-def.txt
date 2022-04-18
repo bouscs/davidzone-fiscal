@@ -65,6 +65,7 @@ id tvTimeLeft
 id txtLayout
 layout activity_camera_preview
 layout activity_consultar
+layout activity_functions_generic_response
 layout activity_login
 layout activity_main
 layout activity_maps
