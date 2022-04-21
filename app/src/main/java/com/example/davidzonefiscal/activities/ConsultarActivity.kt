@@ -93,8 +93,12 @@ class ConsultarActivity : AppCompatActivity() {
                         val code = e.code
                         val details = e.details
                     }
-
                     Log.w(TAG, "consultarPlaca:onFailure", e)
+                    Snackbar.make(binding.etPlaca, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
+                        .setAction("Tente novamente") {
+                            onConsultarPlacaClicked()
+                        }
+                        .show()
                     return@OnCompleteListener
                 }
 

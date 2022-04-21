@@ -10,7 +10,9 @@
     <string name="vaga_inadequada">Vaga Inadequada</string>
     <string name="ticket_expirado">Ticket Expirado</string>
 
-
+    <string name="consultar_placa">Consultar Placa</string>
+    <string name="consultar">Consultar</string>
+    <string name="placa_hint">Digite a Placa</string>
 
 
 </resources>
