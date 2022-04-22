@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -21,14 +22,12 @@ import com.example.davidzonefiscal.databinding.ActivityTirarFotosBinding
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class TirarFotosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTirarFotosBinding
-    private var i = 0
-    private lateinit var photoFile: File
-    lateinit var currentPhotoPath: String
-    private val pictureFromCamera: Int = 1
+    private lateinit var image1: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,69 +35,19 @@ class TirarFotosActivity : AppCompatActivity() {
         binding = ActivityTirarFotosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*
+
         binding.btnStart.setOnClickListener {
             cameraProviderResult.launch(android.Manifest.permission.CAMERA)
-        }*/
-
-        binding.btnStart.setOnClickListener {
-            takePicture()
         }
+
+        getImages()
     }
 
-
-    private fun takePicture(){
-        val pictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        photoFile = createImageFile()
-        val uri = FileProvider.getUriForFile(this, "com.example.davidzonefiscal.fileprovider", photoFile)
-        pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        startActivityForResult(pictureIntent, pictureFromCamera)
-    }
-
-    private fun createImageFile(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_",
-            ".jpg",
-            storageDir
-        ).apply {
-            currentPhotoPath = absolutePath
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == pictureFromCamera) {
-                val uri = FileProvider.getUriForFile(
-                    this,
-                    "com.example.davidzonefiscal.fileprovider",
-                    photoFile
-                )
-                i++
-                when (i) {
-                    1 -> {
-                        binding.imgView1!!.setImageURI(uri)
-                        binding.tvCount.text = "1/4"
-                        binding.btnStart.text = "Próximo"
-                    }
-                    2 -> {
-                        binding.imgView2!!.setImageURI(uri)
-                        binding.tvCount.text = "2/4"
-                    }
-                    3 -> {
-                        binding.imgView3!!.setImageURI(uri)
-                        binding.tvCount.text = "3/4"
-                    }
-                    4 -> {
-                        binding.imgView4!!.setImageURI(uri)
-                        binding.tvCount.text = "4/4"
-                        binding.btnStart.text = "Enviar"
-                    }
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
+    private fun getImages() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            image1 = bundle.getString("picture1").toString()
+            binding.imgView1.setImageURI(image1.toUri())
         }
     }
 
