@@ -14,5 +14,9 @@
     <string name="consultar">Consultar</string>
     <string name="placa_hint">Digite a Placa</string>
 
+    <string name="tmp_rest">Tempo restante:  </string>
+    <string name="prox_pto">Ir para o próximo pto:  </string>
+
+
 
 </resources>

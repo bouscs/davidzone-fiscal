@@ -36,86 +36,130 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal"
                 android:layout_marginTop="30dp"
+                android:layout_marginBottom="25dp"
                 android:background="@drawable/arredondadoteste"
                 android:backgroundTint="?attr/colorPrimaryVariant"
-                android:layout_marginBottom="25dp">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvIniciarItinerario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tempo restante: "
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_margin="8dp"
                     android:layout_marginBottom="10dp"
+                    android:text="Iniciar Itinerario "
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     map:layout_constraintStart_toStartOf="parent"
                     map:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvTimeLeft"
+                    android:id="@+id/tvTempoRestante"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4:57"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="6dp"
+                    android:text="@string/tmp_rest"
                     android:textColor="@color/white"
-                    android:textSize="30sp"
+                    android:textSize="27sp"
+                    map:layout_constraintStart_toStartOf="parent"
+                    map:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/Timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="3dp"
+                    android:text="4:57"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
                     map:layout_constraintEnd_toEndOf="parent"
-                    map:layout_constraintTop_toTopOf="parent" />
+                    map:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnTimer"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/azultema"
+                    android:layout_margin="3dp"
+                    android:contentDescription="Buscar para registrar Irregularidade"
+                    app:maxImageSize="40dp"
+                    app:srcCompat="@drawable/ic_baseline_done_24"
+                    app:tint='@color/white'
+                    android:visibility="gone"/>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/btnNext"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/erro"
+                    android:layout_margin="3dp"
+                    android:contentDescription="Buscar para registrar Irregularidade"
+                    android:visibility="gone"
+                    app:maxImageSize="40dp"
+                    app:srcCompat="@drawable/ic_baseline_navigate_next_24"
+                    app:tint='@color/white' />
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/botoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="30dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
 
                     android:id="@+id/btnregistradireto"
-                    android:backgroundTint="@color/erro"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="30dp"
+                    android:backgroundTint="@color/erro"
                     android:contentDescription="Registrar Irregularidade"
-                    style="@style/Widget.Material3.Button"
-                    app:srcCompat="@drawable/ic_baseline_error_24"
-                    app:maxImageSize="40dp"
                     app:fabCustomSize="80dp"
-                    app:tint='?attr/colorPrimaryVariant' />
+                    app:maxImageSize="40dp"
+                    app:srcCompat="@drawable/ic_baseline_error_24"
+                    app:tint='?attr/colorPrimaryVariant'
+                    android:visibility="gone"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnItinerario"
-                    android:backgroundTint="@color/white"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:contentDescription="Ver Itinerario"
-                    style="@style/Widget.Material3.Button"
-                    app:srcCompat="@drawable/ic_baseline_location_on_24"
-                    app:maxImageSize="40dp"
                     app:fabCustomSize="80dp"
+                    app:maxImageSize="40dp"
+                    app:srcCompat="@drawable/ic_baseline_location_on_24"
                     app:tint='?attr/colorPrimaryVariant' />
 
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnConsultar"
-                    android:backgroundTint="@color/azultema"
+                    style="@style/Widget.Material3.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:backgroundTint="@color/azultema"
                     android:contentDescription="Buscar para registrar Irregularidade"
-                    style="@style/Widget.Material3.Button"
-                    app:srcCompat="@drawable/ic_baseline_search_24_2"
-                    app:maxImageSize="40dp"
                     app:fabCustomSize="80dp"
-                    app:tint='?attr/colorPrimaryVariant' />
-
+                    app:maxImageSize="40dp"
+                    app:srcCompat="@drawable/ic_baseline_search_24_2"
+                    app:tint='?attr/colorPrimaryVariant'
+                    android:visibility="gone"/>
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
