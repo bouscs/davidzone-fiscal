@@ -124,6 +124,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
                 binding.btnNext.visibility = View.GONE
                 binding.btnTimer.visibility = View.VISIBLE
+                binding.btnConsultar.visibility = View.GONE
+                binding.btnregistradireto.visibility = View.GONE
                 binding.Timer.visibility = View.VISIBLE
                 binding.tvTempoRestante.text = getString(R.string.tmp_rest)
                 marker.remove()
