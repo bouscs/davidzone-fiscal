@@ -1,6 +1,7 @@
 package com.example.davidzonefiscal.activities
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
 import com.example.davidzonefiscal.entities.Itinerario
+import com.example.davidzonefiscal.entities.Pontos
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.properties.Delegates
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
