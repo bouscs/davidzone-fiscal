@@ -27,7 +27,6 @@ import kotlin.collections.ArrayList
 class TirarFotosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTirarFotosBinding
-    private lateinit var image1: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +42,51 @@ class TirarFotosActivity : AppCompatActivity() {
         getImages()
     }
 
+    // função que recebe a ArrayList com as fotos tiradas
     private fun getImages() {
+
+        // recebe os "extras" da activity anterior
         val bundle = intent.extras
         if (bundle != null) {
-            image1 = bundle.getString("picture1").toString()
-            binding.imgView1.setImageURI(image1.toUri())
+            val images = bundle.getStringArrayList("picture1")
+
+            // mostrar progresso
+            binding.tvCount.text = ("${images?.size}/4")
+
+            // condicional para mudar texto do botão principal
+            when (images?.size) {
+                1, 2, 3 -> binding.btnStart.text = ("Próximo")
+                4 -> binding.btnStart.text = ("Enviar")
+            }
+
+            // colocar fotos recebidas nas imageViews
+            binding.imgView1.setImageURI(images?.get(0)?.toUri())
+            if (images?.size!! >= 2) {
+                binding.imgView2.setImageURI(images?.get(1)?.toUri())
+            }
+            if (images?.size!! >= 3) {
+                binding.imgView3.setImageURI(images?.get(2)?.toUri())
+            }
+            if (images?.size == 4) {
+                binding.imgView4.setImageURI(images?.get(3)?.toUri())
+            }
         }
     }
 
     private fun abrirPreview() {
         val intentStart = Intent(this@TirarFotosActivity, CameraPreviewActivity::class.java)
-        startActivity(intentStart)
+        val bundle = intent.extras
+
+        // enviar a ArrayList com as fotos para a proxima activity
+        if (bundle != null ) {
+            intentStart.putExtra("pictures", bundle.getStringArrayList("picture1"))
+        }
+
+        // envia para tela de sucesso caso ja tenha tirado 4 fotos
+        if ( bundle?.getStringArrayList("picture1")?.size == 4 ) {
+            val intentSend = Intent(this, IrregularidadeRegistrada::class.java)
+            startActivity(intentSend)
+        } else { startActivity(intentStart) }
     }
 
     private val cameraProviderResult =

@@ -3,8 +3,6 @@ package com.example.davidzonefiscal.activities
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.media.Image
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,15 +16,13 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityCameraPreviewBinding
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
 import java.lang.Exception
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.collections.ArrayList
 
 class CameraPreviewActivity : AppCompatActivity() {
 
@@ -89,7 +85,6 @@ class CameraPreviewActivity : AppCompatActivity() {
             val fileName = "FOTO_JPEG_${System.currentTimeMillis()}"
             val file = File(externalMediaDirs[0], fileName)
             val intentSuccess = Intent(this, TirarFotosActivity::class.java)
-            val bundle = intent.extras
 
             val outputFileOptions = ImageCapture.OutputFileOptions.Builder(file).build()
             it.takePicture(
@@ -98,7 +93,12 @@ class CameraPreviewActivity : AppCompatActivity() {
                 object: ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         Log.i("CameraPreview", "A imagem foi salva no diretório: ${file.toUri()}")
-                        intentSuccess.putExtra("picture1", file.toString())
+                        val arrayList = importArrayList()
+                        // adiciona foto tirada à ArrayList
+                        arrayList?.add(file.toString())
+
+                        // envia ArrayList para proxima activity
+                        intentSuccess.putExtra("picture1", arrayList)
                         startActivity(intentSuccess)
                     }
 
@@ -107,6 +107,16 @@ class CameraPreviewActivity : AppCompatActivity() {
                         Log.e("CameraPreview", "Exceção ao gravar arquivo da foto: $exception")
                     }
                 })
+        }
+    }
+
+    // importar ArrayList contendo as fotos já salvas, caso nao exista cria uma ArrayList vazia
+    private fun importArrayList(): ArrayList<String>? {
+        val bundle = intent.extras
+        if (bundle != null) {
+            return bundle.getStringArrayList("pictures")
+        } else {
+            return ArrayList()
         }
     }
 
