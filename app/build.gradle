@@ -46,7 +46,6 @@ android {
 }
 
 dependencies {
-
     // Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-inappmessaging-ktx'
@@ -63,13 +62,15 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-functions-ktx'
 
+    // Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
     //Gson - Lib Google JSON
     implementation 'com.google.code.gson:gson:2.8.9'
 
     // Google maps dependencies
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
     implementation 'com.google.android.gms:play-services-location:19.0.1'
-
 
     // Camera dependencies
     implementation 'androidx.camera:camera-camera2:1.1.0-beta02'
