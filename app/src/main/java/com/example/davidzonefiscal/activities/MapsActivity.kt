@@ -1,50 +1,77 @@
 package com.example.davidzonefiscal.activities
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Looper
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
 import com.example.davidzonefiscal.entities.Itinerario
-import com.example.davidzonefiscal.entities.Pontos
+import com.example.davidzonefiscal.entities.Logradouros
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlin.properties.Delegates
+import com.google.android.gms.maps.model.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.maps.android.PolyUtil
+import org.json.JSONObject
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
+    //variaveis de itinerario e localização
+    //*******************///FUNCTION PRA PEGAR DO BD///***********************
+    /// TODO: Integrar clouud functions
+    var itinerario = Itinerario(
+        Logradouros("R. Dna Amélia de Paula - Jardim Leonor",
+            LatLng(-22.922795035713108, -47.0600505551868),
+            LatLng(-22.92310628453413, -47.058097894565414),
+            LatLng(-22.922735745230273, -47.06178326071288)),
+
+        Logradouros("Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
+            LatLng(-22.83434768818629, -47.05089004881388),
+            LatLng(-22.834604787803247, -47.05212923151062),
+            LatLng(-22.834352644618864, -47.052606666596645)),
+
+        Logradouros("Rua São Luís do Paraitinga - Jardim do Trevo",
+            LatLng(-22.9260127049913, -47.07022138755717),
+            LatLng(-22.92398115477799, -47.06914812011016),
+            LatLng(-22.928908744150416, -47.07202666336667))
+
+    )
+    var logradouros = itinerario.logradouro1
+    var logradouroAtualNo = 0
+    var ptoAtual = logradouros.ponto
+    var ptoAtualNo = 0
+    var localizacaoAtual: LatLng? = null
+
+    //variaveis do mapa
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private lateinit var binding: ActivityMapsBinding
     private lateinit var marker: Marker
+    private lateinit var linha: Polyline
+    private lateinit var key: String
 
-    //todos os 9 pontos de um determinado itinerario
-    private lateinit var ptoAtual: LatLng
-    private lateinit var ptoAtualNo: Number
-    private lateinit var localizacaoAtual: LatLng
-
+    //constante usada na verificação da permissao de localizacao e atualização de localização
     private val LOCATION_PERMISSION = 1
-
-    //instancia de itinerario
-    private lateinit var itinerario: Itinerario
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,65 +88,78 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+        key = getString(R.string.directions_api_key)
 
         //botao iniciar itinerario
         binding.tvIniciarItinerario.setOnClickListener {
             //pegando os pontos do itinerario  (pega do bd mas nesse caso vou so usar qualquer coisa)
-            itinerario = Itinerario(
-                "Rua São Luís do Paraitinga - Jardim do Trevo",
-                LatLng(-22.9260127049913, -47.07022138755717),
-                LatLng(-22.928908744150416, -47.07202666336667),
-                LatLng(-22.92398115477799, -47.06914812011016)
-            )
+
             binding.tvIniciarItinerario.visibility = View.GONE
             binding.tvTempoRestante.visibility = View.VISIBLE
             binding.Timer.visibility = View.VISIBLE
             binding.botoes.visibility = View.VISIBLE
             binding.btnTimer.visibility = View.VISIBLE
-            ptoAtual = itinerario.ponto
-            ptoAtualNo = 0
-            marker = createMarker(ptoAtual)
-        }
 
-        //Botao do timer
-        binding.btnTimer.setOnClickListener{
-            if (getDistance(ptoAtual, localizacaoAtual)<=100){
-                binding.Timer.visibility = View.GONE
-                binding.btnTimer.visibility = View.GONE
-                binding.btnNext.visibility = View.VISIBLE
-                binding.btnregistradireto.visibility = View.VISIBLE
-                binding.btnConsultar.visibility = View.VISIBLE
-                binding.tvTempoRestante.text =  getString(R.string.prox_pto)
-            } else Toast.makeText(this, "Usuario não está no ponto designado!", Toast.LENGTH_LONG).show()
+            //mMap.clear()
+            marker = createMarker(ptoAtual, logradouros.rua)
+            //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
+
+            //Botao do timer
+            binding.btnTimer.setOnClickListener{
+                timerbotao(binding.btnTimer)
+                if (checadistancia()) {
+                    binding.Timer.visibility = View.GONE
+                    binding.btnTimer.visibility = View.GONE
+                    binding.btnNext.visibility = View.VISIBLE
+                    binding.btnregistradireto.visibility = View.VISIBLE
+                    binding.btnConsultar.visibility = View.VISIBLE
+                    binding.tvTempoRestante.text = getString(R.string.prox_pto)
+
+                    //mMap.clear()
+                    marker.remove()
+                    marker = createMarker(ptoAtual, logradouros.rua)
+                    //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
+
+                } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
 
         //Botao que define proximo pto
         binding.btnNext.setOnClickListener{
             val builder = AlertDialog.Builder(this)
             builder.setTitle("ATENÇÃO!")
-            builder.setMessage("Deseja ir para o proximo ponto do logradouro?")
+            builder.setMessage("Deseja ir para o proximo ponto do itinerário?")
             builder.setPositiveButton("Sim"){dialog, which ->
-                Toast.makeText(this,"Mudando para o próximo ponto.",Toast.LENGTH_SHORT).show()
                 //*********************************************************************** FAZER O NEGOCIO
                 when (ptoAtualNo) {
                     0 -> {
                         ptoAtualNo = 1
-                        ptoAtual = itinerario.ponto2
+                        ptoAtual = logradouros.ponto2
                     }
                     1 -> {
                         ptoAtualNo = -1
-                        ptoAtual = itinerario.ponto3
+                        ptoAtual = logradouros.ponto3
                     }
                     -1 -> {
                         ptoAtualNo = 0
-                        //********pega outro do bd**************
-                        itinerario = Itinerario(
-                            "Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
-                            LatLng(-22.83434768818629, -47.05089004881388),
-                            LatLng(-22.834352644618864, -47.052606666596645),
-                            LatLng(-22.834604787803247, -47.05212923151062)
-                        )
-                       ptoAtual = itinerario.ponto
+                        when (logradouroAtualNo) {
+                            0 -> {
+                                logradouroAtualNo = 1
+                                logradouros = itinerario.logradouro2
+                            }
+                            1 -> {
+                                logradouroAtualNo = -1
+                                logradouros = itinerario.logradouro3
+                            }
+                            -1 -> {
+                                //VOCE TERMINOU SEU ITINERARIO PARABENS BOA MANO
+                                Toast.makeText(this,"Você terminou seu expediente!!!",Toast.LENGTH_SHORT).show()
+                                finish();
+                                System.exit(0);
+                            }
+                        }
+                       ptoAtual = logradouros.ponto
                     }
                 }
                 binding.btnNext.visibility = View.GONE
@@ -128,8 +168,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.btnregistradireto.visibility = View.GONE
                 binding.Timer.visibility = View.VISIBLE
                 binding.tvTempoRestante.text = getString(R.string.tmp_rest)
+
+                //mMap.clear()
                 marker.remove()
-                marker = createMarker(ptoAtual)
+                marker = createMarker(ptoAtual, logradouros.rua)
+                //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
             }
             builder.setNeutralButton("Cancelar"){_,_ ->
                 Toast.makeText(this,"Você cancelou a ação.",Toast.LENGTH_SHORT).show()
@@ -155,13 +198,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Botão consultar itinerário.
         binding.btnItinerario.setOnClickListener {
+            timerbotao(binding.btnConsultar)
+            if(!bottomSheetFragmento.isAdded)
             bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
-            //val puc = LatLng(-22.834065, -47.052522)
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoAtual, 15f))
         }
     }
 
-    //funcoes para calcular distancias em 2 ptos da esfera terrestre
+    //função de timer pra botões pressionados
+    fun timerbotao(botao: FloatingActionButton)
+    {
+        val timer = object: CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                botao.setEnabled(false)
+            }
+            override fun onFinish() {
+                botao.setEnabled(true)
+            }
+        }
+        timer.start()
+    }
+
+
+    //funcoes para calcular distancias em 2 ptos da esfera terrestre (haversine formula)
+    //***************************************///TEM QUE ESTAR NO FUNCTIONS///************************************************
+    /// TODO: Colocar em clouud functions
    private fun rad(x: Double): Double {return x * kotlin.math.PI / 180}
     private fun getDistance(p1: LatLng, p2: LatLng): Double {
 
@@ -174,65 +235,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         var c = 2 * kotlin.math.atan2(kotlin.math.sqrt(a), kotlin.math.sqrt(1 - a))
         var d = r * c
         return d // retorna a distancia em metros
+    }
 
+    private fun checadistancia(): Boolean{
+       if (localizacaoAtual!=null) return getDistance(ptoAtual, localizacaoAtual!!)<=100
+        else return false
     }
 
 
     //Coisas do mapa
-    //*******************************
-    //consegue acesso a localizacao
-    private fun getLocAccess() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.isMyLocationEnabled = true
-            getLocationUpdates()
-            startLocationUpdates()
-        }
-        else
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
-    }
-
-    //usa o mylocation se permitida a utilizacao do gps
-    @SuppressLint("MissingPermission")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == LOCATION_PERMISSION) {
-            if (grantResults.contains(PackageManager.PERMISSION_GRANTED)) {
-                mMap.isMyLocationEnabled = true
-            }
-            else {
-                Toast.makeText(this, "Usuario não permitiu o uso do GPS", Toast.LENGTH_LONG).show()
-                finish()
-            }
-        }
-    }
-
-    private fun getLocationUpdates() {
-        locationRequest = LocationRequest.create().apply {
-            interval = 100
-            fastestInterval = 50
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime= 100
-        }
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                if (locationResult.locations.isNotEmpty()) {
-                    val location = locationResult.lastLocation
-                    if (location != null) {
-                        localizacaoAtual = LatLng(location.latitude, location.longitude)
-                    }
-                }
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-            locationCallback,
-            Looper.getMainLooper())
-    }
-
+    //*********************************************************************************************
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -244,7 +256,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-22.910002734059237, -47.06436548707138),9f))
+        val ptoDefault = LatLng(-22.910002734059237, -47.06436548707138)
+        //localizacaoAtual = ptoDefault
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault,9f))
         getLocAccess()
         //val puc = LatLng(-22.834065, -47.052522)
         //mMap.addMarker(MarkerOptions().position(ptoAtual).title("Marker in PUC"))
@@ -252,14 +266,78 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
-    private fun createMarker(pto: LatLng): Marker {
-        val marker: Marker = mMap.addMarker(MarkerOptions().position(pto).title("Ponto atual"))!!
+    //consegue acesso a localizacao
+    private fun getLocAccess() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.isMyLocationEnabled = true
+            getLocationUpdates()
+            startLocationUpdates()
+        }
+        else
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
+    }
+
+  private fun getLocationUpdates() {
+        locationRequest = LocationRequest.create().apply {
+            interval = 1000
+            fastestInterval = 500
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+            maxWaitTime= 1000
+        }
+
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                if (locationResult.locations.isNotEmpty()) {
+                    val location = locationResult.lastLocation
+                    localizacaoAtual = LatLng(location.latitude, location.longitude)
+                }
+            }
+        }
+    }
+
+   @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
+    }
+
+
+    //elementos no mapa
+    private fun createMarker(pto: LatLng, string: String): Marker {
+        val marker: Marker = mMap.addMarker(MarkerOptions().position(pto).title(string))!!
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pto,15f))
         return marker
     }
 
 
+    /// TODO: Implementar funcionalidade de gps
+    private fun getDirection(origem: LatLng, destino: LatLng): String {
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origem.latitude},${origem.longitude}&destination=${destino.latitude},${destino.longitude}&key=${key}"
+    }
 
-
+    private fun getDirectionLine(string: String) {
+        val path: MutableList<List<LatLng>> = ArrayList()
+        val urlDirections = string
+        val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
+                response ->
+            val jsonResponse = JSONObject(response)
+            // Get routes
+            val routes = jsonResponse.getJSONArray("routes")
+            val legs = routes.getJSONObject(0).getJSONArray("legs")
+            val steps = legs.getJSONObject(0).getJSONArray("steps")
+            for (i in 0 until steps.length()) {
+                val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                path.add(PolyUtil.decode(points))
+            }
+            for (i in 0 until path.size) {
+                linha = this.mMap!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+            }
+        }, Response.ErrorListener {
+                _ ->
+        }){}
+        val requestQueue = Volley.newRequestQueue(this)
+        requestQueue.add(directionsRequest)
+    }
 
 }
