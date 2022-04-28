@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -86,14 +85,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private lateinit var marker: Marker
-    private lateinit var linha: PolylineOptions
     private lateinit var key: String
-    private var polylines: MutableList<Polyline>? = null
 
+    private val linhas: MutableList<Polyline> = mutableListOf()
 
     //constante usada na verificação da permissao de localizacao e atualização de localização
     private val LOCATION_PERMISSION = 1
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -293,7 +290,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         val code = e.code
                         val details = e.details
                     }
-                    Log.w("aaaaaaaa", "consultarPlaca:onFailure", e)
                     Snackbar.make(
                         binding.tvTempoRestante,
                         "Erro no servidor. Se o problema persistir ligue 0800-000-0000",
@@ -309,12 +305,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val result = task.result
 
                 val genericConsultRes = gson.fromJson(result, GenericFunctionResponse::class.java)
-                Log.d("aaaaaaaa", genericConsultRes.toString())
 
                 val message = genericConsultRes.resultConsult.message
                 val status = genericConsultRes.resultConsult.status
-                Log.d("aaaaaaaa", message)
-                Log.d("aaaaaaaa", status)
 
                 if (status == "SUCCESS") {
                     val successResponse =
@@ -386,7 +379,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     localizacaoAtual = LatLng(location.latitude, location.longitude)
-                    //getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
+                    getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
                 }
             }
         }
@@ -409,7 +402,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         return marker
     }
 
-    /*
+
+
+
     /// TODO: Implementar funcionalidade de gps
     private fun getDirection(origem: LatLng, destino: LatLng): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origem.latitude},${origem.longitude}&destination=${destino.latitude},${destino.longitude}&key=${key}"
@@ -430,12 +425,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         steps.getJSONObject(i).getJSONObject("polyline").getString("points")
                     path.add(PolyUtil.decode(points))
                 }
+
+                for (i in 0 until linhas.size) {
+                    linhas[i].remove()
+                }
+
+                linhas.clear()
+
                 for (i in 0 until path.size) {
-                    this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                    linhas.add(this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED)))
                 }
             }, Response.ErrorListener { _ ->
             }) {}
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(directionsRequest)
-    }*/
+    }
 }
