@@ -122,7 +122,6 @@ class ConsultarActivity : AppCompatActivity() {
                         startActivity(intentConsult)
                     } else {
                         val intentConsultNotValid = Intent(this@ConsultarActivity, ResultadoNoTicketActivity::class.java)
-                        intentConsultNotValid.putExtra("consultaData",placa)
                         startActivity(intentConsultNotValid)
                     }
                 } else {
