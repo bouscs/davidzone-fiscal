@@ -56,5 +56,17 @@
         android:textSize="18sp"
         android:layout_marginTop="15dp"
         />
+    <TextView
+        android:id="@+id/tvErro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ative a permissão de localização nas configurações do seu celular!"
+        android:textColor="@color/erro"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:layout_marginTop="15dp"
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

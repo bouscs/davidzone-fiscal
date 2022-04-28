@@ -7,16 +7,25 @@ import android.os.Bundle
 import android.os.Handler
 import com.example.davidzonefiscal.R
 import android.content.pm.PackageManager
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.davidzonefiscal.databinding.ActivityMainBinding
+import com.example.davidzonefiscal.databinding.ActivityMapsBinding
+
+private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         supportActionBar?.hide()
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         if (ContextCompat.checkSelfPermission(this@MainActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION) !==
@@ -55,7 +64,8 @@ class MainActivity : AppCompatActivity() {
                         startMapActivity()
                     }
                 } else {
-                    Toast.makeText(this, "Usuário não permitiu o compartilhamento de localização!!!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "O usuário não permitiu o uso do GPS!", Toast.LENGTH_SHORT).show()
+                    binding.tvErro.visibility = View.VISIBLE
                 }
                 return
             }

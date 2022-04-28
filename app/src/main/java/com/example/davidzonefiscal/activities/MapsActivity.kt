@@ -7,8 +7,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Looper
+import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
+import com.example.davidzonefiscal.entities.EnviarLocalizacaoResponse
 import com.example.davidzonefiscal.entities.Itinerario
 import com.example.davidzonefiscal.entities.Logradouros
 import com.google.android.gms.location.*
@@ -28,30 +29,49 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
+import com.google.gson.GsonBuilder
 import com.google.maps.android.PolyUtil
 import org.json.JSONObject
 
+
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var binding: ActivityMapsBinding
+    private lateinit var functions: FirebaseFunctions
+    private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
 
     //variaveis de itinerario e localização
     //*******************///FUNCTION PRA PEGAR DO BD///***********************
     /// TODO: Integrar clouud functions
     var itinerario = Itinerario(
-        Logradouros("R. Dna Amélia de Paula - Jardim Leonor",
+        Logradouros(
+            "R. Dna Amélia de Paula - Jardim Leonor",
             LatLng(-22.922795035713108, -47.0600505551868),
             LatLng(-22.92310628453413, -47.058097894565414),
-            LatLng(-22.922735745230273, -47.06178326071288)),
+            LatLng(-22.922735745230273, -47.06178326071288)
+        ),
 
-        Logradouros("Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
+        Logradouros(
+            "Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
             LatLng(-22.83434768818629, -47.05089004881388),
             LatLng(-22.834604787803247, -47.05212923151062),
-            LatLng(-22.834352644618864, -47.052606666596645)),
+            LatLng(-22.834352644618864, -47.052606666596645)
+        ),
 
-        Logradouros("Rua São Luís do Paraitinga - Jardim do Trevo",
+        Logradouros(
+            "Rua São Luís do Paraitinga - Jardim do Trevo",
             LatLng(-22.9260127049913, -47.07022138755717),
             LatLng(-22.92398115477799, -47.06914812011016),
-            LatLng(-22.928908744150416, -47.07202666336667))
+            LatLng(-22.928908744150416, -47.07202666336667)
+        )
 
     )
     var logradouros = itinerario.logradouro1
@@ -65,10 +85,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
-    private lateinit var binding: ActivityMapsBinding
     private lateinit var marker: Marker
-    private lateinit var linha: Polyline
+    private lateinit var linha: PolylineOptions
     private lateinit var key: String
+    private var polylines: MutableList<Polyline>? = null
+
 
     //constante usada na verificação da permissao de localizacao e atualização de localização
     private val LOCATION_PERMISSION = 1
@@ -80,6 +101,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val bottomSheetFragmento = BottomSheetFragmento()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        functions = Firebase.functions("southamerica-east1")
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used. e outras coisas do maps
         val mapFragment = supportFragmentManager
@@ -94,6 +117,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.tvIniciarItinerario.setOnClickListener {
             //pegando os pontos do itinerario  (pega do bd mas nesse caso vou so usar qualquer coisa)
 
+
             binding.tvIniciarItinerario.visibility = View.GONE
             binding.tvTempoRestante.visibility = View.VISIBLE
             binding.Timer.visibility = View.VISIBLE
@@ -104,33 +128,25 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             marker = createMarker(ptoAtual, logradouros.rua)
             //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
 
+
             //Botao do timer
-            binding.btnTimer.setOnClickListener{
+            binding.btnTimer.setOnClickListener {
                 timerbotao(binding.btnTimer)
-                if (checadistancia()) {
-                    binding.Timer.visibility = View.GONE
-                    binding.btnTimer.visibility = View.GONE
-                    binding.btnNext.visibility = View.VISIBLE
-                    binding.btnregistradireto.visibility = View.VISIBLE
-                    binding.btnConsultar.visibility = View.VISIBLE
-                    binding.tvTempoRestante.text = getString(R.string.prox_pto)
-
-                    //mMap.clear()
-                    marker.remove()
-                    marker = createMarker(ptoAtual, logradouros.rua)
-                    //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
-
-                } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
-                    .show()
+                localizacaoAtual?.let { it1 ->
+                    pegaDistancia(
+                        ptoAtual,
+                        it1
+                    )
+                }
             }
         }
 
         //Botao que define proximo pto
-        binding.btnNext.setOnClickListener{
+        binding.btnNext.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("ATENÇÃO!")
             builder.setMessage("Deseja ir para o proximo ponto do itinerário?")
-            builder.setPositiveButton("Sim"){dialog, which ->
+            builder.setPositiveButton("Sim") { dialog, which ->
                 //*********************************************************************** FAZER O NEGOCIO
                 when (ptoAtualNo) {
                     0 -> {
@@ -154,12 +170,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             }
                             -1 -> {
                                 //VOCE TERMINOU SEU ITINERARIO PARABENS BOA MANO
-                                Toast.makeText(this,"Você terminou seu expediente!!!",Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    this,
+                                    "Você terminou seu expediente!!!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 finish();
                                 System.exit(0);
                             }
                         }
-                       ptoAtual = logradouros.ponto
+                        ptoAtual = logradouros.ponto
                     }
                 }
                 binding.btnNext.visibility = View.GONE
@@ -174,8 +194,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 marker = createMarker(ptoAtual, logradouros.rua)
                 //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
             }
-            builder.setNeutralButton("Cancelar"){_,_ ->
-                Toast.makeText(this,"Você cancelou a ação.",Toast.LENGTH_SHORT).show()
+            builder.setNeutralButton("Cancelar") { _, _ ->
+                Toast.makeText(this, "Você cancelou a ação.", Toast.LENGTH_SHORT).show()
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
@@ -185,13 +205,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         // Botão regsitrar irregularidade diretamente.
-        binding.btnregistradireto.setOnClickListener{
-            val intentRegistroIrregularidadeActivity = Intent(this@MapsActivity, SelecionarIrregularidadeActivity::class.java)
+        binding.btnregistradireto.setOnClickListener {
+            val intentRegistroIrregularidadeActivity =
+                Intent(this@MapsActivity, SelecionarIrregularidadeActivity::class.java)
             startActivity(intentRegistroIrregularidadeActivity)
         }
 
         // Botão consultar placa.
-        binding.btnConsultar.setOnClickListener{
+        binding.btnConsultar.setOnClickListener {
             val intentConsult = Intent(this@MapsActivity, ConsultarActivity::class.java)
             startActivity(intentConsult)
         }
@@ -199,19 +220,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Botão consultar itinerário.
         binding.btnItinerario.setOnClickListener {
             timerbotao(binding.btnConsultar)
-            if(!bottomSheetFragmento.isAdded)
-            bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
+            if (!bottomSheetFragmento.isAdded)
+                bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoAtual, 15f))
         }
     }
 
+    fun updateUITimer(distance: Double) {
+        if (distance <= 100) {
+            binding.Timer.visibility = View.GONE
+            binding.btnTimer.visibility = View.GONE
+            binding.btnNext.visibility = View.VISIBLE
+            binding.btnregistradireto.visibility = View.VISIBLE
+            binding.btnConsultar.visibility = View.VISIBLE
+            binding.tvTempoRestante.text = getString(R.string.prox_pto)
+
+            //mMap.clear()
+            marker.remove()
+            marker = createMarker(ptoAtual, logradouros.rua)
+            //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
+
+        } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
+            .show()
+    }
+
     //função de timer pra botões pressionados
-    fun timerbotao(botao: FloatingActionButton)
-    {
-        val timer = object: CountDownTimer(5000, 1000) {
+    fun timerbotao(botao: FloatingActionButton) {
+        val timer = object : CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 botao.setEnabled(false)
             }
+
             override fun onFinish() {
                 botao.setEnabled(true)
             }
@@ -223,23 +262,73 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     //funcoes para calcular distancias em 2 ptos da esfera terrestre (haversine formula)
     //***************************************///TEM QUE ESTAR NO FUNCTIONS///************************************************
     /// TODO: Colocar em clouud functions
-   private fun rad(x: Double): Double {return x * kotlin.math.PI / 180}
-    private fun getDistance(p1: LatLng, p2: LatLng): Double {
-
-        var r = 6378137; // Raio da Terra
-        var dLat = rad(p2.latitude - p1.latitude)
-        var dLong = rad(p2.longitude - p1.longitude)
-        var a = kotlin.math.sin(dLat / 2) * kotlin.math.sin(dLat / 2) +
-                kotlin.math.cos(rad(p1.latitude)) * kotlin.math.cos(rad(p2.latitude)) *
-                kotlin.math.sin(dLong / 2) * kotlin.math.sin(dLong / 2)
-        var c = 2 * kotlin.math.atan2(kotlin.math.sqrt(a), kotlin.math.sqrt(1 - a))
-        var d = r * c
-        return d // retorna a distancia em metros
+    private fun callEnviarLocalizacao(pto1: LatLng, pto2: LatLng): Task<String> {
+        val data = hashMapOf(
+            "localizacao" to hashMapOf(
+                "lat" to (pto1?.latitude ?: 0),
+                "long" to (pto1?.longitude ?: 0)
+            ),
+            "pontoItinerario" to hashMapOf(
+                "lat" to pto2?.latitude,
+                "long" to pto2?.longitude
+            ),
+            "uid" to "a"
+        )
+        return functions
+            .getHttpsCallable("enviarLocalizacao")
+            .call(data)
+            .continueWith { task ->
+                val result = gson.toJson(task.result?.data)
+                result
+            }
     }
 
-    private fun checadistancia(): Boolean{
-       if (localizacaoAtual!=null) return getDistance(ptoAtual, localizacaoAtual!!)<=100
-        else return false
+    private fun pegaDistancia(pto1: LatLng, pto2: LatLng) {
+
+        callEnviarLocalizacao(pto1, pto2)
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    val e = task.exception
+                    if (e is FirebaseFunctionsException) {
+                        val code = e.code
+                        val details = e.details
+                    }
+                    Log.w("aaaaaaaa", "consultarPlaca:onFailure", e)
+                    Snackbar.make(
+                        binding.tvTempoRestante,
+                        "Erro no servidor. Se o problema persistir ligue 0800-000-0000",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction("Tente novamente") {
+                            pegaDistancia(pto1, pto2)
+                        }
+                        .show()
+                    return@OnCompleteListener
+                }
+
+                val result = task.result
+
+                val genericConsultRes = gson.fromJson(result, GenericFunctionResponse::class.java)
+                Log.d("aaaaaaaa", genericConsultRes.toString())
+
+                val message = genericConsultRes.resultConsult.message
+                val status = genericConsultRes.resultConsult.status
+                Log.d("aaaaaaaa", message)
+                Log.d("aaaaaaaa", status)
+
+                if (status == "SUCCESS") {
+                    val successResponse =
+                        gson.fromJson(result, EnviarLocalizacaoResponse::class.java)
+                    val distancia = successResponse.result.payload.distanciaKm * 1000
+                    val desvio = successResponse.result.payload.desvio
+                    Log.d("aaaaaaaa", distancia.toString())
+
+                    updateUITimer(distancia)
+
+                } else {
+
+                }
+            })
     }
 
 
@@ -258,7 +347,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         val ptoDefault = LatLng(-22.910002734059237, -47.06436548707138)
         //localizacaoAtual = ptoDefault
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault,9f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault, 9f))
         getLocAccess()
         //val puc = LatLng(-22.834065, -47.052522)
         //mMap.addMarker(MarkerOptions().position(ptoAtual).title("Marker in PUC"))
@@ -268,21 +357,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     //consegue acesso a localizacao
     private fun getLocAccess() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             mMap.isMyLocationEnabled = true
             getLocationUpdates()
             startLocationUpdates()
-        }
-        else
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION)
+        } else
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION
+            )
     }
 
-  private fun getLocationUpdates() {
+    private fun getLocationUpdates() {
         locationRequest = LocationRequest.create().apply {
             interval = 1000
             fastestInterval = 500
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime= 1000
+            maxWaitTime = 1000
         }
 
         locationCallback = object : LocationCallback() {
@@ -290,27 +386,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     localizacaoAtual = LatLng(location.latitude, location.longitude)
+                    //getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
                 }
             }
         }
     }
 
-   @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(locationRequest,
+        fusedLocationClient.requestLocationUpdates(
+            locationRequest,
             locationCallback,
-            Looper.getMainLooper())
+            Looper.getMainLooper()
+        )
     }
 
 
     //elementos no mapa
     private fun createMarker(pto: LatLng, string: String): Marker {
         val marker: Marker = mMap.addMarker(MarkerOptions().position(pto).title(string))!!
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pto,15f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pto, 15f))
         return marker
     }
 
-
+    /*
     /// TODO: Implementar funcionalidade de gps
     private fun getDirection(origem: LatLng, destino: LatLng): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origem.latitude},${origem.longitude}&destination=${destino.latitude},${destino.longitude}&key=${key}"
@@ -319,25 +418,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getDirectionLine(string: String) {
         val path: MutableList<List<LatLng>> = ArrayList()
         val urlDirections = string
-        val directionsRequest = object : StringRequest(Request.Method.GET, urlDirections, Response.Listener<String> {
-                response ->
-            val jsonResponse = JSONObject(response)
-            // Get routes
-            val routes = jsonResponse.getJSONArray("routes")
-            val legs = routes.getJSONObject(0).getJSONArray("legs")
-            val steps = legs.getJSONObject(0).getJSONArray("steps")
-            for (i in 0 until steps.length()) {
-                val points = steps.getJSONObject(i).getJSONObject("polyline").getString("points")
-                path.add(PolyUtil.decode(points))
-            }
-            for (i in 0 until path.size) {
-                linha = this.mMap!!.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
-            }
-        }, Response.ErrorListener {
-                _ ->
-        }){}
+        val directionsRequest = object :
+            StringRequest(Method.GET, urlDirections, Response.Listener<String> { response ->
+                val jsonResponse = JSONObject(response)
+                // Get routes
+                val routes = jsonResponse.getJSONArray("routes")
+                val legs = routes.getJSONObject(0).getJSONArray("legs")
+                val steps = legs.getJSONObject(0).getJSONArray("steps")
+                for (i in 0 until steps.length()) {
+                    val points =
+                        steps.getJSONObject(i).getJSONObject("polyline").getString("points")
+                    path.add(PolyUtil.decode(points))
+                }
+                for (i in 0 until path.size) {
+                    this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED))
+                }
+            }, Response.ErrorListener { _ ->
+            }) {}
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(directionsRequest)
-    }
-
+    }*/
 }
