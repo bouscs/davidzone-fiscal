@@ -29,55 +29,37 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
-import com.google.firebase.functions.ktx.functions
-import com.google.firebase.ktx.Firebase
-import com.google.gson.GsonBuilder
 import com.google.maps.android.PolyUtil
 import org.json.JSONObject
 
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Tasks
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.ktx.functions
+import com.google.firebase.ktx.Firebase
+import com.google.gson.GsonBuilder
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private lateinit var binding: ActivityMapsBinding
+
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    private val logEntry = "MAPS_ITINERARIO";
 
-    //variaveis de itinerario e localização
-    //*******************///FUNCTION PRA PEGAR DO BD///***********************
-    /// TODO: Integrar clouud functions
-    var itinerario = Itinerario(
-        Logradouros(
-            "R. Dna Amélia de Paula - Jardim Leonor",
-            LatLng(-22.922795035713108, -47.0600505551868),
-            LatLng(-22.92310628453413, -47.058097894565414),
-            LatLng(-22.922735745230273, -47.06178326071288)
-        ),
 
-        Logradouros(
-            "Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
-            LatLng(-22.83434768818629, -47.05089004881388),
-            LatLng(-22.834604787803247, -47.05212923151062),
-            LatLng(-22.834352644618864, -47.052606666596645)
-        ),
+    // variaveis de itinerario e localização
+    // FUNCTION PRA PEGAR DO BD
+    // TODO: Integrar clound functions
+    lateinit var itinerario : Itinerario
+    lateinit var logradouros : Logradouros
+    lateinit var logradouroAtualNo : Number
+    lateinit var ptoAtual : LatLng
+    lateinit var ptoAtualNo : Number
 
-        Logradouros(
-            "Rua São Luís do Paraitinga - Jardim do Trevo",
-            LatLng(-22.9260127049913, -47.07022138755717),
-            LatLng(-22.92398115477799, -47.06914812011016),
-            LatLng(-22.928908744150416, -47.07202666336667)
-        )
-
-    )
-    var logradouros = itinerario.logradouro1
-    var logradouroAtualNo = 0
-    var ptoAtual = logradouros.ponto
-    var ptoAtualNo = 0
     var localizacaoAtual: LatLng? = null
 
     //variaveis do mapa
@@ -98,11 +80,37 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        functions = Firebase.functions("southamerica-east1")
+
+        itinerario = Itinerario(
+            Logradouros("R. Dna Amélia de Paula - Jardim Leonor",
+                LatLng(-22.922795035713108, -47.0600505551868),
+                LatLng(-22.92310628453413, -47.058097894565414),
+                LatLng(-22.922735745230273, -47.06178326071288)),
+
+            Logradouros("Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
+                LatLng(-22.83434768818629, -47.05089004881388),
+                LatLng(-22.834604787803247, -47.05212923151062),
+                LatLng(-22.834352644618864, -47.052606666596645)),
+
+            Logradouros("Rua São Luís do Paraitinga - Jardim do Trevo",
+                LatLng(-22.9260127049913, -47.07022138755717),
+                LatLng(-22.92398115477799, -47.06914812011016),
+                LatLng(-22.928908744150416, -47.07202666336667))
+        )
+
+        // onGetItinerarioLoad()
+        // aparentemente latinit vars não pode ser inicializado dentro de uma função, deve ser feito no body da classe
+
         val bottomSheetFragmento = BottomSheetFragmento()
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         functions = Firebase.functions("southamerica-east1")
+        logradouros = itinerario.logradouro1
+        logradouroAtualNo = 0
+        ptoAtual = logradouros.ponto
+        ptoAtualNo = 0
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used. e outras coisas do maps
         val mapFragment = supportFragmentManager
@@ -220,7 +228,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Botão consultar itinerário.
         binding.btnItinerario.setOnClickListener {
             timerbotao(binding.btnConsultar)
-            if (!bottomSheetFragmento.isAdded)
+            if(!bottomSheetFragmento.isAdded)
                 bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoAtual, 15f))
         }
@@ -242,6 +250,57 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
             .show()
+    private fun getItinerario (slug: String): Task<String>  {
+        val data = hashMapOf(
+            "slug" to slug
+        )
+        return functions
+            .getHttpsCallable("getItinerario")
+            .call(data)
+            .continueWith { task ->
+                val result = gson.toJson(task.result?.data)
+                result
+            }
+    }
+
+    private fun onGetItinerarioLoad() {
+        val slug = "itinerario1"
+
+        getItinerario (slug)
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    val e = task.exception
+                    if (e is FirebaseFunctionsException) {
+                        val code = e.code
+                        val details = e.details
+                    }
+                    Log.w(logEntry, "getItinerario:onFailure", e)
+                    Snackbar.make(binding.root, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG).show()
+                    return@OnCompleteListener
+                }
+
+                val result = task.result
+                val getItinerarioRes = gson.fromJson(result, GetItinerarioResponse::class.java)
+
+                itinerario = Itinerario(
+                    Logradouros(getItinerarioRes.result.payload.itinerario.logradouros[0].nome,
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[0]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[1]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[2]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[0]._longitude)),
+
+                    Logradouros(getItinerarioRes.result.payload.itinerario.logradouros[1].nome,
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[0]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[1]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[2]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[0]._longitude)),
+
+                    Logradouros(getItinerarioRes.result.payload.itinerario.logradouros[2].nome,
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[0]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[0].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[1]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[1].pontos[0]._longitude),
+                        LatLng(getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[2]._latitude, getItinerarioRes.result.payload.itinerario.logradouros[2].pontos[0]._longitude)),
+                )
+
+                return@OnCompleteListener
+            })
     }
 
     //função de timer pra botões pressionados

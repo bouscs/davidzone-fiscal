@@ -14,3 +14,4 @@
 .cxx
 local.properties
 app/src/main/res/values/Config.xml
+app/src/main/res/values/map_api.xml

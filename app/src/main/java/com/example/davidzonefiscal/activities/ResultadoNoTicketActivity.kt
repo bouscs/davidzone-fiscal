@@ -17,6 +17,10 @@ class ResultadoNoTicketActivity : AppCompatActivity() {
         binding = ActivityResultadoConsultaIrregularBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var placa: String? = intent.getStringExtra("consultaData")
+
+        binding.etPlaca.text = placa?.uppercase()
+
         binding.btnIrregularidade.setOnClickListener{
             val intentRegistrar = Intent(this@ResultadoNoTicketActivity, SelecionarIrregularidadeActivity::class.java)
             startActivity(intentRegistrar)
