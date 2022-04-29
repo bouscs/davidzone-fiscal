@@ -23,10 +23,7 @@ import com.example.davidzonefiscal.entities.EnviarLocalizacaoResponse
 import com.example.davidzonefiscal.entities.Itinerario
 import com.example.davidzonefiscal.entities.Logradouros
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -78,6 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var ptoAtual = logradouros.ponto
     var ptoAtualNo = 0
     var localizacaoAtual: LatLng? = null
+    var itinerarioPressed = 0
 
     //variaveis do mapa
     private lateinit var mMap: GoogleMap
@@ -114,6 +112,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.tvIniciarItinerario.setOnClickListener {
             //pegando os pontos do itinerario  (pega do bd mas nesse caso vou so usar qualquer coisa)
 
+            itinerarioPressed = 1
 
             binding.tvIniciarItinerario.visibility = View.GONE
             binding.tvTempoRestante.visibility = View.VISIBLE
@@ -318,8 +317,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     updateUITimer(distancia)
 
-                } else {
-
                 }
             })
     }
@@ -338,6 +335,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.uiSettings.isZoomControlsEnabled = true
         val ptoDefault = LatLng(-22.910002734059237, -47.06436548707138)
         //localizacaoAtual = ptoDefault
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault, 9f))
@@ -368,10 +366,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getLocationUpdates() {
         locationRequest = LocationRequest.create().apply {
-            interval = 1000
-            fastestInterval = 500
+            interval = 100
+            fastestInterval = 50
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            maxWaitTime = 1000
+            maxWaitTime = 100
         }
 
         locationCallback = object : LocationCallback() {
@@ -379,7 +377,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     localizacaoAtual = LatLng(location.latitude, location.longitude)
-                    getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
+                    if (itinerarioPressed == 1) getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
                 }
             }
         }
