@@ -36,6 +36,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
 import com.google.maps.android.PolyUtil
 import org.json.JSONObject
+import kotlin.system.exitProcess
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -171,8 +172,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     "Você terminou seu expediente!!!",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                finish();
-                                System.exit(0);
+                                finish()
+                                exitProcess(0)
                             }
                         }
                         ptoAtual = logradouros.ponto
@@ -222,7 +223,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun updateUITimer(distance: Double) {
+    private fun updateUITimer(distance: Double) {
         if (distance <= 100) {
             binding.Timer.visibility = View.GONE
             binding.btnTimer.visibility = View.GONE
@@ -241,7 +242,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     //função de timer pra botões pressionados
-    fun timerbotao(botao: FloatingActionButton) {
+    private fun timerbotao(botao: FloatingActionButton) {
         val timer = object : CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 botao.setEnabled(false)
@@ -261,12 +262,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun callEnviarLocalizacao(pto1: LatLng, pto2: LatLng): Task<String> {
         val data = hashMapOf(
             "localizacao" to hashMapOf(
-                "lat" to (pto1?.latitude ?: 0),
-                "long" to (pto1?.longitude ?: 0)
+                "lat" to pto1.latitude,
+                "long" to pto1.longitude
             ),
             "pontoItinerario" to hashMapOf(
-                "lat" to pto2?.latitude,
-                "long" to pto2?.longitude
+                "lat" to pto2.latitude,
+                "long" to pto2.longitude
             ),
             "uid" to "a"
         )
@@ -364,6 +365,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             )
     }
 
+    //consegue updates de localização no tempo definido
     private fun getLocationUpdates() {
         locationRequest = LocationRequest.create().apply {
             interval = 100
@@ -394,6 +396,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
     //elementos no mapa
+    //marker
     private fun createMarker(pto: LatLng, string: String): Marker {
         val marker: Marker = mMap.addMarker(MarkerOptions().position(pto).title(string))!!
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pto, 15f))
@@ -401,9 +404,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-
-
-    /// TODO: Implementar funcionalidade de gps
+    //funcionalidade de gps
     private fun getDirection(origem: LatLng, destino: LatLng): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origem.latitude},${origem.longitude}&destination=${destino.latitude},${destino.longitude}&key=${key}"
     }
