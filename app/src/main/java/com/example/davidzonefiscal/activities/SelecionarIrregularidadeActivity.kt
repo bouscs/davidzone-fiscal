@@ -32,6 +32,17 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
             hideKeyboard()
             if (binding.radioGroup.checkedRadioButtonId!=View.NO_ID){
                 val intentTirarFotos = Intent(this, TirarFotosActivity::class.java)
+
+                intentTirarFotos.putExtra("placa", binding.etPlaca.toString())
+
+                if (binding.radio1.isChecked) {
+                    val tipo = 1
+                    intentTirarFotos.putExtra("tipo", tipo)
+                }
+                if (binding.radio2.isChecked) {
+                    val tipo = 2
+                    intentTirarFotos.putExtra("tipo", tipo)
+                }
                 startActivity(intentTirarFotos)
             } else {
                 Snackbar.make(binding.tvIrregularidade, "Selecione uma opção", Snackbar.LENGTH_LONG).show()
@@ -40,17 +51,16 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
 
     }
 
-
     // Funções para esconder o teclado
     fun Fragment.hideKeyboard() {
         view?.let { activity?.hideKeyboard(it) }
     }
 
-    fun Activity.hideKeyboard() {
+    private fun Activity.hideKeyboard() {
         hideKeyboard(currentFocus ?: View(this))
     }
 
-    fun Context.hideKeyboard(view: View) {
+    private fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }

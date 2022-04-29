@@ -98,7 +98,7 @@ class CameraPreviewActivity : AppCompatActivity() {
                         arrayList?.add(file.toString())
 
                         // envia ArrayList para proxima activity
-                        intentSuccess.putExtra("picture1", arrayList)
+                        intentSuccess.putExtra("picturesFromPreview", arrayList)
                         startActivity(intentSuccess)
                     }
 
@@ -114,7 +114,7 @@ class CameraPreviewActivity : AppCompatActivity() {
     private fun importArrayList(): ArrayList<String>? {
         val bundle = intent.extras
         if (bundle != null) {
-            return bundle.getStringArrayList("pictures")
+            return bundle.getStringArrayList("picturesToPreview")
         } else {
             return ArrayList()
         }

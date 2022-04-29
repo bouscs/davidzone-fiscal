@@ -224,7 +224,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateUITimer(distance: Double) {
-        if (distance <= 100) {
+        if (distance <= 10000000000000) {
             binding.Timer.visibility = View.GONE
             binding.btnTimer.visibility = View.GONE
             binding.btnNext.visibility = View.VISIBLE

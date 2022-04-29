@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/layout/activity_camera_preview.xml" value="0.358695652173913" />
+        <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/layout/activity_irregularidade_registrada.xml" value="0.358695652173913" />
         <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/layout/activity_registrar_irregularidade_foto.xml" value="0.358695652173913" />
         <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.358695652173913" />
         <entry key="..\:/Github/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.24954710144927536" />
@@ -25,12 +26,6 @@
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/LENOVO/Documents/GitHub/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.22447916666666667" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/activity_consultar.xml" value="0.3046875" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/activity_main.xml" value="0.3046875" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/activity_maps.xml" value="0.3671875" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/activity_selecionar_irregularidade.xml" value="0.2586050724637681" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/activity_tirar_fotos.xml" value="0.3671875" />
-        <entry key="..\:/Users/Usuário/OneDrive/Faculdade/Projeto Integrador 3/davidzone-fiscal/app/src/main/res/layout/bottomsheet_fragmento.xml" value="0.3671875" />
         <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/arredondadoteste.xml" value="0.1215" />
         <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.1215" />
         <entry key="..\:/Users/dvdsh/OneDrive/Documentos/GitHub/davidzone-fiscal/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1215" />
