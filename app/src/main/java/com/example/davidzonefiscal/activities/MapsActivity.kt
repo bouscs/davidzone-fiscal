@@ -44,36 +44,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    private val logEntry = "MAPS_ITINERARIO";
 
-    //variaveis de itinerario e localização
-    //*******************///FUNCTION PRA PEGAR DO BD///***********************
     /// TODO: Integrar clouud functions
-    var itinerario = Itinerario(
-        Logradouros(
-            "R. Dna Amélia de Paula - Jardim Leonor",
-            LatLng(-22.922795035713108, -47.0600505551868),
-            LatLng(-22.92310628453413, -47.058097894565414),
-            LatLng(-22.922735745230273, -47.06178326071288)
-        ),
+    lateinit var itinerario : Itinerario
 
-        Logradouros(
-            "Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
-            LatLng(-22.83434768818629, -47.05089004881388),
-            LatLng(-22.834604787803247, -47.05212923151062),
-            LatLng(-22.834352644618864, -47.052606666596645)
-        ),
-
-        Logradouros(
-            "Rua São Luís do Paraitinga - Jardim do Trevo",
-            LatLng(-22.9260127049913, -47.07022138755717),
-            LatLng(-22.92398115477799, -47.06914812011016),
-            LatLng(-22.928908744150416, -47.07202666336667)
-        )
-
-    )
-    var logradouros = itinerario.logradouro1
+    lateinit var logradouros : Logradouros
     var logradouroAtualNo = 0
-    var ptoAtual = logradouros.ponto
+    lateinit var ptoAtual :  LatLng
     var ptoAtualNo = 0
     var localizacaoAtual: LatLng? = null
     var itinerarioPressed = 0
@@ -93,6 +71,87 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var logradouro1Nome : String = intent.getStringExtra("logradouro1Nome")!!
+        var logradouro1Ponto1Lng : String = intent.getStringExtra("logradouro1Ponto1Lng")!!
+        var logradouro1Ponto1Lat : String = intent.getStringExtra("logradouro1Ponto1Lat")!!
+        var logradouro1Ponto2Lng : String = intent.getStringExtra("logradouro1Ponto2Lng")!!
+        var logradouro1Ponto2Lat : String = intent.getStringExtra("logradouro1Ponto2Lat")!!
+        var logradouro1Ponto3Lng : String = intent.getStringExtra("logradouro1Ponto3Lng")!!
+        var logradouro1Ponto3Lat : String = intent.getStringExtra("logradouro1Ponto3Lat")!!
+
+        var logradouro2Nome : String = intent.getStringExtra("logradouro2Nome")!!
+        var logradouro2Ponto1Lng : String = intent.getStringExtra("logradouro2Ponto1Lng")!!
+        var logradouro2Ponto1Lat : String = intent.getStringExtra("logradouro2Ponto1Lat")!!
+        var logradouro2Ponto2Lng : String = intent.getStringExtra("logradouro2Ponto2Lng")!!
+        var logradouro2Ponto2Lat : String = intent.getStringExtra("logradouro2Ponto2Lat")!!
+        var logradouro2Ponto3Lng : String = intent.getStringExtra("logradouro2Ponto3Lng")!!
+        var logradouro2Ponto3Lat : String = intent.getStringExtra("logradouro2Ponto3Lat")!!
+
+        var logradouro3Nome : String = intent.getStringExtra("logradouro3Nome")!!
+        var logradouro3Ponto1Lng : String = intent.getStringExtra("logradouro3Ponto1Lng")!!
+        var logradouro3Ponto1Lat : String = intent.getStringExtra("logradouro3Ponto1Lat")!!
+        var logradouro3Ponto2Lng : String = intent.getStringExtra("logradouro3Ponto2Lng")!!
+        var logradouro3Ponto2Lat : String = intent.getStringExtra("logradouro3Ponto2Lat")!!
+        var logradouro3Ponto3Lng : String = intent.getStringExtra("logradouro3Ponto3Lng")!!
+        var logradouro3Ponto3Lat : String = intent.getStringExtra("logradouro3Ponto3Lat")!!
+
+
+        var itinerario1 = Itinerario(
+            Logradouros(
+                logradouro1Nome,
+                LatLng(logradouro1Ponto1Lng.toDouble() , logradouro1Ponto1Lat.toDouble() ),
+                LatLng(logradouro1Ponto2Lng.toDouble(),  logradouro1Ponto2Lat.toDouble() ),
+                LatLng(logradouro1Ponto3Lng.toDouble(),  logradouro1Ponto3Lat.toDouble())
+            ),
+
+            Logradouros(
+                logradouro2Nome,
+                LatLng(logradouro2Ponto1Lng.toDouble() , logradouro2Ponto1Lat.toDouble() ),
+                LatLng(logradouro2Ponto2Lng.toDouble(),  logradouro2Ponto2Lat.toDouble() ),
+                LatLng(logradouro2Ponto3Lng.toDouble(),  logradouro2Ponto3Lat.toDouble())
+            ),
+
+            Logradouros(
+                logradouro3Nome,
+                LatLng(logradouro3Ponto1Lng.toDouble() , logradouro3Ponto1Lat.toDouble() ),
+                LatLng(logradouro3Ponto2Lng.toDouble(),  logradouro3Ponto2Lat.toDouble() ),
+                LatLng(logradouro3Ponto3Lng.toDouble(),  logradouro3Ponto3Lat.toDouble())
+            )
+        )
+
+        Log.i(logEntry, itinerario1.logradouro1.ponto.toString() ) // Ponto Atual
+        Log.i(logEntry, itinerario1.logradouro1.toString() )
+        Log.i(logEntry, itinerario1.logradouro2.toString() )
+        Log.i(logEntry, itinerario1.logradouro3.toString() )
+
+
+        itinerario = Itinerario(
+            Logradouros(
+                "R. Dna Amélia de Paula - Jardim Leonor",
+                LatLng(-22.922795035713108, -47.0600505551868),
+                LatLng(-22.92310628453413, -47.058097894565414),
+                LatLng(-22.922735745230273, -47.06178326071288)
+            ),
+
+            Logradouros(
+                "Avenida Reitor Benedito José Barreto Fonseca - Parque dos Jacarandás",
+                LatLng(-22.83434768818629, -47.05089004881388),
+                LatLng(-22.834604787803247, -47.05212923151062),
+                LatLng(-22.834352644618864, -47.052606666596645)
+            ),
+
+            Logradouros(
+                "Rua São Luís do Paraitinga - Jardim do Trevo",
+                LatLng(-22.9260127049913, -47.07022138755717),
+                LatLng(-22.92398115477799, -47.06914812011016),
+                LatLng(-22.928908744150416, -47.07202666336667)
+            )
+        )
+
+
+        logradouros = itinerario.logradouro1
+        ptoAtual = logradouros.ponto
 
         val bottomSheetFragmento = BottomSheetFragmento()
         binding = ActivityMapsBinding.inflate(layoutInflater)

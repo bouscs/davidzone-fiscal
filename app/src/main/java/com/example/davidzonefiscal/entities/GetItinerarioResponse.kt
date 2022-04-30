@@ -1,23 +1,33 @@
 package com.example.davidzonefiscal.entities
 
+import com.google.android.gms.maps.model.LatLng
+
+
 data class GetItinerarioResponse (
-    val response: GetItinerarioResponseResponse
-        )
+    val result : GetItinerarioResponseResponse
+)
 
-data class GetItinerarioResponseResponse(val message : String,
-                                             val status : String,
-                                             val payload: GetItinerarioPayload)
+data class GetItinerarioResponseResponse(
+    val payload : PayloadItinerario,
+    val message : String,
+    val status : String
+)
 
-data class GetItinerarioPayload(
-    val itinerario: _Itinerario
+data class PayloadItinerario(
+    val itinerario : _Itinerario,
 )
 
 data class _Itinerario(
-    val nome: String,
-    val pontos: Array<_ItinerarioPonto>
+    val logradouros : List<_Logradouros>,
+    val slug : String
 )
 
-data class _ItinerarioPonto(
-    val _latitude: Double,
-    val _longitude: Double
+data class _Logradouros(
+    val pontos : List<Coordenations>,
+    val nome : String
+)
+
+data class Coordenations(
+    val _longitude : Double,
+    val _latitude : Double
 )
