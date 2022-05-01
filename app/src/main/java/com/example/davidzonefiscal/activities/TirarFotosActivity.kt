@@ -32,8 +32,6 @@ class TirarFotosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTirarFotosBinding
 
-    private lateinit var storageRef: StorageReference
-
     private var imagePaths: Array<Uri> = arrayOf(Uri.EMPTY, Uri.EMPTY, Uri.EMPTY, Uri.EMPTY)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,30 +121,30 @@ class TirarFotosActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         // If there's a download in progress, save the reference so you can query it later
-        outState.putString("reference", storageRef.toString())
+        //outState.putString("reference", storageRef.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
         // If there was a download in progress, get its reference and create a new StorageReference
-        val stringRef = savedInstanceState.getString("reference") ?: return
+        //val stringRef = savedInstanceState.getString("reference") ?: return
 
-        storageRef = Firebase.storage.getReferenceFromUrl(stringRef)
+        //storageRef = Firebase.storage.getReferenceFromUrl(stringRef)
 
         // Find all DownloadTasks under this StorageReference (in this example, there should be one)
-        val tasks = storageRef.activeDownloadTasks
+        //val tasks = storageRef.activeDownloadTasks
 
-        if (tasks.size > 0) {
+        //if (tasks.size > 0) {
             // Get the task monitoring the download
-            val task = tasks[0]
+            //val task = tasks[0]
 
             // Add new listeners to the task using an Activity scope
-            task.addOnSuccessListener(this) {
+            //task.addOnSuccessListener(this) {
                 // Success!
                 // ...
-            }
-        }
+            //}
+        //}
     }
 
 }
