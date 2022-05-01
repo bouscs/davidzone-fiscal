@@ -60,12 +60,25 @@
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/Timer"
+                    android:id="@+id/TimerMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:layout_marginEnd="3dp"
-                    android:text="4:57"
+                    android:text="4:"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    map:layout_constraintEnd_toEndOf="parent"
+                    map:layout_constraintTop_toTopOf="parent"
+                    android:visibility="gone"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/TimerSeg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="3dp"
+                    android:text="57"
                     android:textColor="@color/white"
                     android:textSize="27sp"
                     map:layout_constraintEnd_toEndOf="parent"

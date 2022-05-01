@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
@@ -40,6 +41,13 @@ import kotlin.system.exitProcess
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var timer: CountDownTimer
+    private var timerIntervalo = 1000L
+    private val tempo1 = 300000L
+    private val tempo2 = 1200000L
+    private lateinit var runnable: Runnable
+    private var handler = Handler(Looper.getMainLooper())
 
     private lateinit var binding: ActivityMapsBinding
     private lateinit var functions: FirebaseFunctions
@@ -126,7 +134,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         Log.i(logEntry, itinerario1.logradouro3.toString() )
 
 
-        itinerario = Itinerario(
+       itinerario = Itinerario(
             Logradouros(
                 "R. Dna Amélia de Paula - Jardim Leonor",
                 LatLng(-22.922795035713108, -47.0600505551868),
@@ -176,9 +184,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             binding.tvIniciarItinerario.visibility = View.GONE
             binding.tvTempoRestante.visibility = View.VISIBLE
-            binding.Timer.visibility = View.VISIBLE
+            binding.TimerMin.visibility = View.VISIBLE
+            binding.TimerSeg.visibility = View.VISIBLE
             binding.botoes.visibility = View.VISIBLE
             binding.btnTimer.visibility = View.VISIBLE
+
+            timerVisual(tempo1)
+            timer.start()
+            timerBackground(tempo1)
+
 
             //mMap.clear()
             marker = createMarker(ptoAtual, logradouros.rua)
@@ -189,10 +203,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.btnTimer.setOnClickListener {
                 timerbotao(binding.btnTimer)
                 localizacaoAtual?.let { it1 ->
-                    pegaDistancia(
-                        ptoAtual,
-                        it1
-                    )
+                    pegaDistancia(ptoAtual, it1, 2)
                 }
             }
         }
@@ -242,20 +253,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.btnTimer.visibility = View.VISIBLE
                 binding.btnConsultar.visibility = View.GONE
                 binding.btnregistradireto.visibility = View.GONE
-                binding.Timer.visibility = View.VISIBLE
+                binding.TimerMin.visibility = View.VISIBLE
+                binding.TimerSeg.visibility = View.VISIBLE
                 binding.tvTempoRestante.text = getString(R.string.tmp_rest)
 
-                //mMap.clear()
+                timerVisual(tempo1)
+                timer.start()
+
                 marker.remove()
                 marker = createMarker(ptoAtual, logradouros.rua)
-                //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
             }
             builder.setNeutralButton("Cancelar") { _, _ ->
                 Toast.makeText(this, "Você cancelou a ação.", Toast.LENGTH_SHORT).show()
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED)
         }
 
@@ -282,22 +295,43 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun updateUITimer(distance: Double) {
-        if (distance <= 10000000000000) {
-            binding.Timer.visibility = View.GONE
-            binding.btnTimer.visibility = View.GONE
-            binding.btnNext.visibility = View.VISIBLE
-            binding.btnregistradireto.visibility = View.VISIBLE
-            binding.btnConsultar.visibility = View.VISIBLE
-            binding.tvTempoRestante.text = getString(R.string.prox_pto)
 
-            //mMap.clear()
-            marker.remove()
-            marker = createMarker(ptoAtual, logradouros.rua)
-            //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
 
-        } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
-            .show()
+
+    //funcoes relacionadas ao tempo
+    //***************************************************************************************
+
+    private fun timerVisual(tempoinicial: Long) {
+        val tempoInicialRestanteMin = (tempoinicial / 1000) / 60
+        binding.TimerMin.text = tempoInicialRestanteMin.toString()
+        binding.TimerSeg.text = "00"
+        timer = object: CountDownTimer(tempoinicial, timerIntervalo){
+            override fun onTick(milisAteOFim: Long) {
+                val tempoRestanteSegundos = (milisAteOFim / 1000) % 60
+                val tempoRestanteMinutos = (milisAteOFim / 1000) / 60
+                binding.TimerMin.text = tempoRestanteMinutos.toString() + ":"
+                if (tempoRestanteSegundos<10) binding.TimerSeg.text = "0" + tempoRestanteSegundos.toString()
+                else binding.TimerSeg.text = tempoRestanteSegundos.toString()
+            }
+
+            override fun onFinish() {
+                localizacaoAtual?.let { pegaDistancia(it, ptoAtual, 1) }
+            }
+        }
+    }
+
+    private fun timerBackground(tempoinicial: Long) {
+        runnable = Runnable {
+
+            ///TODO: checa se houve desvio e manda pro firestore
+           // Toast.makeText(this, "Deu certo!", Toast.LENGTH_LONG)
+               // .show()
+
+            handler.postDelayed(runnable, tempoinicial)
+
+        }
+
+        handler.postDelayed(runnable, tempoinicial)
     }
 
     //função de timer pra botões pressionados
@@ -315,9 +349,59 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
 
-    //funcoes para calcular distancias em 2 ptos da esfera terrestre (haversine formula)
-    //***************************************///TEM QUE ESTAR NO FUNCTIONS///************************************************
-    /// TODO: Colocar em clouud functions
+
+
+    //funcoes para calcular distancias em 2 ptos
+    //***************************************************************************************
+
+    private fun updateUITimer(distance: Double) {
+        if (distance <= 100) {
+            binding.TimerMin.visibility = View.GONE
+            binding.TimerSeg.visibility = View.GONE
+            binding.btnTimer.visibility = View.GONE
+            binding.btnNext.visibility = View.VISIBLE
+            binding.btnregistradireto.visibility = View.VISIBLE
+            binding.btnConsultar.visibility = View.VISIBLE
+            binding.tvTempoRestante.text = getString(R.string.prox_pto)
+
+            marker.remove()
+            marker = createMarker(ptoAtual, logradouros.rua)
+
+        } else {
+
+            ///TODO: timer de 20min
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("ATENÇÃO!")
+            builder.setMessage("Dirija-se para o ponto marcado no mapa!!!")
+            builder.setPositiveButton("OK") { dialog, which ->
+                timerVisual(tempo2)
+                timer.start()
+            }
+            val dialog: AlertDialog = builder.create()
+            dialog.setCancelable(false)
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
+        }
+    }
+
+    private fun botaoTimer(distance: Double) {
+        if (distance <= 100) {
+            binding.TimerMin.visibility = View.GONE
+            binding.TimerSeg.visibility = View.GONE
+            binding.btnTimer.visibility = View.GONE
+            binding.btnNext.visibility = View.VISIBLE
+            binding.btnregistradireto.visibility = View.VISIBLE
+            binding.btnConsultar.visibility = View.VISIBLE
+            binding.tvTempoRestante.text = getString(R.string.prox_pto)
+
+            marker.remove()
+            marker = createMarker(ptoAtual, logradouros.rua)
+
+        } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
+                .show()
+    }
+
     private fun callEnviarLocalizacao(pto1: LatLng, pto2: LatLng): Task<String> {
         val data = hashMapOf(
             "localizacao" to hashMapOf(
@@ -339,7 +423,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
     }
 
-    private fun pegaDistancia(pto1: LatLng, pto2: LatLng) {
+    private fun pegaDistancia(pto1: LatLng, pto2: LatLng, chamaFunc: Number) {
 
         callEnviarLocalizacao(pto1, pto2)
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -355,7 +439,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         Snackbar.LENGTH_LONG
                     )
                         .setAction("Tente novamente") {
-                            pegaDistancia(pto1, pto2)
+                            pegaDistancia(pto1, pto2, chamaFunc)
                         }
                         .show()
                     return@OnCompleteListener
@@ -375,11 +459,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val desvio = successResponse.result.payload.desvio
                     Log.d("aaaaaaaa", distancia.toString())
 
-                    updateUITimer(distancia)
+                    if (chamaFunc == 1) updateUITimer(distancia)
+                    else botaoTimer(distancia)
 
                 }
             })
     }
+
+
 
 
     //Coisas do mapa
@@ -393,6 +480,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
@@ -452,7 +540,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             Looper.getMainLooper()
         )
     }
-
 
     //elementos no mapa
     //marker
