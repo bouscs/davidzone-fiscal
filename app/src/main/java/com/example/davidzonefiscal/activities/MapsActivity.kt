@@ -62,6 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var ptoAtual :  LatLng
     var ptoAtualNo = 0
     var localizacaoAtual: LatLng? = null
+    var localizacaoAnterior: LatLng? = null
     var itinerarioPressed = 0
 
     //variaveis do mapa
@@ -187,7 +188,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.TimerMin.visibility = View.VISIBLE
             binding.TimerSeg.visibility = View.VISIBLE
             binding.botoes.visibility = View.VISIBLE
-            binding.btnTimer.visibility = View.VISIBLE
 
             timerVisual(tempo1)
             timer.start()
@@ -198,14 +198,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             marker = createMarker(ptoAtual, logradouros.rua)
             //getDirectionLine(getDirection(localizacaoAtual, ptoAtual))
 
-
-            //Botao do timer
-            binding.btnTimer.setOnClickListener {
-                timerbotao(binding.btnTimer)
-                localizacaoAtual?.let { it1 ->
-                    pegaDistancia(ptoAtual, it1, 2)
-                }
-            }
         }
 
         //Botao que define proximo pto
@@ -250,13 +242,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
                 binding.btnNext.visibility = View.GONE
-                binding.btnTimer.visibility = View.VISIBLE
                 binding.btnConsultar.visibility = View.GONE
                 binding.btnregistradireto.visibility = View.GONE
                 binding.TimerMin.visibility = View.VISIBLE
                 binding.TimerSeg.visibility = View.VISIBLE
                 binding.tvTempoRestante.text = getString(R.string.tmp_rest)
 
+                timer.cancel()
                 timerVisual(tempo1)
                 timer.start()
 
@@ -297,8 +289,89 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
 
+    //funcoes para calcular distancias em 2 ptos
+    //***************************************************************************************
+    //funcoes para calcular distancias em 2 ptos da esfera terrestre (Formula de Haversine)
+    private fun rad(x: Double): Double {return x * kotlin.math.PI / 180}
+    private fun getDistance(p1: LatLng, p2: LatLng): Double {
 
-    //funcoes relacionadas ao tempo
+        val r = 6378137 // Raio da Terra
+        val dLat = rad(p2.latitude - p1.latitude)
+        val dLong = rad(p2.longitude - p1.longitude)
+        val a = kotlin.math.sin(dLat / 2) * kotlin.math.sin(dLat / 2) +
+                kotlin.math.cos(rad(p1.latitude)) * kotlin.math.cos(rad(p2.latitude)) *
+                kotlin.math.sin(dLong / 2) * kotlin.math.sin(dLong / 2)
+        val c = 2 * kotlin.math.atan2(kotlin.math.sqrt(a), kotlin.math.sqrt(1 - a))
+        return r * c // retorna a distancia em metros
+
+    }
+    //funcoes para calcular distancias em 2 ptos firebase func
+    //***************************************************************************************
+    private fun callEnviarLocalizacao(pto1: LatLng, pto2: LatLng): Task<String> {
+        val data = hashMapOf(
+            "localizacao" to hashMapOf(
+                "lat" to pto1.latitude,
+                "long" to pto1.longitude
+            ),
+            "pontoItinerario" to hashMapOf(
+                "lat" to pto2.latitude,
+                "long" to pto2.longitude
+            ),
+            "uid" to "a"
+        )
+        return functions
+            .getHttpsCallable("enviarLocalizacao")
+            .call(data)
+            .continueWith { task ->
+                val result = gson.toJson(task.result?.data)
+                result
+            }
+    }
+
+    private fun pegaDistancia(pto1: LatLng, pto2: LatLng) {
+
+        callEnviarLocalizacao(pto1, pto2)
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    val e = task.exception
+                    if (e is FirebaseFunctionsException) {
+                        val code = e.code
+                        val details = e.details
+                    }
+                    Snackbar.make(
+                        binding.tvTempoRestante,
+                        "Erro no servidor. Se o problema persistir ligue 0800-000-0000",
+                        Snackbar.LENGTH_LONG
+                    )
+                        .setAction("Tente novamente") {
+                            pegaDistancia(pto1, pto2)
+                        }
+                        .show()
+                    return@OnCompleteListener
+                }
+
+                val result = task.result
+
+                val genericConsultRes = gson.fromJson(result, GenericFunctionResponse::class.java)
+
+                val message = genericConsultRes.resultConsult.message
+                val status = genericConsultRes.resultConsult.status
+
+                if (status == "SUCCESS") {
+                    val successResponse =
+                        gson.fromJson(result, EnviarLocalizacaoResponse::class.java)
+                    val distancia = successResponse.result.payload.distanciaKm * 1000
+                    val desvio = successResponse.result.payload.desvio
+                    Log.d("aaaaaaaa", distancia.toString())
+
+                }
+            })
+    }
+
+
+
+
+    //funcoes relacionadas ao tempo e timers
     //***************************************************************************************
 
     private fun timerVisual(tempoinicial: Long) {
@@ -315,7 +388,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
             override fun onFinish() {
-                localizacaoAtual?.let { pegaDistancia(it, ptoAtual, 1) }
+                localizacaoAtual?.let { getDistance(it, ptoAtual) }?.let { updateUITimer(it) }
             }
         }
     }
@@ -323,7 +396,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun timerBackground(tempoinicial: Long) {
         runnable = Runnable {
 
-            ///TODO: checa se houve desvio e manda pro firestore
+            if (localizacaoAnterior != null)
+            {
+                if ( (getDistance(localizacaoAnterior!!,ptoAtual)) < (getDistance(localizacaoAtual!!,ptoAtual)))
+                    {
+                        localizacaoAtual?.let { pegaDistancia(it, ptoAtual) }
+                        Toast.makeText(this, "Desvio registrado", Toast.LENGTH_LONG)
+                        .show()
+                    } else if ( getDistance(localizacaoAnterior!!,localizacaoAtual!!) < 100
+                                && getDistance(localizacaoAtual!!, ptoAtual) > 100 ) aviso()
+            }
+            localizacaoAnterior = localizacaoAtual
            // Toast.makeText(this, "Deu certo!", Toast.LENGTH_LONG)
                // .show()
 
@@ -348,17 +431,42 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         timer.start()
     }
 
-
-
-
-    //funcoes para calcular distancias em 2 ptos
-    //***************************************************************************************
-
     private fun updateUITimer(distance: Double) {
         if (distance <= 100) {
             binding.TimerMin.visibility = View.GONE
             binding.TimerSeg.visibility = View.GONE
-            binding.btnTimer.visibility = View.GONE
+            binding.btnNext.visibility = View.VISIBLE
+            binding.btnregistradireto.visibility = View.VISIBLE
+            binding.btnConsultar.visibility = View.VISIBLE
+            binding.tvTempoRestante.text = getString(R.string.prox_pto)
+
+            marker.remove()
+            marker = createMarker(ptoAtual, logradouros.rua)
+
+        } else aviso()
+
+    }
+
+    private fun aviso(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("ATENÇÃO!")
+        builder.setMessage("Dirija-se para o ponto marcado no mapa!!!")
+        builder.setPositiveButton("OK") { dialog, which ->
+            timer.cancel()
+            timerVisual(tempo2)
+            timer.start()
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
+    }
+
+    private fun checaSempre(distance: Double) {
+        if (distance <= 100) {
+            binding.TimerMin.visibility = View.GONE
+            binding.TimerSeg.visibility = View.GONE
             binding.btnNext.visibility = View.VISIBLE
             binding.btnregistradireto.visibility = View.VISIBLE
             binding.btnConsultar.visibility = View.VISIBLE
@@ -368,107 +476,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             marker = createMarker(ptoAtual, logradouros.rua)
 
         } else {
+                binding.TimerMin.visibility = View.VISIBLE
+                binding.TimerSeg.visibility = View.VISIBLE
+                binding.btnNext.visibility = View.GONE
+                binding.btnregistradireto.visibility = View.GONE
+                binding.btnConsultar.visibility = View.GONE
+                binding.tvTempoRestante.text = getString(R.string.tmp_rest)
 
-            ///TODO: timer de 20min
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("ATENÇÃO!")
-            builder.setMessage("Dirija-se para o ponto marcado no mapa!!!")
-            builder.setPositiveButton("OK") { dialog, which ->
-                timerVisual(tempo2)
-                timer.start()
-            }
-            val dialog: AlertDialog = builder.create()
-            dialog.setCancelable(false)
-            dialog.setCanceledOnTouchOutside(false)
-            dialog.show()
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
+                marker.remove()
+                marker = createMarker(ptoAtual, logradouros.rua)
         }
     }
 
-    private fun botaoTimer(distance: Double) {
-        if (distance <= 100) {
-            binding.TimerMin.visibility = View.GONE
-            binding.TimerSeg.visibility = View.GONE
-            binding.btnTimer.visibility = View.GONE
-            binding.btnNext.visibility = View.VISIBLE
-            binding.btnregistradireto.visibility = View.VISIBLE
-            binding.btnConsultar.visibility = View.VISIBLE
-            binding.tvTempoRestante.text = getString(R.string.prox_pto)
-
-            marker.remove()
-            marker = createMarker(ptoAtual, logradouros.rua)
-
-        } else Toast.makeText(this, "O usuário não está no ponto designado!", Toast.LENGTH_LONG)
-                .show()
-    }
-
-    private fun callEnviarLocalizacao(pto1: LatLng, pto2: LatLng): Task<String> {
-        val data = hashMapOf(
-            "localizacao" to hashMapOf(
-                "lat" to pto1.latitude,
-                "long" to pto1.longitude
-            ),
-            "pontoItinerario" to hashMapOf(
-                "lat" to pto2.latitude,
-                "long" to pto2.longitude
-            ),
-            "uid" to "a"
-        )
-        return functions
-            .getHttpsCallable("enviarLocalizacao")
-            .call(data)
-            .continueWith { task ->
-                val result = gson.toJson(task.result?.data)
-                result
-            }
-    }
-
-    private fun pegaDistancia(pto1: LatLng, pto2: LatLng, chamaFunc: Number) {
-
-        callEnviarLocalizacao(pto1, pto2)
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    val e = task.exception
-                    if (e is FirebaseFunctionsException) {
-                        val code = e.code
-                        val details = e.details
-                    }
-                    Snackbar.make(
-                        binding.tvTempoRestante,
-                        "Erro no servidor. Se o problema persistir ligue 0800-000-0000",
-                        Snackbar.LENGTH_LONG
-                    )
-                        .setAction("Tente novamente") {
-                            pegaDistancia(pto1, pto2, chamaFunc)
-                        }
-                        .show()
-                    return@OnCompleteListener
-                }
-
-                val result = task.result
-
-                val genericConsultRes = gson.fromJson(result, GenericFunctionResponse::class.java)
-
-                val message = genericConsultRes.resultConsult.message
-                val status = genericConsultRes.resultConsult.status
-
-                if (status == "SUCCESS") {
-                    val successResponse =
-                        gson.fromJson(result, EnviarLocalizacaoResponse::class.java)
-                    val distancia = successResponse.result.payload.distanciaKm * 1000
-                    val desvio = successResponse.result.payload.desvio
-                    Log.d("aaaaaaaa", distancia.toString())
-
-                    if (chamaFunc == 1) updateUITimer(distancia)
-                    else botaoTimer(distancia)
-
-                }
-            })
-    }
 
 
-
-
+    
     //Coisas do mapa
     //*********************************************************************************************
     /**
@@ -485,13 +507,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         mMap.uiSettings.isZoomControlsEnabled = true
         val ptoDefault = LatLng(-22.910002734059237, -47.06436548707138)
-        //localizacaoAtual = ptoDefault
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault, 9f))
         getLocAccess()
-        //val puc = LatLng(-22.834065, -47.052522)
-        //mMap.addMarker(MarkerOptions().position(ptoAtual).title("Marker in PUC"))
-        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoAtual, 15f))
-
     }
 
     //consegue acesso a localizacao
@@ -526,7 +543,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (locationResult.locations.isNotEmpty()) {
                     val location = locationResult.lastLocation
                     localizacaoAtual = LatLng(location.latitude, location.longitude)
-                    if (itinerarioPressed == 1) getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
+                    if (itinerarioPressed == 1) {
+                        checaSempre(getDistance(localizacaoAtual!!,ptoAtual))
+                        getDirectionLine(getDirection(localizacaoAtual!!,ptoAtual))
+                    }
                 }
             }
         }
@@ -557,9 +577,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getDirectionLine(string: String) {
         val path: MutableList<List<LatLng>> = ArrayList()
-        val urlDirections = string
         val directionsRequest = object :
-            StringRequest(Method.GET, urlDirections, Response.Listener<String> { response ->
+            StringRequest(Method.GET, string, Response.Listener { response ->
                 val jsonResponse = JSONObject(response)
                 // Get routes
                 val routes = jsonResponse.getJSONArray("routes")
@@ -578,9 +597,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 linhas.clear()
 
                 for (i in 0 until path.size) {
-                    linhas.add(this.mMap.addPolyline(PolylineOptions().addAll(path[i]).color(Color.RED)))
+                    linhas.add(
+                        this.mMap.addPolyline(
+                            PolylineOptions().addAll(path[i]).color(Color.RED)
+                        )
+                    )
                 }
-            }, Response.ErrorListener { _ ->
+            }, Response.ErrorListener {
             }) {}
         val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(directionsRequest)

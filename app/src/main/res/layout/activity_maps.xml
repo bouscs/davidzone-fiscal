@@ -49,7 +49,8 @@
                     android:id="@+id/tvTempoRestante"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="6dp"
                     android:text="@string/tmp_rest"
@@ -57,13 +58,14 @@
                     android:textSize="27sp"
                     map:layout_constraintStart_toStartOf="parent"
                     map:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/TimerMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="3dp"
                     android:text="4:"
                     android:textColor="@color/white"
@@ -76,26 +78,14 @@
                     android:id="@+id/TimerSeg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="8dp"
                     android:text="57"
                     android:textColor="@color/white"
                     android:textSize="27sp"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone"/>
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnTimer"
-                    style="@style/Widget.Material3.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/azultema"
-                    android:layout_margin="3dp"
-                    android:contentDescription="Buscar para registrar Irregularidade"
-                    app:maxImageSize="40dp"
-                    app:srcCompat="@drawable/ic_baseline_done_24"
-                    app:tint='@color/white'
                     android:visibility="gone"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -106,10 +96,10 @@
                     android:backgroundTint="@color/erro"
                     android:layout_margin="3dp"
                     android:contentDescription="Buscar para registrar Irregularidade"
-                    android:visibility="gone"
                     app:maxImageSize="40dp"
                     app:srcCompat="@drawable/ic_baseline_navigate_next_24"
-                    app:tint='@color/white' />
+                    app:tint='@color/white'
+                    android:visibility="gone"/>
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
