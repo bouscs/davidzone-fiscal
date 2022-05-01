@@ -482,9 +482,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 binding.btnregistradireto.visibility = View.GONE
                 binding.btnConsultar.visibility = View.GONE
                 binding.tvTempoRestante.text = getString(R.string.tmp_rest)
-
-                marker.remove()
-                marker = createMarker(ptoAtual, logradouros.rua)
         }
     }
 
