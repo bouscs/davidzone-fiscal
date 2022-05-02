@@ -47,7 +47,6 @@ android {
 }
 
 dependencies {
-
     // Firebase dependencies
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-inappmessaging-ktx'
@@ -63,6 +62,9 @@ dependencies {
     // Declare the dependency for the Cloud Functions library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-functions-ktx'
+
+    // Cloud Storage library
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     //Gson - Lib Google JSON
     implementation 'com.google.code.gson:gson:2.8.9'

@@ -106,6 +106,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="20dp">
 
+
         <TextView
             android:id="@+id/tvCount"
             android:layout_width="wrap_content"
@@ -115,15 +116,31 @@
             android:layout_margin="20dp"
             android:textSize="20sp"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnStart"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:text="começar"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            android:textSize="22sp"
-            android:backgroundTint="@color/azultema"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStart"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:text="começar"
+
+                android:textSize="22sp"
+                android:backgroundTint="@color/azultema" />
+
+            <ProgressBar
+                android:id="@+id/progressLoader"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:translationZ="10dp"
+                android:visibility="invisible" />
+        </FrameLayout>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
