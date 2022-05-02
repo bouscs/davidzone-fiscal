@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,8 +22,10 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityTirarFotosBinding
+import com.example.davidzonefiscal.entities.IrregularidadePhotosUpload
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
@@ -155,52 +158,66 @@ class TirarFotosActivity : AppCompatActivity() {
         if (bundle != null ) {
             val placa = bundle.getString("placa", "CU")
             val tipo = bundle.getInt("tipo")
+            val user = FirebaseAuth.getInstance().currentUser
 
             Log.i("aaaaaaaaaaaaaaaaaaaaaa", placa)
 
             // envia para tela de sucesso caso ja tenha tirado 4 fotos
-            if ( photos.size >= 4 && placa != null ) {
+            if ( photos.size >= 4 && placa != null && user != null ) {
 
-                val uid = FirebaseAuth.getInstance().currentUser.toString()
+                val uid = user.uid
 
-                binding.btnStart.alpha = 0.5f
                 binding.btnStart.isClickable = false
+                binding.btnStart.visibility = View.INVISIBLE
 
-                registrarIrregularidade(placa, tipo, uid)
-                    .addOnCompleteListener(OnCompleteListener { task ->
-                        Log.i("testeFunction", task.result.toString())
+                binding.progressLoader.visibility = View.VISIBLE
 
-                        if (!task.isSuccessful) {
-                            val e = task.exception
-                            if (e is FirebaseFunctionsException) {
-                                val code = e.code
-                                val details = e.details
-                                Log.e("FirebaseFunctionsExc", "Error code $code : $details")
-                            }
-                            Log.w(TAG, "registrarIrregularidade:onFailure", e)
-                            Snackbar.make(binding.btnStart, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
-                                .setAction("Tente novamente") {
-                                    abrirPreview()
-                                }
-                                .show()
+                binding.tvCount.text = "Enviando fotos (0 de 4)"
 
+                val uploadTransaction = IrregularidadePhotosUpload(photos)
+                uploadTransaction.onProgressCallback = {finishedCounter ->
+                    binding.tvCount.text = "Enviando fotos ($finishedCounter de 4)"
+                }
+                uploadTransaction.start { remotePaths ->
+                    registrarIrregularidade(placa, tipo, remotePaths, uid)
+                        .addOnCompleteListener(OnCompleteListener { task ->
                             Log.i("testeFunction", task.result.toString())
 
-                            binding.btnStart.alpha = 1f
-                            binding.btnStart.isClickable = true
-                        }
-                        else {
-                            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-                            builder.setTitle(R.string.sucesso)
-                            builder.setMessage(R.string.sucesso_registro_irregularidade)
-                            builder.setPositiveButton(R.string.ok) { dialog, which ->
-                                finish()
+                            if (!task.isSuccessful) {
+                                val e = task.exception
+                                if (e is FirebaseFunctionsException) {
+                                    val code = e.code
+                                    val details = e.details
+                                    Log.e("FirebaseFunctionsExc", "Error code $code : $details")
+                                }
+                                Log.w(TAG, "registrarIrregularidade:onFailure", e)
+                                Snackbar.make(binding.btnStart, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
+                                    .setAction("Tente novamente") {
+                                        abrirPreview()
+                                    }
+                                    .show()
+
+                                Log.i("testeFunction", task.result.toString())
+
+                                binding.btnStart.visibility = View.VISIBLE
+                                binding.btnStart.isClickable = true
+
+                                binding.progressLoader.visibility = View.INVISIBLE
                             }
-                            val dialog: androidx.appcompat.app.AlertDialog = builder.create()
-                            dialog.show()
-                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
-                        }
-                    })
+                            else {
+
+                                val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+                                builder.setTitle(R.string.sucesso)
+                                builder.setMessage(R.string.sucesso_registro_irregularidade)
+                                builder.setPositiveButton(R.string.ok) { dialog, which ->
+                                    finish()
+                                }
+                                val dialog: androidx.appcompat.app.AlertDialog = builder.create()
+                                dialog.show()
+                                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                            }
+                        })
+                }
 
             } else {
                 getPhoto.launch(intentStart)
@@ -209,11 +226,11 @@ class TirarFotosActivity : AppCompatActivity() {
         }
     }
 
-    private fun registrarIrregularidade(placa: String, tipo: Number, uid: String): Task<String> {
+    private fun registrarIrregularidade(placa: String, tipo: Number, images: ArrayList<String>, uid: String): Task<String> {
         val data = hashMapOf(
             "placa" to placa,
             "tipo" to tipo,
-            "images" to photos,
+            "images" to images,
             "uid" to uid
         )
         return functions
