@@ -52,7 +52,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val tempo2 = 1200000L
     private lateinit var runnable: Runnable
     private var handler = Handler(Looper.getMainLooper())
-    var globals: DavidGlobals = DavidGlobals()
 
     private lateinit var binding: ActivityMapsBinding
     private lateinit var functions: FirebaseFunctions
@@ -208,7 +207,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Botão consultar itinerário.
         binding.btnItinerario.setOnClickListener {
-            globals.timerbotao(binding.btnConsultar)
             if (!bottomSheetFragmento.isAdded)
                 bottomSheetFragmento.show(supportFragmentManager, "BottomSheetDialog")
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoAtual, 15f))
