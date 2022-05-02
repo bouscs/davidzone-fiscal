@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.example.davidzonefiscal.databinding.ActivityMainBinding
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
 import com.example.davidzonefiscal.entities.GetItinerarioResponse
+import com.example.davidzonefiscal.entities.PayloadItinerario
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private lateinit var auth: FirebaseAuth
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
-    private val logEntry = "MAPS_ITINERARIO";
+    private val logEntry = "MAIN_ACTIVITY";
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -97,93 +98,11 @@ class MainActivity : AppCompatActivity() {
 
                 val result = task.result
                 val getItinerarioRes = gson.fromJson(result, GetItinerarioResponse::class.java)
-
-
-
                 val intinerarioResult = getItinerarioRes.result.payload
-
-                val logradouro1 = intinerarioResult.itinerario.logradouros[0]
-                val logradouro1Nome = logradouro1.nome
-
-                val logradouro1Ponto1Lng = logradouro1.pontos[0]._longitude.toString()
-                val logradouro1Ponto1Lat = logradouro1.pontos[0]._latitude.toString()
-
-
-                val logradouro1Ponto2Lng = logradouro1.pontos[1]._longitude.toString()
-                val logradouro1Ponto2Lat = logradouro1.pontos[1]._latitude.toString()
-
-                val logradouro1Ponto3Lng = logradouro1.pontos[2]._longitude.toString()
-                val logradouro1Ponto3Lat = logradouro1.pontos[2]._latitude.toString()
-
-
-                val logradouro2 = intinerarioResult.itinerario.logradouros[1]
-                val logradouro2Nome = logradouro2.nome
-
-                val logradouro2Ponto1Lng = logradouro2.pontos[0]._longitude.toString()
-                val logradouro2Ponto1Lat = logradouro2.pontos[0]._latitude.toString()
-
-                val logradouro2Ponto2Lng = logradouro2.pontos[1]._longitude.toString()
-                val logradouro2Ponto2Lat = logradouro2.pontos[1]._latitude.toString()
-
-                val logradouro2Ponto3Lng = logradouro2.pontos[2]._longitude.toString()
-                val logradouro2Ponto3Lat = logradouro2.pontos[2]._latitude.toString()
-
-
-                val logradouro3 = intinerarioResult.itinerario.logradouros[2]
-                val logradouro3Nome = logradouro3.nome
-
-                val logradouro3Ponto1Lng = logradouro3.pontos[0]._longitude.toString()
-                val logradouro3Ponto1Lat = logradouro3.pontos[0]._latitude.toString()
-
-                val logradouro3Ponto2Lng = logradouro3.pontos[1]._longitude.toString()
-                val logradouro3Ponto2Lat = logradouro3.pontos[1]._latitude.toString()
-
-                val logradouro3Ponto3Lng = logradouro3.pontos[2]._longitude.toString()
-                val logradouro3Ponto3Lat = logradouro3.pontos[2]._latitude.toString()
-
-                // Log.i(logEntry, logradouro1.pontos[0].toString() )
-                // Log.i(logEntry, logradouro1.pontos[1].toString() )
-                // Log.i(logEntry, logradouro1.pontos[2].toString() )
-
 
                 Handler().postDelayed({
                     val intent = Intent(this@MainActivity, MapsActivity::class.java)
-
-                    intent.putExtra("logradouro1Nome",logradouro1Nome)
-
-                    intent.putExtra("logradouro1Ponto1Lng",logradouro1Ponto1Lng)
-                    intent.putExtra("logradouro1Ponto1Lat",logradouro1Ponto1Lat)
-
-                    intent.putExtra("logradouro1Ponto2Lng",logradouro1Ponto2Lng)
-                    intent.putExtra("logradouro1Ponto2Lat",logradouro1Ponto2Lat)
-
-                    intent.putExtra("logradouro1Ponto3Lng",logradouro1Ponto3Lng)
-                    intent.putExtra("logradouro1Ponto3Lat",logradouro1Ponto3Lat)
-
-
-                    intent.putExtra("logradouro2Nome",logradouro2Nome)
-
-                    intent.putExtra("logradouro2Ponto1Lng",logradouro2Ponto1Lng)
-                    intent.putExtra("logradouro2Ponto1Lat",logradouro2Ponto1Lat)
-
-                    intent.putExtra("logradouro2Ponto2Lng",logradouro2Ponto2Lng)
-                    intent.putExtra("logradouro2Ponto2Lat",logradouro2Ponto2Lat)
-
-                    intent.putExtra("logradouro2Ponto3Lng",logradouro2Ponto3Lng)
-                    intent.putExtra("logradouro2Ponto3Lat",logradouro2Ponto3Lat)
-
-
-                    intent.putExtra("logradouro3Nome",logradouro3Nome)
-
-                    intent.putExtra("logradouro3Ponto1Lng",logradouro3Ponto1Lng)
-                    intent.putExtra("logradouro3Ponto1Lat",logradouro3Ponto1Lat)
-
-                    intent.putExtra("logradouro3Ponto2Lng",logradouro3Ponto2Lng)
-                    intent.putExtra("logradouro3Ponto2Lat",logradouro3Ponto2Lat)
-
-                    intent.putExtra("logradouro3Ponto3Lng",logradouro3Ponto3Lng)
-                    intent.putExtra("logradouro3Ponto3Lat",logradouro3Ponto3Lat)
-
+                    intent.putExtra("itinerarioGetter", intinerarioResult)
                     startActivity(intent)
                     finish()
                 }, 1000)

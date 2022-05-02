@@ -25,6 +25,7 @@ import com.example.davidzonefiscal.databinding.ActivityMapsBinding
 import com.example.davidzonefiscal.entities.EnviarLocalizacaoResponse
 import com.example.davidzonefiscal.entities.Itinerario
 import com.example.davidzonefiscal.entities.Logradouros
+import com.example.davidzonefiscal.entities.PayloadItinerario
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -54,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
-    private val logEntry = "MAPS_ITINERARIO";
+    // private val logEntry = "MAPS_ITINERARIO";
 
     lateinit var itinerario : Itinerario
     lateinit var logradouros : Logradouros
@@ -81,56 +82,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var logradouro1Nome : String = intent.getStringExtra("logradouro1Nome")!!
-        var logradouro1Ponto1Lng : String = intent.getStringExtra("logradouro1Ponto1Lng")!!
-        var logradouro1Ponto1Lat : String = intent.getStringExtra("logradouro1Ponto1Lat")!!
-        var logradouro1Ponto2Lng : String = intent.getStringExtra("logradouro1Ponto2Lng")!!
-        var logradouro1Ponto2Lat : String = intent.getStringExtra("logradouro1Ponto2Lat")!!
-        var logradouro1Ponto3Lng : String = intent.getStringExtra("logradouro1Ponto3Lng")!!
-        var logradouro1Ponto3Lat : String = intent.getStringExtra("logradouro1Ponto3Lat")!!
+        val itinerarioGetter : PayloadItinerario = intent.getParcelableExtra("itinerarioGetter")!!
 
-        var logradouro2Nome : String = intent.getStringExtra("logradouro2Nome")!!
-        var logradouro2Ponto1Lng : String = intent.getStringExtra("logradouro2Ponto1Lng")!!
-        var logradouro2Ponto1Lat : String = intent.getStringExtra("logradouro2Ponto1Lat")!!
-        var logradouro2Ponto2Lng : String = intent.getStringExtra("logradouro2Ponto2Lng")!!
-        var logradouro2Ponto2Lat : String = intent.getStringExtra("logradouro2Ponto2Lat")!!
-        var logradouro2Ponto3Lng : String = intent.getStringExtra("logradouro2Ponto3Lng")!!
-        var logradouro2Ponto3Lat : String = intent.getStringExtra("logradouro2Ponto3Lat")!!
-
-        var logradouro3Nome : String = intent.getStringExtra("logradouro3Nome")!!
-        var logradouro3Ponto1Lng : String = intent.getStringExtra("logradouro3Ponto1Lng")!!
-        var logradouro3Ponto1Lat : String = intent.getStringExtra("logradouro3Ponto1Lat")!!
-        var logradouro3Ponto2Lng : String = intent.getStringExtra("logradouro3Ponto2Lng")!!
-        var logradouro3Ponto2Lat : String = intent.getStringExtra("logradouro3Ponto2Lat")!!
-        var logradouro3Ponto3Lng : String = intent.getStringExtra("logradouro3Ponto3Lng")!!
-        var logradouro3Ponto3Lat : String = intent.getStringExtra("logradouro3Ponto3Lat")!!
+        val itinerario1 = itinerarioGetter.itinerario.logradouros[0]
+        val itinerario2 = itinerarioGetter.itinerario.logradouros[1]
+        val itinerario3 = itinerarioGetter.itinerario.logradouros[2]
 
         itinerario = Itinerario(
             Logradouros(
-                logradouro1Nome,
-                LatLng(logradouro1Ponto1Lat.toDouble(), logradouro1Ponto1Lng.toDouble()),
-                LatLng(logradouro1Ponto2Lat.toDouble(), logradouro1Ponto2Lng.toDouble() ),
-                LatLng(logradouro1Ponto3Lat.toDouble(), logradouro1Ponto3Lng.toDouble() )
+                itinerario1.nome,
+                LatLng(itinerario1.pontos[0]._latitude, itinerario1.pontos[0]._longitude),
+                LatLng(itinerario1.pontos[1]._latitude, itinerario1.pontos[1]._longitude),
+                LatLng(itinerario1.pontos[2]._latitude, itinerario1.pontos[2]._longitude)
             ),
 
             Logradouros(
-                logradouro2Nome,
-                LatLng(logradouro2Ponto1Lat.toDouble(), logradouro2Ponto1Lng.toDouble()),
-                LatLng(logradouro2Ponto2Lat.toDouble(), logradouro2Ponto2Lng.toDouble()),
-                LatLng(logradouro2Ponto3Lat.toDouble(), logradouro2Ponto3Lng.toDouble())
+                itinerario2.nome,
+                LatLng(itinerario2.pontos[0]._latitude, itinerario2.pontos[0]._longitude),
+                LatLng(itinerario2.pontos[1]._latitude, itinerario2.pontos[1]._longitude),
+                LatLng(itinerario2.pontos[2]._latitude, itinerario2.pontos[2]._longitude)
             ),
 
             Logradouros(
-                logradouro3Nome,
-                LatLng(logradouro3Ponto1Lat.toDouble(), logradouro3Ponto1Lng.toDouble()),
-                LatLng(logradouro3Ponto2Lat.toDouble(), logradouro3Ponto2Lng.toDouble()),
-                LatLng(logradouro3Ponto3Lat.toDouble(), logradouro3Ponto3Lng.toDouble() )
+                itinerario3.nome,
+                LatLng(itinerario3.pontos[0]._latitude, itinerario3.pontos[0]._longitude),
+                LatLng(itinerario3.pontos[1]._latitude, itinerario3.pontos[1]._longitude),
+                LatLng(itinerario3.pontos[2]._latitude, itinerario3.pontos[2]._longitude)
             )
         )
-
-        Log.i(logEntry, itinerario.logradouro1.toString() )
-        Log.i(logEntry, itinerario.logradouro2.toString() )
-        Log.i(logEntry, itinerario.logradouro3.toString() )
 
         logradouros = itinerario.logradouro1
         ptoAtual = logradouros.ponto
