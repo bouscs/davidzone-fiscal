@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
         auth = Firebase.auth
 
+        //cria usuario anonimo no firebase
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

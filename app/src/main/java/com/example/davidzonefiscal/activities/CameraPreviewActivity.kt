@@ -97,9 +97,20 @@ class CameraPreviewActivity : AppCompatActivity() {
                         // adiciona foto tirada à ArrayList
                         arrayList?.add(file.toString())
 
-                        // envia ArrayList para proxima activity
-                        intentSuccess.putExtra("picturesFromPreview", arrayList)
-                        startActivity(intentSuccess)
+                        val bundle = intent.extras
+                        if (bundle != null) {
+                            val placa = bundle.getString("placa")
+                            val tipo = bundle.getInt("tipo")
+                            Log.i("CameraPreviewActivity", placa.toString())
+                            Log.i("CameraPreviewActivity", tipo.toString())
+
+                            // envia ArrayList para proxima activity
+                            intentSuccess.putExtra("picturesFromPreview", arrayList)
+                            intentSuccess.putExtra("placa", placa)
+                            intentSuccess.putExtra("tipo", tipo)
+                            startActivity(intentSuccess)
+                        }
+
                     }
 
                     override fun onError(exception: ImageCaptureException) {
