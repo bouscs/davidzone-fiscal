@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -370,7 +371,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     //função de timer pra botões pressionados
-    private fun timerbotao(botao: FloatingActionButton) {
+    private fun timerbotao(botao: Button) {
         val timer = object : CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 botao.setEnabled(false)
