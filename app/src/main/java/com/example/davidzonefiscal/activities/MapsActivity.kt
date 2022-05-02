@@ -23,10 +23,10 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.example.davidzonefiscal.entities.EnviarLocalizacaoResponse
 import com.example.davidzonefiscal.entities.Itinerario
-import com.example.davidzonefiscal.entities.Logradouros
-import com.example.davidzonefiscal.entities.PayloadItinerario
+import com.example.davidzonefiscal.entities.Logradouro
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -58,14 +58,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
     // private val logEntry = "MAPS_ITINERARIO";
 
-    lateinit var itinerario : Itinerario
-    lateinit var logradouros : Logradouros
+    lateinit var logradouros : Logradouro
     var logradouroAtualNo = 0
     lateinit var ptoAtual :  LatLng
     var ptoAtualNo = 0
     var localizacaoAtual: LatLng? = null
     var localizacaoAnterior: LatLng? = null
     var itinerarioPressed = 0
+
+    lateinit var itinerario: Itinerario
 
     //variaveis do mapa
     private lateinit var mMap: GoogleMap
@@ -83,34 +84,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val itinerarioGetter : PayloadItinerario = intent.getParcelableExtra("itinerarioGetter")!!
-
-        val itinerario1 = itinerarioGetter.itinerario.logradouros[0]
-        val itinerario2 = itinerarioGetter.itinerario.logradouros[1]
-        val itinerario3 = itinerarioGetter.itinerario.logradouros[2]
-
-        itinerario = Itinerario(
-            Logradouros(
-                itinerario1.nome,
-                LatLng(itinerario1.pontos[0]._latitude, itinerario1.pontos[0]._longitude),
-                LatLng(itinerario1.pontos[1]._latitude, itinerario1.pontos[1]._longitude),
-                LatLng(itinerario1.pontos[2]._latitude, itinerario1.pontos[2]._longitude)
-            ),
-
-            Logradouros(
-                itinerario2.nome,
-                LatLng(itinerario2.pontos[0]._latitude, itinerario2.pontos[0]._longitude),
-                LatLng(itinerario2.pontos[1]._latitude, itinerario2.pontos[1]._longitude),
-                LatLng(itinerario2.pontos[2]._latitude, itinerario2.pontos[2]._longitude)
-            ),
-
-            Logradouros(
-                itinerario3.nome,
-                LatLng(itinerario3.pontos[0]._latitude, itinerario3.pontos[0]._longitude),
-                LatLng(itinerario3.pontos[1]._latitude, itinerario3.pontos[1]._longitude),
-                LatLng(itinerario3.pontos[2]._latitude, itinerario3.pontos[2]._longitude)
-            )
-        )
+        itinerario = DavidGlobals.itinerario
 
         logradouros = itinerario.logradouro1
         ptoAtual = logradouros.ponto

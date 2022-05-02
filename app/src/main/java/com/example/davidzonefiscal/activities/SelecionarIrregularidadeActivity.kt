@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivitySelecionarIrregularidadeBinding
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
@@ -33,7 +34,7 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
             if (binding.radioGroup.checkedRadioButtonId!=View.NO_ID){
                 val intentTirarFotos = Intent(this, TirarFotosActivity::class.java)
 
-                intentTirarFotos.putExtra("placa", binding.etPlaca.toString())
+                intentTirarFotos.putExtra("placa", binding.etPlaca.text.toString())
 
                 if (binding.radio1.isChecked) {
                     val tipo = 1
@@ -44,6 +45,7 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
                     intentTirarFotos.putExtra("tipo", tipo)
                 }
                 startActivity(intentTirarFotos)
+                finish()
             } else {
                 Snackbar.make(binding.tvIrregularidade, "Selecione uma opção", Snackbar.LENGTH_LONG).show()
             }

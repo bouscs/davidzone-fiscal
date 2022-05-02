@@ -93,23 +93,12 @@ class CameraPreviewActivity : AppCompatActivity() {
                 object: ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         Log.i("CameraPreview", "A imagem foi salva no diretório: ${file.toUri()}")
-                        val arrayList = importArrayList()
-                        // adiciona foto tirada à ArrayList
-                        arrayList?.add(file.toString())
 
-                        val bundle = intent.extras
-                        if (bundle != null) {
-                            val placa = bundle.getString("placa")
-                            val tipo = bundle.getInt("tipo")
-                            Log.i("CameraPreviewActivity", placa.toString())
-                            Log.i("CameraPreviewActivity", tipo.toString())
 
                             // envia ArrayList para proxima activity
-                            intentSuccess.putExtra("picturesFromPreview", arrayList)
-                            intentSuccess.putExtra("placa", placa)
-                            intentSuccess.putExtra("tipo", tipo)
-                            startActivity(intentSuccess)
-                        }
+                            //startActivity(intentSuccess)
+                            setResult(0, Intent().putExtra("path", file.toString()))
+                            finish()
 
                     }
 
