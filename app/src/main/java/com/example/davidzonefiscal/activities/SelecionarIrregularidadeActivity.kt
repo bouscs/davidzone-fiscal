@@ -18,6 +18,7 @@ import com.google.android.material.textfield.TextInputLayout
 class SelecionarIrregularidadeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySelecionarIrregularidadeBinding
+    var globals: DavidGlobals = DavidGlobals()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,8 @@ class SelecionarIrregularidadeActivity : AppCompatActivity() {
 
         // Validar seleção ao clicar no botão próximo
         binding.btnProx.setOnClickListener{
+
+            globals.timerbotao(binding.btnProx)
             hideKeyboard()
             validarSelecao()
         }

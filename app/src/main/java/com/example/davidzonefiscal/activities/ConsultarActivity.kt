@@ -26,6 +26,7 @@ import com.google.firebase.ktx.Firebase
 import com.example.davidzonefiscal.databinding.ActivityConsultarBinding
 import androidx.fragment.app.Fragment
 import com.example.davidzonefiscal.R
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.google.gson.Gson
 
 import com.google.gson.GsonBuilder
@@ -35,6 +36,7 @@ import org.json.JSONObject
 class ConsultarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityConsultarBinding
+    var globals: DavidGlobals = DavidGlobals()
 
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
@@ -50,6 +52,7 @@ class ConsultarActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
 
         binding.btnConsult.setOnClickListener{
+            globals.timerbotao(binding.btnConsult)
             hideKeyboard()
             onConsultarPlacaClicked()
         }

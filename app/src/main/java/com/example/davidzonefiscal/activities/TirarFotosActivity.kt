@@ -26,6 +26,7 @@ import androidx.core.view.isVisible
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityTirarFotosBinding
 import com.example.davidzonefiscal.entities.IrregularidadePhotosUpload
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +40,8 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
+var globals: DavidGlobals = DavidGlobals()
 
 class TirarFotosActivity : AppCompatActivity() {
 
@@ -88,6 +91,7 @@ class TirarFotosActivity : AppCompatActivity() {
         functions = Firebase.functions("southamerica-east1")
 
         binding.btnStart.setOnClickListener {
+            globals.timerbotao(binding.btnStart)
             cameraProviderResult.launch(android.Manifest.permission.CAMERA)
         }
         getImages()

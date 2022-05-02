@@ -17,6 +17,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.example.davidzonefiscal.databinding.ActivityCameraPreviewBinding
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.google.common.util.concurrent.ListenableFuture
 import java.io.File
 import java.lang.Exception
@@ -25,6 +26,8 @@ import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
 
 class CameraPreviewActivity : AppCompatActivity() {
+
+    var globals: DavidGlobals = DavidGlobals()
 
     private lateinit var binding: ActivityCameraPreviewBinding
     // Processamento de imagem
@@ -53,6 +56,8 @@ class CameraPreviewActivity : AppCompatActivity() {
         startCamera()
 
         binding.abTirarFoto.setOnClickListener{
+
+            globals.timerbotaoFAB(binding.abTirarFoto)
             takePhoto()
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
