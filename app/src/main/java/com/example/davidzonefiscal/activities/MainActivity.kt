@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private lateinit var auth: FirebaseAuth
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
-    private val logEntry = "MAPS_ITINERARIO";
+    private val logEntry = "MAIN_ACTIVITY";
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -101,9 +101,6 @@ class MainActivity : AppCompatActivity() {
 
                 val result = task.result
                 val getItinerarioRes = gson.fromJson(result, GetItinerarioResponse::class.java)
-
-
-
                 val intinerarioResult = getItinerarioRes.result.payload
 
                 val logradouro1 = intinerarioResult.itinerario.logradouros[0]
@@ -196,7 +193,6 @@ class MainActivity : AppCompatActivity() {
 
                 Handler().postDelayed({
                     val intent = Intent(this@MainActivity, MapsActivity::class.java)
-
                     startActivity(intent)
                     finish()
                 }, 1000)

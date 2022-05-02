@@ -55,7 +55,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapsBinding
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
-    private val logEntry = "MAPS_ITINERARIO";
+    // private val logEntry = "MAPS_ITINERARIO";
 
     lateinit var logradouros : Logradouro
     var logradouroAtualNo = 0
@@ -84,8 +84,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
 
         itinerario = DavidGlobals.itinerario
-
-        Log.i(logEntry, itinerario.toString() ) // Ponto Atual
 
         logradouros = itinerario.logradouro1
         ptoAtual = logradouros.ponto
