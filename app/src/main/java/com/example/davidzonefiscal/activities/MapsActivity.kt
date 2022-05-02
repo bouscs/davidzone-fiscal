@@ -1,8 +1,10 @@
 package com.example.davidzonefiscal.activities
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -471,10 +473,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             binding.btnregistradireto.visibility = View.VISIBLE
             binding.btnConsultar.visibility = View.VISIBLE
             binding.tvTempoRestante.text = getString(R.string.prox_pto)
-
-            marker.remove()
-            marker = createMarker(ptoAtual, logradouros.rua)
-
+            
         } else {
                 binding.TimerMin.visibility = View.VISIBLE
                 binding.TimerSeg.visibility = View.VISIBLE
@@ -502,6 +501,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    this, R.raw.mapstyle2
+                )
+            )
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
+
+
+
         mMap.uiSettings.isZoomControlsEnabled = true
         val ptoDefault = LatLng(-22.910002734059237, -47.06436548707138)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ptoDefault, 9f))
