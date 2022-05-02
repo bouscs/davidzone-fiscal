@@ -16,9 +16,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.davidzonefiscal.databinding.ActivityMainBinding
 import com.example.davidzonefiscal.databinding.ActivityMapsBinding
+import com.example.davidzonefiscal.entities.DavidGlobals
 import com.example.davidzonefiscal.entities.GetItinerarioResponse
+import com.example.davidzonefiscal.entities.Itinerario
+import com.example.davidzonefiscal.entities.Logradouro
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
+import com.google.android.gms.maps.model.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -141,48 +145,57 @@ class MainActivity : AppCompatActivity() {
                 val logradouro3Ponto3Lng = logradouro3.pontos[2]._longitude.toString()
                 val logradouro3Ponto3Lat = logradouro3.pontos[2]._latitude.toString()
 
-                // Log.i(logEntry, logradouro1.pontos[0].toString() )
-                // Log.i(logEntry, logradouro1.pontos[1].toString() )
-                // Log.i(logEntry, logradouro1.pontos[2].toString() )
+                DavidGlobals.itinerario = Itinerario(
+                    Logradouro(
+                        logradouro1Nome,
+                        LatLng(
+                            logradouro1Ponto1Lat.toDouble(),
+                            logradouro1Ponto1Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro1Ponto2Lat.toDouble(),
+                            logradouro1Ponto2Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro1Ponto3Lat.toDouble(),
+                            logradouro1Ponto3Lng.toDouble()
+                        )
+                    ),
+                    Logradouro(
+                        logradouro2Nome,
+                        LatLng(
+                            logradouro2Ponto1Lat.toDouble(),
+                            logradouro2Ponto1Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro2Ponto2Lat.toDouble(),
+                            logradouro2Ponto2Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro2Ponto3Lat.toDouble(),
+                            logradouro2Ponto3Lng.toDouble()
+                        )
+                    ),
+                    Logradouro(
+                        logradouro3Nome,
+                        LatLng(
+                            logradouro3Ponto1Lat.toDouble(),
+                            logradouro3Ponto1Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro3Ponto2Lat.toDouble(),
+                            logradouro3Ponto2Lng.toDouble()
+                        ),
+                        LatLng(
+                            logradouro3Ponto3Lat.toDouble(),
+                            logradouro3Ponto3Lng.toDouble()
+                        )
+                    )
+                )
 
 
                 Handler().postDelayed({
                     val intent = Intent(this@MainActivity, MapsActivity::class.java)
-
-                    intent.putExtra("logradouro1Nome",logradouro1Nome)
-
-                    intent.putExtra("logradouro1Ponto1Lng",logradouro1Ponto1Lng)
-                    intent.putExtra("logradouro1Ponto1Lat",logradouro1Ponto1Lat)
-
-                    intent.putExtra("logradouro1Ponto2Lng",logradouro1Ponto2Lng)
-                    intent.putExtra("logradouro1Ponto2Lat",logradouro1Ponto2Lat)
-
-                    intent.putExtra("logradouro1Ponto3Lng",logradouro1Ponto3Lng)
-                    intent.putExtra("logradouro1Ponto3Lat",logradouro1Ponto3Lat)
-
-
-                    intent.putExtra("logradouro2Nome",logradouro2Nome)
-
-                    intent.putExtra("logradouro2Ponto1Lng",logradouro2Ponto1Lng)
-                    intent.putExtra("logradouro2Ponto1Lat",logradouro2Ponto1Lat)
-
-                    intent.putExtra("logradouro2Ponto2Lng",logradouro2Ponto2Lng)
-                    intent.putExtra("logradouro2Ponto2Lat",logradouro2Ponto2Lat)
-
-                    intent.putExtra("logradouro2Ponto3Lng",logradouro2Ponto3Lng)
-                    intent.putExtra("logradouro2Ponto3Lat",logradouro2Ponto3Lat)
-
-
-                    intent.putExtra("logradouro3Nome",logradouro3Nome)
-
-                    intent.putExtra("logradouro3Ponto1Lng",logradouro3Ponto1Lng)
-                    intent.putExtra("logradouro3Ponto1Lat",logradouro3Ponto1Lat)
-
-                    intent.putExtra("logradouro3Ponto2Lng",logradouro3Ponto2Lng)
-                    intent.putExtra("logradouro3Ponto2Lat",logradouro3Ponto2Lat)
-
-                    intent.putExtra("logradouro3Ponto3Lng",logradouro3Ponto3Lng)
-                    intent.putExtra("logradouro3Ponto3Lat",logradouro3Ponto3Lat)
 
                     startActivity(intent)
                     finish()

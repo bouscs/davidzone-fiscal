@@ -15,6 +15,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -43,6 +44,38 @@ class TirarFotosActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
 
+    val photos = arrayListOf<String>()
+
+    val cameraProviderResult =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it){
+                abrirPreview()
+            }else{
+                Toast.makeText(this, "Sem permissões para o uso da câmera.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    val getPhoto = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        Log.i("AAAAAAAAAAAAAAAAAAAA", result.data.toString())
+
+        if(result.data == null) {
+            Log.e("TirarFotosActivity", "Erro na foto recebida de CameraPreview")
+            return@registerForActivityResult
+        }
+
+        val bundle = result.data!!.extras
+
+        if (bundle != null && photos.size < 4) {
+            val path = bundle.getString("path")
+
+            if(path != null)
+            {
+                photos.add(path)
+                return@registerForActivityResult
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,7 +90,29 @@ class TirarFotosActivity : AppCompatActivity() {
         getImages()
     }
 
+    override fun onResume() {
+        super.onResume()
 
+        binding.tvCount.text = ("${photos.size}/4")
+
+        when (photos.size) {
+            1, 2, 3 -> binding.btnStart.text = ("Próximo")
+            4 -> binding.btnStart.text = ("Enviar")
+        }
+
+        // colocar fotos recebidas nas imageViews
+        if(photos.size > 0)
+            binding.imgView1.setImageURI(photos[0].toUri())
+
+        if (photos.size > 1)
+            binding.imgView2.setImageURI(photos[1].toUri())
+
+        if (photos.size > 2)
+            binding.imgView3.setImageURI(photos[2].toUri())
+
+        if (photos.size > 3)
+            binding.imgView4.setImageURI(photos[3].toUri())
+    }
 
     // função que recebe a ArrayList com as fotos tiradas
     private fun getImages() {
@@ -93,78 +148,72 @@ class TirarFotosActivity : AppCompatActivity() {
     }
 
     private fun abrirPreview() {
-        Log.i("testeFunction", "abrirPreview")
         val intentStart = Intent(this@TirarFotosActivity, CameraPreviewActivity::class.java)
         val bundle = intent.extras
 
-
         // enviar a ArrayList com as fotos para a proxima activity
         if (bundle != null ) {
-            val placa = bundle.getString("placa")
+            val placa = bundle.getString("placa", "CU")
             val tipo = bundle.getInt("tipo")
-            Log.i("testeFunction", placa.toString())
-            Log.i("testeFunction", tipo.toString())
 
-            var picturesFromPreview = bundle.getStringArrayList("picturesFromPreview")
-            if (picturesFromPreview == null) picturesFromPreview = arrayListOf()
-
-            intentStart.putExtra("picturesToPreview", picturesFromPreview)
-            intentStart.putExtra("placa", placa)
-            intentStart.putExtra("tipo", tipo)
+            Log.i("aaaaaaaaaaaaaaaaaaaaaa", placa)
 
             // envia para tela de sucesso caso ja tenha tirado 4 fotos
-            if ( bundle.getStringArrayList("picturesFromPreview")?.size == 4 ) {
+            if ( photos.size >= 4 && placa != null ) {
 
-                val images = bundle.getStringArrayList("picturesFromPreview")
                 val uid = FirebaseAuth.getInstance().currentUser.toString()
-                Log.i("testeFunction", images.toString())
-                Log.i("testeFunction", uid)
-                if (images != null && placa != null) {
-                    registrarIrregularidade(placa, tipo, images, uid)
-                        .addOnCompleteListener(OnCompleteListener { task ->
-                            Log.i("testeFunction", task.result.toString())
-                            if (!task.isSuccessful) {
-                                val e = task.exception
-                                if (e is FirebaseFunctionsException) {
-                                    val code = e.code
-                                    val details = e.details
-                                    Log.e("FirebaseFunctionsExc", "Error code $code : $details")
+
+                binding.btnStart.alpha = 0.5f
+                binding.btnStart.isClickable = false
+
+                registrarIrregularidade(placa, tipo, uid)
+                    .addOnCompleteListener(OnCompleteListener { task ->
+                        Log.i("testeFunction", task.result.toString())
+
+                        if (!task.isSuccessful) {
+                            val e = task.exception
+                            if (e is FirebaseFunctionsException) {
+                                val code = e.code
+                                val details = e.details
+                                Log.e("FirebaseFunctionsExc", "Error code $code : $details")
+                            }
+                            Log.w(TAG, "registrarIrregularidade:onFailure", e)
+                            Snackbar.make(binding.btnStart, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
+                                .setAction("Tente novamente") {
+                                    abrirPreview()
                                 }
-                                Log.w(TAG, "registrarIrregularidade:onFailure", e)
-                                Snackbar.make(binding.btnStart, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
-                                    .setAction("Tente novamente") {
-                                        abrirPreview()
-                                    }
-                                    .show()
-                                return@OnCompleteListener
+                                .show()
+
+                            Log.i("testeFunction", task.result.toString())
+
+                            binding.btnStart.alpha = 1f
+                            binding.btnStart.isClickable = true
+                        }
+                        else {
+                            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+                            builder.setTitle(R.string.sucesso)
+                            builder.setMessage(R.string.sucesso_registro_irregularidade)
+                            builder.setPositiveButton(R.string.ok) { dialog, which ->
+                                finish()
                             }
-                            else {
-                                Log.i("testeFunction", task.result.toString())
-                            }
-                        })
-                }
+                            val dialog: androidx.appcompat.app.AlertDialog = builder.create()
+                            dialog.show()
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                        }
+                    })
 
-
-                val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-                builder.setTitle(R.string.sucesso)
-                builder.setMessage(R.string.sucesso_registro_irregularidade)
-                builder.setPositiveButton(R.string.ok) { dialog, which ->
-                    val intentSend = Intent(this, MapsActivity::class.java)
-                    startActivity(intentSend)
-                }
-                val dialog: androidx.appcompat.app.AlertDialog = builder.create()
-                dialog.show()
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
-
-            } else { startActivity(intentStart) }
+            } else {
+                getPhoto.launch(intentStart)
+                //startActivity(intentStart)
+            }
         }
     }
 
-    private fun registrarIrregularidade(placa: String, tipo: Number, images: ArrayList<String>, uid: String): Task<String> {
+    private fun registrarIrregularidade(placa: String, tipo: Number, uid: String): Task<String> {
         val data = hashMapOf(
             "placa" to placa,
             "tipo" to tipo,
-            "images" to images,
+            "images" to photos,
             "uid" to uid
         )
         return functions
@@ -176,14 +225,7 @@ class TirarFotosActivity : AppCompatActivity() {
             }
     }
 
-    private val cameraProviderResult =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){
-            if(it){
-                abrirPreview()
-            }else{
-                Toast.makeText(this, "Sem permissões para o uso da câmera.", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
+}
+
 
 

@@ -129,8 +129,9 @@ class ConsultarActivity : AppCompatActivity() {
                         builder.setTitle(R.string.consulta_regular_titulo)
                         builder.setMessage(R.string.consulta_regular_mensagem)
                         builder.setPositiveButton(R.string.ok) { dialog, which ->
-                            val intentConsultaValid = Intent(this@ConsultarActivity, MapsActivity::class.java)
-                            startActivity(intentConsultaValid)
+                            //val intentConsultaValid = Intent(this@ConsultarActivity, MapsActivity::class.java)
+                            //startActivity(intentConsultaValid)
+                            finish()
                         }
                         val dialog: androidx.appcompat.app.AlertDialog = builder.create()
                         dialog.show()
@@ -146,6 +147,7 @@ class ConsultarActivity : AppCompatActivity() {
                             intentConsultaNotValid.putExtra("placa", placa)
                             intentConsultaNotValid.putExtra("tipo", tipo)
                             startActivity(intentConsultaNotValid)
+                            finish()
                         }
                         builder.setNeutralButton(R.string.voltar) { dialog, _ ->
                             dialog.dismiss()
