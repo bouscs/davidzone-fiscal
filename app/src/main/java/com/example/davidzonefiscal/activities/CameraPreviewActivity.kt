@@ -93,13 +93,13 @@ class CameraPreviewActivity : AppCompatActivity() {
                 object: ImageCapture.OnImageSavedCallback {
                     override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                         Log.i("CameraPreview", "A imagem foi salva no diretório: ${file.toUri()}")
-                        val arrayList = importArrayList()
-                        // adiciona foto tirada à ArrayList
-                        arrayList?.add(file.toString())
 
-                        // envia ArrayList para proxima activity
-                        intentSuccess.putExtra("picture1", arrayList)
-                        startActivity(intentSuccess)
+
+                            // envia ArrayList para proxima activity
+                            //startActivity(intentSuccess)
+                            setResult(0, Intent().putExtra("path", file.toString()))
+                            finish()
+
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -114,7 +114,7 @@ class CameraPreviewActivity : AppCompatActivity() {
     private fun importArrayList(): ArrayList<String>? {
         val bundle = intent.extras
         if (bundle != null) {
-            return bundle.getStringArrayList("pictures")
+            return bundle.getStringArrayList("picturesToPreview")
         } else {
             return ArrayList()
         }

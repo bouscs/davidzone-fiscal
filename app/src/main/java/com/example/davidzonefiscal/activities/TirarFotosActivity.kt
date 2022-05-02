@@ -1,9 +1,12 @@
 package com.example.davidzonefiscal.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import androidx.core.net.toUri
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -19,10 +23,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.example.davidzonefiscal.R
 import com.example.davidzonefiscal.databinding.ActivityTirarFotosBinding
-import com.example.davidzonefiscal.entities.IrregularidadePhotosUpload
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
+import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
+import com.google.gson.GsonBuilder
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,7 +41,40 @@ class TirarFotosActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTirarFotosBinding
 
-    private var imagePaths: Array<Uri> = arrayOf(Uri.EMPTY, Uri.EMPTY, Uri.EMPTY, Uri.EMPTY)
+    private lateinit var functions: FirebaseFunctions
+    private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+
+    val photos = arrayListOf<String>()
+
+    val cameraProviderResult =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()){
+            if(it){
+                abrirPreview()
+            }else{
+                Toast.makeText(this, "Sem permissões para o uso da câmera.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    val getPhoto = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        Log.i("AAAAAAAAAAAAAAAAAAAA", result.data.toString())
+
+        if(result.data == null) {
+            Log.e("TirarFotosActivity", "Erro na foto recebida de CameraPreview")
+            return@registerForActivityResult
+        }
+
+        val bundle = result.data!!.extras
+
+        if (bundle != null && photos.size < 4) {
+            val path = bundle.getString("path")
+
+            if(path != null)
+            {
+                photos.add(path)
+                return@registerForActivityResult
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +82,36 @@ class TirarFotosActivity : AppCompatActivity() {
         binding = ActivityTirarFotosBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        functions = Firebase.functions("southamerica-east1")
 
         binding.btnStart.setOnClickListener {
             cameraProviderResult.launch(android.Manifest.permission.CAMERA)
         }
-
         getImages()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        binding.tvCount.text = ("${photos.size}/4")
+
+        when (photos.size) {
+            1, 2, 3 -> binding.btnStart.text = ("Próximo")
+            4 -> binding.btnStart.text = ("Enviar")
+        }
+
+        // colocar fotos recebidas nas imageViews
+        if(photos.size > 0)
+            binding.imgView1.setImageURI(photos[0].toUri())
+
+        if (photos.size > 1)
+            binding.imgView2.setImageURI(photos[1].toUri())
+
+        if (photos.size > 2)
+            binding.imgView3.setImageURI(photos[2].toUri())
+
+        if (photos.size > 3)
+            binding.imgView4.setImageURI(photos[3].toUri())
     }
 
     // função que recebe a ArrayList com as fotos tiradas
@@ -54,31 +120,29 @@ class TirarFotosActivity : AppCompatActivity() {
         // recebe os "extras" da activity anterior
         val bundle = intent.extras
         if (bundle != null) {
-            val images = bundle.getStringArrayList("picture1")
+            val images = bundle.getStringArrayList("picturesFromPreview")
+            if (images != null) {
+                Log.i("CameraPreview", images.size.toString())
+                // mostrar progresso
+                binding.tvCount.text = ("${images?.size}/4")
 
-            // mostrar progresso
-            binding.tvCount.text = ("${images?.size}/4")
+                // condicional para mudar texto do botão principal
+                when (images?.size) {
+                    1, 2, 3 -> binding.btnStart.text = ("Próximo")
+                    4 -> binding.btnStart.text = ("Enviar")
+                }
 
-            // condicional para mudar texto do botão principal
-            when (images?.size) {
-                1, 2, 3 -> binding.btnStart.text = ("Próximo")
-                4 -> binding.btnStart.text = ("Enviar")
-            }
-
-            // colocar fotos recebidas nas imageViews
-            binding.imgView1.setImageURI(images?.get(0)?.toUri())
-            imagePaths[0] = images?.get(0)?.toUri() as Uri
-            if (images?.size!! >= 2) {
-                binding.imgView2.setImageURI(images?.get(1)?.toUri())
-                imagePaths[1] = images?.get(1)?.toUri() as Uri
-            }
-            if (images?.size!! >= 3) {
-                binding.imgView3.setImageURI(images?.get(2)?.toUri())
-                imagePaths[2] = images?.get(2)?.toUri() as Uri
-            }
-            if (images?.size == 4) {
-                binding.imgView4.setImageURI(images?.get(3)?.toUri())
-                imagePaths[3] = images?.get(3)?.toUri() as Uri
+                // colocar fotos recebidas nas imageViews
+                binding.imgView1.setImageURI(images?.get(0)?.toUri())
+                if (images?.size!! >= 2) {
+                    binding.imgView2.setImageURI(images?.get(1)?.toUri())
+                }
+                if (images?.size!! >= 3) {
+                    binding.imgView3.setImageURI(images?.get(2)?.toUri())
+                }
+                if (images?.size == 4) {
+                    binding.imgView4.setImageURI(images?.get(3)?.toUri())
+                }
             }
         }
     }
@@ -89,64 +153,79 @@ class TirarFotosActivity : AppCompatActivity() {
 
         // enviar a ArrayList com as fotos para a proxima activity
         if (bundle != null ) {
-            intentStart.putExtra("pictures", bundle.getStringArrayList("picture1"))
-        }
+            val placa = bundle.getString("placa", "CU")
+            val tipo = bundle.getInt("tipo")
 
-        // envia para tela de sucesso caso ja tenha tirado 4 fotos
-        if ( bundle?.getStringArrayList("picture1")?.size == 4 ) {
-            val intentSend = Intent(this, IrregularidadeRegistrada::class.java)
-            val uploader = IrregularidadePhotosUpload(imagePaths)
-            val uploadTask = uploader.upload()
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-            }.addOnSuccessListener { taskSnapshot ->
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                // ...
-                startActivity(intentSend)
+            Log.i("aaaaaaaaaaaaaaaaaaaaaa", placa)
+
+            // envia para tela de sucesso caso ja tenha tirado 4 fotos
+            if ( photos.size >= 4 && placa != null ) {
+
+                val uid = FirebaseAuth.getInstance().currentUser.toString()
+
+                binding.btnStart.alpha = 0.5f
+                binding.btnStart.isClickable = false
+
+                registrarIrregularidade(placa, tipo, uid)
+                    .addOnCompleteListener(OnCompleteListener { task ->
+                        Log.i("testeFunction", task.result.toString())
+
+                        if (!task.isSuccessful) {
+                            val e = task.exception
+                            if (e is FirebaseFunctionsException) {
+                                val code = e.code
+                                val details = e.details
+                                Log.e("FirebaseFunctionsExc", "Error code $code : $details")
+                            }
+                            Log.w(TAG, "registrarIrregularidade:onFailure", e)
+                            Snackbar.make(binding.btnStart, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
+                                .setAction("Tente novamente") {
+                                    abrirPreview()
+                                }
+                                .show()
+
+                            Log.i("testeFunction", task.result.toString())
+
+                            binding.btnStart.alpha = 1f
+                            binding.btnStart.isClickable = true
+                        }
+                        else {
+                            val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+                            builder.setTitle(R.string.sucesso)
+                            builder.setMessage(R.string.sucesso_registro_irregularidade)
+                            builder.setPositiveButton(R.string.ok) { dialog, which ->
+                                finish()
+                            }
+                            val dialog: androidx.appcompat.app.AlertDialog = builder.create()
+                            dialog.show()
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                        }
+                    })
+
+            } else {
+                getPhoto.launch(intentStart)
+                //startActivity(intentStart)
             }
-
-        } else { startActivity(intentStart) }
+        }
     }
 
-    private val cameraProviderResult =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){
-            if(it){
-                abrirPreview()
-            }else{
-                Toast.makeText(this, "Sem permissões para o uso da câmera.", Toast.LENGTH_SHORT).show()
+    private fun registrarIrregularidade(placa: String, tipo: Number, uid: String): Task<String> {
+        val data = hashMapOf(
+            "placa" to placa,
+            "tipo" to tipo,
+            "images" to photos,
+            "uid" to uid
+        )
+        return functions
+            .getHttpsCallable("registrarIrregularidade")
+            .call(data)
+            .continueWith { task ->
+                val result = gson.toJson(task.result?.data)
+                result
             }
-        }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        // If there's a download in progress, save the reference so you can query it later
-        //outState.putString("reference", storageRef.toString())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-
-        // If there was a download in progress, get its reference and create a new StorageReference
-        //val stringRef = savedInstanceState.getString("reference") ?: return
-
-        //storageRef = Firebase.storage.getReferenceFromUrl(stringRef)
-
-        // Find all DownloadTasks under this StorageReference (in this example, there should be one)
-        //val tasks = storageRef.activeDownloadTasks
-
-        //if (tasks.size > 0) {
-            // Get the task monitoring the download
-            //val task = tasks[0]
-
-            // Add new listeners to the task using an Activity scope
-            //task.addOnSuccessListener(this) {
-                // Success!
-                // ...
-            //}
-        //}
     }
 
 }
 
-     
+
+

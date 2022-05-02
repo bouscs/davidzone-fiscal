@@ -1,13 +1,18 @@
 package com.example.davidzonefiscal.activities
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 import com.google.android.gms.tasks.OnCompleteListener
@@ -20,6 +25,7 @@ import com.google.firebase.ktx.Firebase
 
 import com.example.davidzonefiscal.databinding.ActivityConsultarBinding
 import androidx.fragment.app.Fragment
+import com.example.davidzonefiscal.R
 import com.google.gson.Gson
 
 import com.google.gson.GsonBuilder
@@ -33,7 +39,7 @@ class ConsultarActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
 
-    private val logEntry = "CONSULTA_PLACA";
+    private val logEntry = "CONSULTA_PLACA"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +98,7 @@ class ConsultarActivity : AppCompatActivity() {
                     if (e is FirebaseFunctionsException) {
                         val code = e.code
                         val details = e.details
+                        Log.e("FirebaseFunctionsExc", "Error code $code : $details")
                     }
                     Log.w(TAG, "consultarPlaca:onFailure", e)
                     Snackbar.make(binding.etPlaca, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG)
@@ -118,11 +125,37 @@ class ConsultarActivity : AppCompatActivity() {
                     Log.i(logEntry, ticketRegular.toString())
 
                     if(ticketRegular){
-                        val intentConsult = Intent(this@ConsultarActivity, ResultadoConsultaActivity::class.java )
-                        startActivity(intentConsult)
+                        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+                        builder.setTitle(R.string.consulta_regular_titulo)
+                        builder.setMessage(R.string.consulta_regular_mensagem)
+                        builder.setPositiveButton(R.string.ok) { dialog, which ->
+                            //val intentConsultaValid = Intent(this@ConsultarActivity, MapsActivity::class.java)
+                            //startActivity(intentConsultaValid)
+                            finish()
+                        }
+                        val dialog: androidx.appcompat.app.AlertDialog = builder.create()
+                        dialog.show()
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+
                     } else {
-                        val intentConsultNotValid = Intent(this@ConsultarActivity, ResultadoNoTicketActivity::class.java)
-                        startActivity(intentConsultNotValid)
+                        val tipo = 2
+                        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+                        builder.setTitle(R.string.consulta_irregular_titulo)
+                        builder.setMessage(R.string.consulta_irregular_mensagem)
+                        builder.setPositiveButton(R.string.registrar_irregularidade_short) { _, _ ->
+                            val intentConsultaNotValid = Intent(this@ConsultarActivity, TirarFotosActivity::class.java)
+                            intentConsultaNotValid.putExtra("placa", placa)
+                            intentConsultaNotValid.putExtra("tipo", tipo)
+                            startActivity(intentConsultaNotValid)
+                            finish()
+                        }
+                        builder.setNeutralButton(R.string.voltar) { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        val dialog: androidx.appcompat.app.AlertDialog = builder.create()
+                        dialog.show()
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                        dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.WHITE)
                     }
                 } else {
                     if(status == "E_INVALID_INPUT") binding.textField.error = "Digite uma placa válida!"
@@ -149,6 +182,7 @@ class ConsultarActivity : AppCompatActivity() {
     fun Activity.hideKeyboard() {
         hideKeyboard(currentFocus ?: View(this))
     }
+
     fun Context.hideKeyboard(view: View) {
         val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)

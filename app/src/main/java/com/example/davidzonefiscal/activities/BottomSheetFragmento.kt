@@ -26,8 +26,6 @@ class BottomSheetFragmento:BottomSheetDialogFragment(){
         var btnFechar = view.findViewById(R.id.btnFechar) as FloatingActionButton
         var ruaAtual = view.findViewById(R.id.tvRua) as TextView
         var ptoAtual = view.findViewById(R.id.tvPonto) as TextView
-        var ptoRestante1 = view.findViewById(R.id.tvPontoRestante) as TextView
-        var ptoRestante2 = view.findViewById(R.id.tvPontoRestante2) as TextView
         var ruaRestante1 = view.findViewById(R.id.tvLogradourosRestantes) as TextView
         var ruaRestante2 = view.findViewById(R.id.tvLogradourosRestantes2) as TextView
 
@@ -39,14 +37,11 @@ class BottomSheetFragmento:BottomSheetDialogFragment(){
 
 
         when ((activity as MapsActivity).ptoAtualNo) {
-            0 -> {
-                ptoRestante1.setText("(${(activity as MapsActivity).logradouros.ponto2.latitude}, ${(activity as MapsActivity).logradouros.ponto2.longitude})")
-                ptoRestante2.visibility = View.VISIBLE
-                ptoRestante2.setText("(${(activity as MapsActivity).logradouros.ponto3.latitude}, ${(activity as MapsActivity).logradouros.ponto3.longitude})")
-            }
-            1 -> {
-                ptoRestante1.setText("(${(activity as MapsActivity).logradouros.ponto3.latitude}, ${(activity as MapsActivity).logradouros.ponto3.longitude})")
-            }
+            0 -> ptoAtual.setText("1 ")
+
+            1 -> ptoAtual.setText("2 ")
+
+            -1 -> ptoAtual.setText("3 ")
         }
 
         when ((activity as MapsActivity).logradouroAtualNo) {

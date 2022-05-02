@@ -1,9 +1,19 @@
 <resources>
     <string name="app_name">DavidZone Fiscal</string>
+    <string name="ok">OK</string>
+    <string name="voltar">Voltar</string>
+    <string name="sucesso">Sucesso!</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="registrar_irregularidade">Registrar Irregularidade</string>
     <string name="registrar_irregularidade_short">Registrar</string>
     <string name="selecionar_irregularidade">Selecione a Irregularidade:</string>
+    <string name="sucesso_registro_irregularidade">Irregularidade registrada com sucesso!</string>
+
+    <string name="consulta_regular_titulo">Pagamento encontrado!</string>
+    <string name="consulta_regular_mensagem">Veículo está regularizado.</string>
+    <string name="consulta_irregular_titulo">Pagamento não encontrado!</string>
+    <string name="consulta_irregular_mensagem">Deseja prosseguir com o registro da irregularidade?</string>
+
     <string name="tempo_atual">Tempo atual: </string>
     <string name="placa_sample">ABC1234</string>
     <string name="proximo">Próximo</string>
@@ -15,7 +25,7 @@
     <string name="placa_hint">Digite a Placa</string>
 
     <string name="tmp_rest">Tempo restante:  </string>
-    <string name="prox_pto">Ir para o próximo pto:  </string>
+    <string name="prox_pto">Próximo ponto:  </string>
 
 
 

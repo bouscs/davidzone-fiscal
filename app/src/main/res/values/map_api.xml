@@ -3,5 +3,7 @@
     <string name="map_key" translatable="false">
         AIzaSyDx1gXyWjtvIJ3i49s7SVOptIv3iyYIxjA
     </string>
-    <string name="directions_api_key">AIzaSyBa8pqXptk5Ch1SHcxBtrR3PiuGw7l9te0</string>
+    <string
+        name="directions_api_key">AIzaSyBa8pqXptk5Ch1SHcxBtrR3PiuGw7l9te0
+    </string>
 </resources>

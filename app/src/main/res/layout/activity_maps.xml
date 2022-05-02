@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorPrimary"
     tools:context=".activities.MapsActivity">
@@ -12,20 +13,10 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bottombar"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        app:cardElevation="3dp"
-        android:layout_margin="8dp"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="?attr/colorPrimary">
-
+        android:layout_weight=".70"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -36,8 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:background="@drawable/arredondadoteste"
                 android:backgroundTint="?attr/colorPrimaryVariant"
                 android:orientation="horizontal">
@@ -58,7 +49,8 @@
                     android:id="@+id/tvTempoRestante"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="6dp"
                     android:text="@string/tmp_rest"
@@ -66,32 +58,34 @@
                     android:textSize="27sp"
                     map:layout_constraintStart_toStartOf="parent"
                     map:layout_constraintTop_toTopOf="parent"
-                    android:visibility="gone" />
+                    android:visibility="gone"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/Timer"
+                    android:id="@+id/TimerMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="13dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="3dp"
-                    android:text="4:57"
+                    android:text="4:"
                     android:textColor="@color/white"
                     android:textSize="27sp"
                     map:layout_constraintEnd_toEndOf="parent"
                     map:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btnTimer"
-                    style="@style/Widget.Material3.Button"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/TimerSeg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/azultema"
-                    android:layout_margin="3dp"
-                    android:contentDescription="Buscar para registrar Irregularidade"
-                    app:maxImageSize="40dp"
-                    app:srcCompat="@drawable/ic_baseline_done_24"
-                    app:tint='@color/white'
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="57"
+                    android:textColor="@color/white"
+                    android:textSize="27sp"
+                    map:layout_constraintEnd_toEndOf="parent"
+                    map:layout_constraintTop_toTopOf="parent"
                     android:visibility="gone"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -102,10 +96,10 @@
                     android:backgroundTint="@color/erro"
                     android:layout_margin="3dp"
                     android:contentDescription="Buscar para registrar Irregularidade"
-                    android:visibility="gone"
                     app:maxImageSize="40dp"
                     app:srcCompat="@drawable/ic_baseline_navigate_next_24"
-                    app:tint='@color/white' />
+                    app:tint='@color/white'
+                    android:visibility="gone"/>
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -114,8 +108,8 @@
                 android:id="@+id/botoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -131,7 +125,7 @@
                     app:fabCustomSize="80dp"
                     app:maxImageSize="40dp"
                     app:srcCompat="@drawable/ic_baseline_error_24"
-                    app:tint='?attr/colorPrimaryVariant'
+                    app:tint='@color/white'
                     android:visibility="gone"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -158,7 +152,7 @@
                     app:fabCustomSize="80dp"
                     app:maxImageSize="40dp"
                     app:srcCompat="@drawable/ic_baseline_search_24_2"
-                    app:tint='?attr/colorPrimaryVariant'
+                    app:tint='@color/blue_grey_light'
                     android:visibility="gone"/>
 
 
@@ -167,9 +161,7 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>
 
 
 
