@@ -120,6 +120,8 @@ class TirarFotosActivity : AppCompatActivity() {
         // recebe os "extras" da activity anterior
         val bundle = intent.extras
         if (bundle != null) {
+            val placa = bundle.getString("placa", "CU")
+            binding.cdPlaca.text = placa
             val images = bundle.getStringArrayList("picturesFromPreview")
             if (images != null) {
                 Log.i("CameraPreview", images.size.toString())
