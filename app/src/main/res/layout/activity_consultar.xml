@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="@string/consultar_placa"
         android:fontFamily="@font/roboto_regular"
+        android:textColor="?attr/colorPrimaryVariant"
         android:textSize="36sp"
         android:textAlignment="center"/>
 
