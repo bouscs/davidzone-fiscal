@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -110,6 +111,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             itinerarioPressed = 1
 
+            binding.caixaItinerario.visibility = View.GONE
+            binding.caixaItinerario2.visibility = View.VISIBLE
             binding.tvIniciarItinerario.visibility = View.GONE
             binding.tvTempoRestante.visibility = View.VISIBLE
             binding.TimerMin.visibility = View.VISIBLE
@@ -187,7 +190,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             val dialog: AlertDialog = builder.create()
             dialog.show()
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ResourcesCompat.getColor(
+                resources, R.color.azultema, null))
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED)
         }
 
@@ -372,7 +376,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#4886FF"))
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ResourcesCompat.getColor(
+            resources, R.color.azultema, null))
     }
 
     private fun checaSempre(distance: Double) {

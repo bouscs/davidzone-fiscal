@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/colorSecondaryVariant"
+    android:background="?attr/colorSecondary"
     tools:context=".activities.ConsultarActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/ic_baseline_search_24_2"
+        android:tint="?attr/colorPrimaryVariant"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"/>
 

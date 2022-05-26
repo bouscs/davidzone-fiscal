@@ -14,6 +14,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -138,7 +139,9 @@ class ConsultarActivity : AppCompatActivity() {
                         }
                         val dialog: androidx.appcompat.app.AlertDialog = builder.create()
                         dialog.show()
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(
+                            ResourcesCompat.getColor(
+                            resources, R.color.azultema, null))
 
                     } else {
                         val tipo = 2
@@ -157,7 +160,8 @@ class ConsultarActivity : AppCompatActivity() {
                         }
                         val dialog: androidx.appcompat.app.AlertDialog = builder.create()
                         dialog.show()
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE)
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ResourcesCompat.getColor(
+                            resources, R.color.azultema, null))
                         dialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.WHITE)
                     }
                 } else {

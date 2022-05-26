@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.TirarFotosActivity"
     android:orientation="vertical"
-    android:background="?attr/colorSecondaryVariant">
+    android:background="?attr/colorSecondary">
 
     <TextView
         android:id="@+id/tvIrregularidade"

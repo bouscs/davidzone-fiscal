@@ -24,26 +24,38 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/caixaItinerario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="3dp"
                 android:background="@drawable/arredondadoteste"
-                android:backgroundTint="?attr/colorPrimaryVariant"
+                android:backgroundTint="@color/azultema"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvIniciarItinerario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Iniciar Itinerario "
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     map:layout_constraintStart_toStartOf="parent"
                     map:layout_constraintTop_toTopOf="parent" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/caixaItinerario2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/arredondadoteste"
+                android:backgroundTint="?attr/colorSecondary"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTempoRestante"
@@ -101,7 +113,6 @@
                     app:tint='@color/white'
                     android:visibility="gone"/>
 
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,6 +127,8 @@
                     android:id="@+id/btnregistradireto"
                     android:layout_width="64.33dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/custombutton_left"
                     map:backgroundTint="@color/erro"
                     app:layout_constraintLeft_toLeftOf="parent"
@@ -128,6 +141,8 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnConsultar"
                     android:layout_width="64.33dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_height="50dp"
                     android:background="@drawable/custombutton_right"
                     map:backgroundTint="@color/azultema"
@@ -140,14 +155,15 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnItinerario"
+                    android:layout_marginTop="8dp"
                     android:layout_width="81dp"
                     android:layout_height="81dp"
                     android:backgroundTint="@color/white"
                     android:contentDescription="Ver Itinerario"
-                    app:fabCustomSize="80dp"
+                    app:fabCustomSize="83dp"
                     app:maxImageSize="40dp"
                     app:srcCompat="@drawable/ic_baseline_location_on_24"
-                    app:tint='?attr/colorPrimaryVariant'
+                    app:tint='?attr/colorPrimary'
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
