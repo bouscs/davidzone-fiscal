@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimaryVariant">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:textSize="15sp"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -68,14 +68,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center"
                 android:textSize="18sp"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="de 3"
                 android:layout_gravity="center"
                 android:textSize="18sp"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -102,7 +102,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:textSize="15sp"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
             <TextView
                 android:id="@+id/tvLogradourosRestantes2"
                 android:layout_width="wrap_content"
@@ -115,7 +115,7 @@
                 android:layout_marginEnd="10dp"
                 android:textSize="15sp"
                 android:visibility="gone"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -137,7 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:text="30 minutos"
-            android:textColor="@color/blue_grey_light"
+            android:textColor="@color/grey_1"
             android:textSize="18sp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -159,22 +159,22 @@
                 android:layout_marginLeft="20dp"
                 android:text="0"
                 android:textSize="18sp"
-                android:textColor="@color/blue_grey_light"/>
+                android:textColor="@color/grey_1"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnFechar"
-        android:backgroundTint="@color/white"
-        android:layout_gravity="center"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="40dp"
         style="@style/Widget.Material3.Button"
-        android:layout_width="wrap_content"
+        android:layout_width="71dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="0dp"
+        android:backgroundTint="@color/white"
         android:contentDescription="Registrar Irregularidade"
-        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
         app:maxImageSize="50dp"
-        app:tint='?attr/colorPrimaryVariant' />
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
+        app:tint='?attr/colorSecondary' />
 
     <TextView
         android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
         android:layout_marginLeft="20dp"
         android:text="0"
         android:textSize="18sp"
-        android:textColor="?attr/colorPrimaryVariant"/>
+        android:textColor="?attr/colorPrimary"/>
 
 
 </LinearLayout>
