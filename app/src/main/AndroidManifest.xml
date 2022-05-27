@@ -18,9 +18,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DavidZoneFiscal">
-        <activity
-            android:name=".activities.IrregularidadeRegistrada"
-            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -33,12 +30,6 @@
         </provider>
 
         <activity
-            android:name=".activities.GenericInsertResponse"
-            android:exported="false" />
-        <activity
-            android:name=".activities.FunctionsGenericResponse"
-            android:exported="false" />
-        <activity
             android:name=".activities.CameraPreviewActivity"
             android:exported="false" />
         <activity
@@ -46,12 +37,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.SelecionarIrregularidadeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ResultadoNoTicketActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.ResultadoConsultaActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ConsultarActivity"

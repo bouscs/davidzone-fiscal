@@ -34,6 +34,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.functions.ktx.functions
@@ -107,6 +109,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         //botao iniciar itinerario
         binding.tvIniciarItinerario.setOnClickListener {
             //pegando os pontos do itinerario  (pega do bd mas nesse caso vou so usar qualquer coisa)
+            //createFiscalFirestore()
+
 
             itinerarioPressed = 1
 
@@ -243,7 +247,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 "lat" to pto2.latitude,
                 "long" to pto2.longitude
             ),
-            "uid" to "a"
+            "uid" to FirebaseAuth.getInstance().currentUser.toString()
         )
         return functions
             .getHttpsCallable("enviarLocalizacao")
@@ -533,3 +537,4 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         requestQueue.add(directionsRequest)
     }
 }
+
