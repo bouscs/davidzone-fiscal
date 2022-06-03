@@ -73,6 +73,23 @@ class ConsultarActivity : AppCompatActivity() {
         return true
     }
 
+    fun validarPlacaMercosul(placa:String):Boolean {
+        if (placa.length != 7) {
+            return false
+        } else {
+            for (letter in 0..2){
+                if(placa[letter].lowercaseChar().isLetter() == false) return false
+            }
+            if(placa[3].isDigit() == false) return false
+            if(placa[4].lowercaseChar().isLetter() == false) return false
+            for (num in 5..6){
+                if(placa[num].isDigit() == false) return false
+            }
+
+        }
+        return true
+    }
+
     private fun consultarPlaca (placa: String): Task<String> {
         val data = hashMapOf(
             "placa" to placa
@@ -89,7 +106,7 @@ class ConsultarActivity : AppCompatActivity() {
     private fun onConsultarPlacaClicked() {
         val placa = binding.etPlaca.text.toString().lowercase()
 
-        if (!validarPlaca(placa)) {
+        if ((validarPlaca(placa) || validarPlacaMercosul(placa)) == false ) {
             // showSnackbar("Please enter a message.")
             binding.textField.error = "Digite uma placa válida!"
             return
