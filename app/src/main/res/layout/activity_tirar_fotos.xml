@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.TirarFotosActivity"
     android:orientation="vertical"
-    android:background="?attr/colorSecondary">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/tvIrregularidade"
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:text="começar"
-
+                android:textColor="?attr/colorPrimary"
                 android:textSize="22sp"
                 android:backgroundTint="@color/azultema" />
 

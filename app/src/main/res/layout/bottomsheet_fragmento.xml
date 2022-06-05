@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary">
+    android:background="@color/bg_dark">
 
     <TextView
         android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
         android:contentDescription="Registrar Irregularidade"
         app:maxImageSize="50dp"
         app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24"
-        app:tint='?attr/colorSecondary' />
+        app:tint='@color/bg_dark' />
 
     <TextView
         android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
         android:layout_marginLeft="20dp"
         android:text="0"
         android:textSize="18sp"
-        android:textColor="?attr/colorPrimary"/>
+        android:textColor="@color/bg_dark"/>
 
 
 </LinearLayout>

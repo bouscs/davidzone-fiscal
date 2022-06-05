@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.SelecionarIrregularidadeActivity"
     android:orientation="vertical"
-    android:background="?attr/colorSecondary">
+    android:background="?attr/colorPrimary">
 
     <TextView
         android:id="@+id/tvIrregularidade"
@@ -69,14 +69,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vaga_inadequada"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="?attr/colorPrimaryVariant"
             android:textSize="20sp"/>
 
         <RadioButton
             android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="?attr/colorPrimaryVariant"
 
             android:text="@string/ticket_expirado"
             android:textSize="20sp"/>
@@ -104,6 +104,7 @@
         android:layout_width="wrap_content"
         android:layout_height="70dp"
         android:text="@string/proximo"
+        android:textColor="?attr/colorPrimary"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:textSize="22sp"
