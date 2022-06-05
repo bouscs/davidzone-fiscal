@@ -90,121 +90,130 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startMapActivity(){
-        val slug = "itinerario1"
-
-        getItinerario (slug)
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    val e = task.exception
-                    if (e is FirebaseFunctionsException) {
-                        val code = e.code
-                        val details = e.details
-                    }
-                    Log.w(logEntry, "getItinerario:onFailure", e)
-                    Snackbar.make(binding.root, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG).show()
-                    return@OnCompleteListener
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        var slug = "itinerario1"
+        if (uid != null) {
+            if(uid[0].isLetter()) {
+                var slug = "itinerario2"
+                if (uid[0].isUpperCase()) {
+                    var slug = "itinerario3"
                 }
+            }
 
-                val result = task.result
-                val getItinerarioRes = gson.fromJson(result, GetItinerarioResponse::class.java)
-                val intinerarioResult = getItinerarioRes.result.payload
+                getItinerario (slug)
+                    .addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            val e = task.exception
+                            if (e is FirebaseFunctionsException) {
+                                val code = e.code
+                                val details = e.details
+                            }
+                            Log.w(logEntry, "getItinerario:onFailure", e)
+                            Snackbar.make(binding.root, "Erro no servidor. Se o problema persistir ligue 0800-000-0000", Snackbar.LENGTH_LONG).show()
+                            return@OnCompleteListener
+                        }
 
-                val logradouro1 = intinerarioResult.itinerario.logradouros[0]
-                val logradouro1Nome = logradouro1.nome
+                        val result = task.result
+                        val getItinerarioRes = gson.fromJson(result, GetItinerarioResponse::class.java)
+                        val intinerarioResult = getItinerarioRes.result.payload
 
-                val logradouro1Ponto1Lng = logradouro1.pontos[0]._longitude.toString()
-                val logradouro1Ponto1Lat = logradouro1.pontos[0]._latitude.toString()
+                        val logradouro1 = intinerarioResult.itinerario.logradouros[0]
+                        val logradouro1Nome = logradouro1.nome
 
-
-                val logradouro1Ponto2Lng = logradouro1.pontos[1]._longitude.toString()
-                val logradouro1Ponto2Lat = logradouro1.pontos[1]._latitude.toString()
-
-                val logradouro1Ponto3Lng = logradouro1.pontos[2]._longitude.toString()
-                val logradouro1Ponto3Lat = logradouro1.pontos[2]._latitude.toString()
-
-
-                val logradouro2 = intinerarioResult.itinerario.logradouros[1]
-                val logradouro2Nome = logradouro2.nome
-
-                val logradouro2Ponto1Lng = logradouro2.pontos[0]._longitude.toString()
-                val logradouro2Ponto1Lat = logradouro2.pontos[0]._latitude.toString()
-
-                val logradouro2Ponto2Lng = logradouro2.pontos[1]._longitude.toString()
-                val logradouro2Ponto2Lat = logradouro2.pontos[1]._latitude.toString()
-
-                val logradouro2Ponto3Lng = logradouro2.pontos[2]._longitude.toString()
-                val logradouro2Ponto3Lat = logradouro2.pontos[2]._latitude.toString()
+                        val logradouro1Ponto1Lng = logradouro1.pontos[0]._longitude.toString()
+                        val logradouro1Ponto1Lat = logradouro1.pontos[0]._latitude.toString()
 
 
-                val logradouro3 = intinerarioResult.itinerario.logradouros[2]
-                val logradouro3Nome = logradouro3.nome
+                        val logradouro1Ponto2Lng = logradouro1.pontos[1]._longitude.toString()
+                        val logradouro1Ponto2Lat = logradouro1.pontos[1]._latitude.toString()
 
-                val logradouro3Ponto1Lng = logradouro3.pontos[0]._longitude.toString()
-                val logradouro3Ponto1Lat = logradouro3.pontos[0]._latitude.toString()
+                        val logradouro1Ponto3Lng = logradouro1.pontos[2]._longitude.toString()
+                        val logradouro1Ponto3Lat = logradouro1.pontos[2]._latitude.toString()
 
-                val logradouro3Ponto2Lng = logradouro3.pontos[1]._longitude.toString()
-                val logradouro3Ponto2Lat = logradouro3.pontos[1]._latitude.toString()
 
-                val logradouro3Ponto3Lng = logradouro3.pontos[2]._longitude.toString()
-                val logradouro3Ponto3Lat = logradouro3.pontos[2]._latitude.toString()
+                        val logradouro2 = intinerarioResult.itinerario.logradouros[1]
+                        val logradouro2Nome = logradouro2.nome
 
-                DavidGlobals.itinerario = Itinerario(
-                    Logradouro(
-                        logradouro1Nome,
-                        LatLng(
-                            logradouro1Ponto1Lat.toDouble(),
-                            logradouro1Ponto1Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro1Ponto2Lat.toDouble(),
-                            logradouro1Ponto2Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro1Ponto3Lat.toDouble(),
-                            logradouro1Ponto3Lng.toDouble()
+                        val logradouro2Ponto1Lng = logradouro2.pontos[0]._longitude.toString()
+                        val logradouro2Ponto1Lat = logradouro2.pontos[0]._latitude.toString()
+
+                        val logradouro2Ponto2Lng = logradouro2.pontos[1]._longitude.toString()
+                        val logradouro2Ponto2Lat = logradouro2.pontos[1]._latitude.toString()
+
+                        val logradouro2Ponto3Lng = logradouro2.pontos[2]._longitude.toString()
+                        val logradouro2Ponto3Lat = logradouro2.pontos[2]._latitude.toString()
+
+
+                        val logradouro3 = intinerarioResult.itinerario.logradouros[2]
+                        val logradouro3Nome = logradouro3.nome
+
+                        val logradouro3Ponto1Lng = logradouro3.pontos[0]._longitude.toString()
+                        val logradouro3Ponto1Lat = logradouro3.pontos[0]._latitude.toString()
+
+                        val logradouro3Ponto2Lng = logradouro3.pontos[1]._longitude.toString()
+                        val logradouro3Ponto2Lat = logradouro3.pontos[1]._latitude.toString()
+
+                        val logradouro3Ponto3Lng = logradouro3.pontos[2]._longitude.toString()
+                        val logradouro3Ponto3Lat = logradouro3.pontos[2]._latitude.toString()
+
+                        DavidGlobals.itinerario = Itinerario(
+                            Logradouro(
+                                logradouro1Nome,
+                                LatLng(
+                                    logradouro1Ponto1Lat.toDouble(),
+                                    logradouro1Ponto1Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro1Ponto2Lat.toDouble(),
+                                    logradouro1Ponto2Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro1Ponto3Lat.toDouble(),
+                                    logradouro1Ponto3Lng.toDouble()
+                                )
+                            ),
+                            Logradouro(
+                                logradouro2Nome,
+                                LatLng(
+                                    logradouro2Ponto1Lat.toDouble(),
+                                    logradouro2Ponto1Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro2Ponto2Lat.toDouble(),
+                                    logradouro2Ponto2Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro2Ponto3Lat.toDouble(),
+                                    logradouro2Ponto3Lng.toDouble()
+                                )
+                            ),
+                            Logradouro(
+                                logradouro3Nome,
+                                LatLng(
+                                    logradouro3Ponto1Lat.toDouble(),
+                                    logradouro3Ponto1Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro3Ponto2Lat.toDouble(),
+                                    logradouro3Ponto2Lng.toDouble()
+                                ),
+                                LatLng(
+                                    logradouro3Ponto3Lat.toDouble(),
+                                    logradouro3Ponto3Lng.toDouble()
+                                )
+                            )
                         )
-                    ),
-                    Logradouro(
-                        logradouro2Nome,
-                        LatLng(
-                            logradouro2Ponto1Lat.toDouble(),
-                            logradouro2Ponto1Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro2Ponto2Lat.toDouble(),
-                            logradouro2Ponto2Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro2Ponto3Lat.toDouble(),
-                            logradouro2Ponto3Lng.toDouble()
-                        )
-                    ),
-                    Logradouro(
-                        logradouro3Nome,
-                        LatLng(
-                            logradouro3Ponto1Lat.toDouble(),
-                            logradouro3Ponto1Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro3Ponto2Lat.toDouble(),
-                            logradouro3Ponto2Lng.toDouble()
-                        ),
-                        LatLng(
-                            logradouro3Ponto3Lat.toDouble(),
-                            logradouro3Ponto3Lng.toDouble()
-                        )
-                    )
-                )
 
 
-                Handler().postDelayed({
-                    val intent = Intent(this@MainActivity, MapsActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }, 1000)
+                        Handler().postDelayed({
+                            val intent = Intent(this@MainActivity, MapsActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }, 1000)
 
-                return@OnCompleteListener
-            })
+                        return@OnCompleteListener
+                    })
+        }
     }
 
 
@@ -246,14 +255,15 @@ class MainActivity : AppCompatActivity() {
 
 private fun createFiscalFirestore(){
     val db = Firebase.firestore
-    val user = FirebaseAuth.getInstance().currentUser.toString()
+    val user = FirebaseAuth.getInstance().currentUser?.uid
     val codigo = createFourDigitNumber()
 
     val fiscal = hashMapOf(
         "codigo" to codigo,
         "user" to user)
 
-    if (db.collection("fiscais").whereEqualTo("user", user).toString().isNotEmpty()) {
+
+    if (db.collection("fiscais").whereEqualTo("user", user).toString().isEmpty()) {
         db.collection("fiscais")
             .document()
             .set(fiscal)
