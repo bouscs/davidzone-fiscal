@@ -86,19 +86,19 @@ class MainActivity : AppCompatActivity() {
         } else {
             startMapActivity()
         }
-        createFiscalFirestore()
     }
 
     fun startMapActivity(){
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         var slug = "itinerario1"
         if (uid != null) {
-            if(uid[0].isLetter()) {
-                var slug = "itinerario2"
+            if (uid[0].isLetter()) {
+                slug = "itinerario2"
                 if (uid[0].isUpperCase()) {
-                    var slug = "itinerario3"
+                    slug = "itinerario3"
                 }
             }
+        }
 
                 getItinerario (slug)
                     .addOnCompleteListener(OnCompleteListener { task ->
@@ -213,7 +213,6 @@ class MainActivity : AppCompatActivity() {
 
                         return@OnCompleteListener
                     })
-        }
     }
 
 
@@ -250,29 +249,6 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
-    }
-}
-
-private fun createFiscalFirestore(){
-    val db = Firebase.firestore
-    val user = FirebaseAuth.getInstance().currentUser?.uid
-    val codigo = createFourDigitNumber()
-
-    val fiscal = hashMapOf(
-        "codigo" to codigo,
-        "user" to user)
-
-
-    if (db.collection("fiscais").whereEqualTo("user", user).toString().isEmpty()) {
-        db.collection("fiscais")
-            .document()
-            .set(fiscal)
-            .addOnSuccessListener {
-                Log.i(TAG, "Fiscal criado com Sucesso ")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Erro ao criar fiscal", e)
-            }
     }
 }
 
